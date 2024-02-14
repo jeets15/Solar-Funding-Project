@@ -1,6 +1,6 @@
 # COM6103 Team Software Project
 
-Team 02 - Manhattan Project (Solar Offset).
+Team 02 - Manhattan Project ([solar Offset](https://docs.google.com/document/d/1TmaMmdomg0CNfR4qqA27rtB8mQ5qMhh86YsuTJqq6y4/edit?pli=1)).
 
 ---
 
