@@ -29,6 +29,7 @@ A single person or a household of people that lives in the UK. A householder wis
 > - Will there be a single account for a household of 4? Or can many users form a household?
 > - What information will be collected on this user? Will information be stored for statistical analysis?
 > - Storing personal data requires compliance with GDPR
+> - Will the footprint reduction be publicly visible? Will it be private?
 
 ### System Administrators
 
