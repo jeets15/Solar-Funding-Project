@@ -31,9 +31,9 @@ A single person or a household of people that lives in the UK. A householder wis
 > - Storing personal data requires compliance with GDPR
 > - Will the footprint reduction be publicly visible? Will it be private?
 
-### System Administrators
+### System Administrator
 
-System administrators must ensure that the web application works as intended. If other users have questions or complaints, they should be able to be contacted to resolve any issues.
+System administrators must ensure that the web application works as intended. They have the ability to modify accounts and upgrade users to staff accounts. Questions and issues can be reported to system administrators by other users that system administrators will resolve or answer.
 
 ## User Stories
 
