@@ -33,7 +33,16 @@ A single person or a household of people that lives in the UK. A householder wis
 
 ### System Administrator
 
-System administrators must ensure that the web application works as intended. They have the ability to modify accounts and upgrade users to staff accounts. Questions and issues can be reported to system administrators by other users that system administrators will resolve or answer.
+System administrators must ensure that the web application works as intended. They have the ability to modify accounts and upgrade users to staff accounts through a dashboard. Questions and issues can be reported to system administrators by other users that system administrators will resolve or answer.
+
+### Staff
+
+Staff accounts can help system administrators with keeping the information on the web application up to date, and can add more countries / opportunities for funding. Staff will be able to view generated reports on statistics of funding by country and carbon offset.
+
+> Open Questions
+> - Will staff changes / edits have to be approved by a system administrator?
+> - What specifically should staff be able to do?
+> - Are staff accounts allowed to donate money? Do they have to use a separate account?
 
 ## User Stories
 
