@@ -55,3 +55,10 @@ Staff accounts can help system administrators with keeping the information on th
 | Could Have | As staff, I want to be able to see which country listings were updated least recently so that I can check if there is any updated information available. |
 
 ## Architecture Technology Choices
+
+- Front-end
+  - HTML5,CSS3, Bootstrap, JS
+- Back-end
+  - Python Flask
+- Database
+  - SQL
