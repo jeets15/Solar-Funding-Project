@@ -54,6 +54,12 @@ Staff accounts can help system administrators with keeping the information on th
 | Should<br>Have | As staff I want to view automatically generated reports showing statistics about donations per country, solar panels built, and offset carbon emissions, so that I can get better insights into the preferences of householders. |
 | Could Have | As staff, I want to be able to see which country listings were updated least recently so that I can check if there is any updated information available. |
 
+| Priority | Household Owner User Story |
+| :-: | :-- |
+| Must<br>Be | Able to login in case of a returning user or register himself in case of a new user. For registration, we can make use of SSO(Google, Facebook, Github) |
+| Must<br>Be | As a household owner, he/she must be able to compare carbon benefits for different countries available against his/her own country's carbon footprint |
+
+
 ## Architecture Technology Choices
 
 - Front-end
