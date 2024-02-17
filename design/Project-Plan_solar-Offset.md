@@ -46,6 +46,11 @@ Staff accounts can help system administrators with keeping the information on th
 
 ## User Stories
 
+| Priority | System Administrator User Story |
+| :-: | :-- |
+| Must<br>Have | As a system administrator, I want to use a dashboard to be able to manage, modify, and delete user accounts that have registered for solar Offset so that I can udpate potentially incorrect information and take action against abusive or otherwise disruptive users. |
+| Must<br>Have | As a system administrator, I want to be able to upgrade householder user accounts to staff accounts and be able to downgrade them so that I can designate users that can help with the upkeep of solar Offset, but be able to take away their priviliges if necessary. |
+
 | Priority | Staff User Story |
 | :-: | :-- |
 | Must<br>Have | As staff, I want to add a new country to the listing where I can add current carbon emissions for electricity, electricity availablility, cost of solar panels, potential solar energy generation, population size, benefit to the communities, and a realistic textual description of the country, so that householders can make informed decisions about where they want to donate to solar energy. |
