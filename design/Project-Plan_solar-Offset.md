@@ -67,8 +67,8 @@ Staff accounts can help system administrators with keeping the information on th
 | Must<br>Have | As a household owner, I want to fund solar power for my country,So that I can reduce my carbon footprint and contribute to renewable energy initiatives. |
 | Should<br>Have | As a householder, I want to be pointed towards a service to calculate my carbon footprint easily and free of charge on my profile, so that I can compare my footprint against my carbon offsets through donations. |
 | Could<br>Have | As a household owner, I want to be able to refer friends and family to make contributions towards solar power projects. (Referal) |
-|Could<br> Have| Achivement Badges for the household owners based on the contribution for reducing the carbon emmsions |
-| Should<br>Have | Maintaining multiple dashboard for comparing each contries contibution for carbom emssion, population, How many household has adapted the practice, the renewable resource available in the each countries and impact on world after adapating conservative techniques |
+|Could<br> Have| As a houshold owner, I should have achivement badges based on the contribution for reducing the carbon emmsions |
+| Should<br>Have | As as househod owner, I must able to see multiple dashboard comparing each contries contibution for carbom emssion, population, How many household has adapted the practice, the resource available in the each countries and impact on world after adapating conservative techniques |
 
 
 
