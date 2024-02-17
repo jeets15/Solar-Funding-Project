@@ -65,6 +65,7 @@ Staff accounts can help system administrators with keeping the information on th
 | Must<br>Be | As a household owner, he/she must be able to compare carbon benefits for different countries available against his/her own country's carbon footprint |
 | Must<br>Have | As a household owner, I want to view my current solar funding and carbon savings,So that I can track my contributions to renewable energy and monitor my environmental impact. |
 | Must<br>Have | As a household owner, I want to fund solar power for my country,So that I can reduce my carbon footprint and contribute to renewable energy initiatives. |
+| Should<br>Have | As a householder, I want to be pointed towards a service to calculate my carbon footprint easily and free of charge on my profile, so that I can compare my footprint against my carbon offsets through donations. |
 | Could<br>Have | As a household owner, I want to be able to refer friends and family to make contributions towards solar power projects. (Referal) |
 
 
