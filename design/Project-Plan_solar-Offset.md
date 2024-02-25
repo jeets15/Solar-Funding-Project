@@ -72,6 +72,7 @@ Staff accounts can help system administrators with keeping the information on th
 | Could<br>Have | As a householder, I want to use SSO (Google/Facebook/Github) to register and login for Solar Offset without having to create a separate account. |
 | Could<br>Have | As a householder, I want to be able to refer friends and family to Solar Offset so that I can spread awareness about offsetting carbon emissions by donating towards solar panel projects in other countries. (Referral) |
 | Would<br>Have | As a householder, I want to receive achievement badges for certain amounts of donations or for donating towards several different projects, so that I can feel accomplished in offseting my carbon footprint and can share my achievements with others. |
+| Must<br>Have | As a householder, Calculate the carbon footprint saving based on the donation amount on homepage. |
 
 
 
