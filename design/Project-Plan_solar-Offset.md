@@ -77,6 +77,7 @@ Staff accounts can help system administrators with keeping the information on th
 | Should<br>Have | As as househod owner, I must able to see multiple dashboard comparing each contries contibution for carbom emssion, population, How many household has adapted the practice, the resource available in the each countries and impact on world after adapating conservative techniques |
 | Must<br>Have | As a householder, I want to be able to view a list of countries along with relevant data that I can donate towards solar projects via Solar Offset, so that I can fund solar electricity generation in other countries and offset my own carbon footprint.<br>Relevant data includes: yearly sun hours, yearly CO2 emissions, average cost of installing a solar panel, fraction of solar energy in country's electricity mix, number of donations made, amount of funds raised, and the potential carbon offset per unit of currency donated |
 | Should<br>Have | As a householder, I want to be pointed towards a service to calculate my carbon footprint easily and free of charge on my profile, so that I can compare my footprint against my carbon offsets through donations. |
+| Must<br>Have | As a householder, Calculate the carbon footprint saving based on the donation amount on homepage. |
 
 
 
