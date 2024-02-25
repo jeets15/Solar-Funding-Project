@@ -54,7 +54,7 @@ Staff accounts can help system administrators with keeping the information on th
 | Priority | System Administrator User Story |
 | :-: | :-- |
 | Must<br> Have | As a system administrator, I want to use a dashboard to view a list of users that are registered for solar Offset and their role (householder or staff). I want to be able to delete a certain user account, so that I can comply with deletion requests and remove users that have been abusive or otherwise disruptive. |
-| Should<br>Have | EITHER:<br>As a system administrator, I want to be able to create staff accounts, so that I can designate users for non user-management processes<br>OR:<br>As a system administrator, I want to be able to change a householder user account to a staff user account, so that this user can support solar Offset in non user-management processes. |
+| Should<br>Have | EITHER:<br>As a system administrator, I want to be able to create staff accounts, so that I can designate users for non user-management processes<br>OR:<br>As a system administrator, I want to be able to change a householder user account to a staff user account, so that this user can support solar Offset in non user-management processes.<br>( or staff accounts will be created manually on the database ) |
 | Could<br>Have | As a system administrator, I want to be able to suspend user accounts (which is reversible), adding a message about why the account was suspended, so that I can take action against abusive or otherwise disruptive users without having to delete their account permanently. |
 
 | Priority | Staff User Story |
