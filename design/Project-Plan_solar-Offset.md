@@ -64,15 +64,14 @@ Staff accounts can help system administrators with keeping the information on th
 
 | Priority | Householder User Story |
 | :-: | :-- |
-| Must<br>Be | Able to login in case of a returning user or register himself in case of a new user. For registration, we can make use of SSO(Google, Facebook, Github) along with legacy login  |
-| Must<br>Be | As a household owner, he/she must be able to compare carbon benefits for different countries available against his/her own country's carbon footprint |
-| Must<br>Have | As a household owner, I want to view my current solar funding and carbon savings,So that I can track my contributions to renewable energy and monitor my environmental impact. |
-| Must<br>Have | As a household owner, I want to fund solar power for my country,So that I can reduce my carbon footprint and contribute to renewable energy initiatives. |
-| Could<br>Have | As a household owner, I want to be able to refer friends and family to make contributions towards solar power projects. (Referal) |
-|Could<br> Have| As a houshold owner, I should have achivement badges based on the contribution for reducing the carbon emmsions |
-| Should<br>Have | As as househod owner, I must able to see multiple dashboard comparing each contries contibution for carbom emssion, population, How many household has adapted the practice, the resource available in the each countries and impact on world after adapating conservative techniques |
-| Must<br>Have | As a householder, I want to be able to view a list of countries along with relevant data that I can donate towards solar projects via Solar Offset, so that I can fund solar electricity generation in other countries and offset my own carbon footprint.<br>Relevant data includes: yearly sun hours, yearly CO2 emissions, average cost of installing a solar panel, fraction of solar energy in country's electricity mix, number of donations made, amount of funds raised, and the potential carbon offset per unit of currency donated |
+| Must<br>Have | As a householder, I want to be able to register for a Solar Offset account, so that I can keep a record of my donations and my carbon offset. |
+| Must<br>Have | As a householder, I want to be able to view a list of countries (along with relevant data) with solar projects that I can donate towards via Solar Offset, so that I can fund solar electricity generation in other countries and offset my own carbon footprint.<br>Relevant data includes: yearly sun hours, yearly CO2 emissions, average cost of installing a solar panel, fraction of solar energy in country's electricity mix, number of donations made, amount of funds raised, and the potential carbon offset per unit of currency donated. |
+| Should<br>Have | As a householder that is interested in using Solar Offset and visiting the home page, I want to be informed about what Solar Offset does and want to see statistics about how other householders have contributed towards funding solar projects in various countries across the world, so that I feel motivated to register for Solar Offset and donate towards solar projects.<br>Potential Statistics include: World map with highlighted countries that can be donated to, number of donations made through Solar Offset, funds collected, number of other householders that have joined Solar Offset, ... |
+| Should<br>Have | As a householder, I want to view my previous donations and other statistics on a dashboard, and compare carbon offsets from donating to different countries and projects to my own carbon footprint, so that I can track my contributions to renewable energy and monitor my environmental impact. |
 | Should<br>Have | As a householder, I want to be pointed towards a service to calculate my carbon footprint easily and free of charge on my profile, so that I can compare my footprint against my carbon offsets through donations. |
+| Could<br>Have | As a householder, I want to use SSO (Google/Facebook/Github) to register and login for Solar Offset without having to create a separate account. |
+| Could<br>Have | As a householder, I want to be able to refer friends and family to Solar Offset so that I can spread awareness about offsetting carbon emissions by donating towards solar panel projects in other countries. (Referral) |
+| Would<br>Have | As a householder, I want to receive achievement badges for certain amounts of donations or for donating towards several different projects, so that I can feel accomplished in offseting my carbon footprint and can share my achievements with others. |
 
 
 
