@@ -60,10 +60,6 @@ Staff accounts can help system administrators with keeping the information on th
 | Priority | Staff User Story |
 | :-: | :-- |
 | Should<br>Have | As staff, I want to view automatically generated reports on a dashboard showing statistics about donations per country, solar panels built, and offset carbon emissions, so that I can get better insights into the preferences of householders. |
-| Must<br>Have | As staff, I want to add a new country to the listing where I can add current carbon emissions for electricity, electricity availablility, cost of solar panels, potential solar energy generation, population size, benefit to the communities, and a realistic textual description of the country, so that householders can make informed decisions about where they want to donate to solar energy. |
-| Must<br>Have | As staff, I want to be able to modify existing country listings so that I can keep them accurate and up to date. |
-| Must<br>Have | As staff, I want to add, update, and delete payment details for donation recepients within a country listing. |
-| Could Have | As staff, I want to be able to see which country listings were updated least recently so that I can check if there is any updated information available. |
 | Would<br>Have | As staff, I want to be able to converse with householders over an interactive chat so that householder questions or issues can be resolved nearly instantaneously. |
 
 | Priority | Householder User Story |
