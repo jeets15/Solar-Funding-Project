@@ -66,16 +66,17 @@ Staff accounts can help system administrators with keeping the information on th
 | Could Have | As staff, I want to be able to see which country listings were updated least recently so that I can check if there is any updated information available. |
 | Would<br>Have | As staff, I want to be able to converse with householders over an interactive chat so that householder questions or issues can be resolved nearly instantaneously. |
 
-| Priority | Household Owner User Story |
+| Priority | Householder User Story |
 | :-: | :-- |
 | Must<br>Be | Able to login in case of a returning user or register himself in case of a new user. For registration, we can make use of SSO(Google, Facebook, Github) along with legacy login  |
 | Must<br>Be | As a household owner, he/she must be able to compare carbon benefits for different countries available against his/her own country's carbon footprint |
 | Must<br>Have | As a household owner, I want to view my current solar funding and carbon savings,So that I can track my contributions to renewable energy and monitor my environmental impact. |
 | Must<br>Have | As a household owner, I want to fund solar power for my country,So that I can reduce my carbon footprint and contribute to renewable energy initiatives. |
-| Should<br>Have | As a householder, I want to be pointed towards a service to calculate my carbon footprint easily and free of charge on my profile, so that I can compare my footprint against my carbon offsets through donations. |
 | Could<br>Have | As a household owner, I want to be able to refer friends and family to make contributions towards solar power projects. (Referal) |
 |Could<br> Have| As a houshold owner, I should have achivement badges based on the contribution for reducing the carbon emmsions |
 | Should<br>Have | As as househod owner, I must able to see multiple dashboard comparing each contries contibution for carbom emssion, population, How many household has adapted the practice, the resource available in the each countries and impact on world after adapating conservative techniques |
+| Must<br>Have | As a householder, I want to be able to view a list of countries along with relevant data that I can donate towards solar projects via Solar Offset, so that I can fund solar electricity generation in other countries and offset my own carbon footprint.<br>Relevant data includes: yearly sun hours, yearly CO2 emissions, average cost of installing a solar panel, fraction of solar energy in country's electricity mix, number of donations made, amount of funds raised, and the potential carbon offset per unit of currency donated |
+| Should<br>Have | As a householder, I want to be pointed towards a service to calculate my carbon footprint easily and free of charge on my profile, so that I can compare my footprint against my carbon offsets through donations. |
 
 
 
