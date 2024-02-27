@@ -25,6 +25,7 @@ test-py:
   stage: test
   script:
     - pip install .
-    - python -m pytest
-    #- coverage run -m pytest
-    #- coverage report
+    - pip install pytest coverage
+    - pytest
+    - coverage run -m pytest
+    - coverage report
