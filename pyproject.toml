@@ -1,0 +1,12 @@
+[project]
+name = "solar_offset"
+version = "0.0.1"
+description = "A Flask-based web application that allows household owners in the UK to donate towards solar energy projects in other countries."
+readme = "README.md"
+dependencies = [
+    "flask",
+]
+
+[build-system]
+requires = ["flit_core<4"]
+build-backend = "flit_core.buildapi"
