@@ -10,8 +10,12 @@
         <meta>
     </head>
     <body>
-        <header>Header Solar Offset</header>
-        <main style="height: 100vh">{% block body %}{% endblock %}</main>
+        <header>
+            <a href="/" style="text-decoration: none; color: black">Solar Offset</a>
+        <button onclick="location.href='/login'" class="btn btn-success">Login</button>
+            <button onclick="location.href='/register'" class="btn btn-outline-success">Register</button>
+        </header>
+        <main style="height: 90vh">{% block body %}{% endblock %}</main>
         <footer></footer>
       <script src="{{ url_for('static', filename='jquery-3.3.1.slim.min.js') }}"></script>
   <script src="{{ url_for('static', filename='popper.min.js') }}"></script>

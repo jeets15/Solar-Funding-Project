@@ -25,7 +25,8 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
-    from .views import householder
+    from .views import householder,admin
     app.register_blueprint(householder.bp)
+    app.register_blueprint(admin.bp)
     
     return app
