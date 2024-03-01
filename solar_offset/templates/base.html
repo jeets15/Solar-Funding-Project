@@ -4,12 +4,17 @@
         <title>Solar Offset - {% block title %}{% endblock %}</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
         <link rel="stylesheet" href="{{ url_for('static', filename='styles_base.css') }}">
+
         <meta>
     </head>
     <body>
         <header>Header Solar Offset</header>
-        <main>{% block body %}{% endblock %}</main>
+        <main style="height: 100vh">{% block body %}{% endblock %}</main>
         <footer></footer>
+      <script src="{{ url_for('static', filename='jquery-3.3.1.slim.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
     </body>
 </html>
