@@ -11,8 +11,8 @@ DROP TABLE IF EXISTS donation;
 CREATE TABLE householder (
     id CHAR(36) PRIMARY KEY, -- Entries to the id column will be generated using uuid.uuid4(), a random 36 character string
     email VARCHAR(70) UNIQUE NOT NULL, -- 70 as an upper limit for e-mail length is already very long
-    password_hash TEXT NOT NULL, -- Password hashes will be generated using werkzeug.security.generate_password_hash and checked with werkzeug.security.check_password_hash
-    display_name VARCHAR(70) NOT NULL -- Display name is how the householder will be adressed
+    display_name VARCHAR(70) NOT NULL, -- Display name is how the householder will be adressed
+    password_hash TEXT NOT NULL -- Password hashes will be generated using werkzeug.security.generate_password_hash and checked with werkzeug.security.check_password_hash
 );
 
 CREATE TABLE staff (
