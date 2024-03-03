@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template,flash
+from solar_offset import get_db
+from werkzeug.security import check_password_hash, generate_password_hash
 
 from solar_offset.db import get_db
 
@@ -29,6 +31,27 @@ def country_list():
 def login():
     return render_template("login.html")
 
-@bp.route("/register")
+@bp.route("/register",methods=["GET","POST"])
 def register():
-    return render_template("register.html")
+    if request.method == 'POST':
+        userid = request.form['userid']
+        email = request.form['emailaddress']
+        password = request.form['password']
+        db = get_db()
+        error = None
+
+        try:
+            db.execute(
+                "INSERT INTO user (username, password) VALUES (?, ?)",
+                (userid, generate_password_hash(password)),
+            )
+            db.commit()
+        except db.IntegrityError:
+            error = f"User {userid} is already registered."
+        else:
+            return redirect(url_for("login"))
+
+        flash(error)
+
+    return render_template('register.html')
+
