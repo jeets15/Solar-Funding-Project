@@ -9,21 +9,21 @@
         <h2>Solar Offset Register Form</h2>
     </div>
     <div>
-        <form style="margin: auto;" id="registerform" onsubmit="return validateFields()" action="/login">
+        <form style="margin: auto;" id="registerform" onsubmit="return validateFields()" action="register" method="post">
             <div class="mb-3 mt-5">
                 <label for="userid" class="form-label">User Id: </label>
-                <input type="text" id="userid" class="form-control " style="margin-bottom: 2.5rem;" autofocus required
+                <input type="text" id="userid" name="userid" class="form-control " style="margin-bottom: 2.5rem;" autofocus required
                        placeholder="Enter user id: ">
             </div>
             <div class="mb-3 mt-5">
                 <label for="emailAddress" class="form-label">Email Address: </label>
-                <input type="email" id="emailAddress" class="form-control " style="margin-bottom: 2.5rem;" autofocus
+                <input type="email" id="emailAddress" name="emailaddress" class="form-control " style="margin-bottom: 2.5rem;" autofocus
                        required placeholder="Enter email address: ">
             </div>
             <div class="mb-3 mt-5" id="passwordfield">
 
                 <label for="password" class="form-label">Password: </label>
-                <input type="password" id="password" class="form-control" style="margin-bottom: 2.5rem;" autofocus
+                <input type="password" id="password" name="password" class="form-control" style="margin-bottom: 2.5rem;" autofocus
                        placeholder="Enter password">
                 <i class="fa-solid fa-eye"></i>
             </div>
