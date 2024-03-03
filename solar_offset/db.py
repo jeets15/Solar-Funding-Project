@@ -4,9 +4,6 @@ import click
 from flask import current_app, g
 
 
-# !! Consider using sql-alchemy since this provides an ORM and is easier to use
-
-
 def get_db():
     if 'db' not in g:
         g.db = sqlite3.connect(
@@ -30,7 +27,6 @@ def init_db():
 
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
-
 
 @click.command('init-db')
 def init_db_command():

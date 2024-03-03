@@ -11,16 +11,13 @@ with open(os.path.join(os.path.dirname(__file__), 'data.sql'), 'rb') as f:
 
 @pytest.fixture
 def app():
-    # Create test database as temporary file
     db_fd, db_path = tempfile.mkstemp()
 
-    # Define testing configuration
     app = create_app({
         'TESTING': True,
         'DATABASE': db_path,
     })
 
-    # Populate database with test data
     with app.app_context():
         init_db()
         get_db().executescript(_data_sql)
