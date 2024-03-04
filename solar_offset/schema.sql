@@ -29,11 +29,12 @@ CREATE TABLE administrator (
 
 CREATE TABLE country (
     country_code CHAR(3) PRIMARY KEY, -- This column will store the ISO 3166-1 A-3 Country code (https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
+    short_code CHAR(2) UNIQUE, -- The two-character country code, useful for various API's
     name TEXT NOT NULL, -- Country Name as displayed to the user
     description TEXT, -- long-ish description about country in relation to solar offset
     solar_hours INTEGER, -- hours of sunlight per year (estimate)
     carbon_emissions INTEGER, -- Yearly carbon emissions (from electricity production ideally) in Tons of CO2
-    solar_panel_price DOUBLE, -- Price for constructing a solar panel in (£)
+    solar_panel_price DOUBLE, -- Price for constructing a solar panel in (£ / kW)
     electricity_mix_percentage DOUBLE -- What percentage of the electricity mix is generated from solar energy
 );
 
