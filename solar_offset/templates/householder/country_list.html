@@ -5,9 +5,9 @@
 {% block body %}
 <h2>Country List</h2>
 {% if countries %}
-<ul>
+<ul class="no-bullet">
     {% for country in countries %}
-    <li>
+    <li class="framed">
         <div>
             <h3>
                 {% if country.short_code %}
@@ -21,15 +21,15 @@
             </h3>
         </div>
         <div>
-            <ul>
-                <li><span>Hours of Sun Per Year</span>: <span>{{ country.solar_hours }}</span></li>
-                <li><span>Carbon Emissions Per Year [tons]</span>: <span>{{ country.carbon_emissions }}</span></li>
-                <li><span>Solar Panel Price (estimate)</span>: <span>{{ country.solar_panel_price }}</span></li>
-                <li><span>Electricty Mix Percentage</span>: <span>{{ country.electricty_mix_percentage }}</span></li>
+            <ul class="list-inline">
+                <li><span class="icon-badge" title="Hours of Sun Per Year"><i class="bi bi-sun"></i>{{ country.solar_hours }}h</span></li>
+                <li><span class="icon-badge" title="Carbon Emissions per Year (in Mega-tons)"><i class="bi bi-clouds"></i>{{ country.carbon_emissions / 1000000.0 }}Mt</span></li>
+                <li><span class="icon-badge" title="Solar Panel Construction Price (£)"><i class="bi bi-currency-pound"></i>{{ country.solar_panel_price }} /kW</span></li>
+                <li><span class="icon-badge" title="Percentage of Solar Energy in Electricity Mix"><i class="bi bi-plug"></i>{{ country.electricity_mix_percentage *100 }}%</span></li>
             </ul>
         </div>
         <div>
-            <ul>
+            <ul class="list-inline">
                 <li><span>0</span> <span>Donations Made</span></li>
                 <li><span>£0</span> <span>Funds Raised</span></li>
             </ul>
