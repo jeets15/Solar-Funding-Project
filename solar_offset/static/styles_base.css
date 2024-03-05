@@ -17,8 +17,24 @@
     border-radius: 4px 4px 0 0;
 }
 
+.text-center {
+    text-align: center;
+}
+
+.fit-tight {
+    width: fit-content;
+}
+
+ul.list-inline {
+    margin-top: 1em;
+}
+
 ul.list-inline > li {
-    display: inline;
+    display: inline-block;
+}
+
+ul.gap-large > li + li {
+    margin-left: 3em;
 }
 
 ul.no-bullet {
