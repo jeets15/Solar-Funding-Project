@@ -34,10 +34,6 @@ ul.list-inline > li {
     margin-top: 0.3em;
 }
 
-ul.gap-large > li + li {
-    margin-left: 3em;
-}
-
 ul.no-bullet {
     list-style-type: none;
     margin: 0;
