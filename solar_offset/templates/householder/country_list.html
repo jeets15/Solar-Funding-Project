@@ -14,9 +14,9 @@
                     <h3>
                         {% if country.short_code %}
                         <!-- Taken from https://flagpedia.net/download/api -->
-                        <img src="https://flagcdn.com/h24/{{country.short_code | lower}}.png" 
-                            srcset="https://flagcdn.com/h48/{{country.short_code | lower}}.png 2x"
-                            height="24"
+                        <img src="https://flagcdn.com/h30/{{country.short_code | lower}}.png" 
+                            srcset="https://flagcdn.com/h60/{{country.short_code | lower}}.png 2x"
+                            height="30"
                             alt="{{country.name}} Flag Icon">
                         {% endif %}
                         {{ country.name }}
