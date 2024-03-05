@@ -4,10 +4,18 @@
 {% block title %}Login{% endblock %}
 {% block body %}
     <div class="text-center mt-5">
+        <div id="flash-messages">
+            {% for message in get_flashed_messages() %}
+                <div class="container text-center">
+                    <div class="p-3 mb-2 text-[12px] text-success">{{ message }}</div>
+                </div>
+                <br>
+            {% endfor %}
+        </div>
         <h2>Solar Offset Login Form</h2>
     </div>
     <div>
-        <form style="margin: auto;" id="loginform" onsubmit="return validateFields()" action="admin" method="post">
+        <form style="margin: auto;" id="loginform" action="login" method="post">
             <div class="mb-3 mt-5">
                 <label for="userid" class="form-label">UserID: </label>
                 <input type="text" id="userid" name="userid" class="form-control " style="margin-bottom: 2.5rem;"
@@ -16,7 +24,8 @@
             <div class="mb-3 mt-5" id="passwordfield">
 
                 <label for="password" class="form-label">Password: </label>
-                <input type="password" id="password" class="form-control" style="margin-bottom: 2.5rem;" autofocus
+                <input type="password" id="password" name="password" class="form-control" style="margin-bottom: 2.5rem;"
+                       autofocus
                        placeholder="Enter password">
                 <i class="fa-solid fa-eye"></i>
                 <div>New User? <a href="/register" target="_blank">Sign Up</a></div>
