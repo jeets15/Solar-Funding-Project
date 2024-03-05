@@ -1,6 +1,8 @@
+from math import floor
 from flask import Blueprint, render_template
 
 from solar_offset.db import get_db
+from solar_offset.util import calc_carbon_offset
 
 bp = Blueprint("householder", __name__)
 
@@ -14,7 +16,6 @@ def about():
 
 @bp.route("/countries")
 def country_list():
-    # TODO Add calculated Potential Carbon Offset for each country
     db = get_db()
     countries = db.execute(
         "SELECT country.*, COUNT(donation_amount) AS donation_count, SUM(donation_amount) AS donation_sum \
@@ -22,7 +23,13 @@ def country_list():
             ON (country.country_code == donation.country_code) \
             GROUP BY country.country_code;"
     ).fetchall()
-    country_dicts = [dict(c) for c in countries]
+
+    country_dicts = []
+    for c_row in countries:
+        cd = dict(c_row)
+        cd["carbon_offset"] = floor(calc_carbon_offset(c_row))
+        country_dicts.append(cd)
+
     return render_template("householder/country_list.html", countries=country_dicts)
 
 @bp.route("/login")
