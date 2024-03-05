@@ -43,6 +43,10 @@ ul.no-bullet {
     padding: 0;
 }
 
+ul.vgap-1 > li + li {
+    margin-top: 1em;
+}
+
 span.icon-badge {
     border: 0.1em solid;
     border-radius: 1em;
