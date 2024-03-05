@@ -31,6 +31,7 @@ ul.list-inline {
 
 ul.list-inline > li {
     display: inline-block;
+    margin-top: 0.3em;
 }
 
 ul.gap-large > li + li {
@@ -47,19 +48,30 @@ ul.vgap-1 > li + li {
     margin-top: 1em;
 }
 
-span.icon-badge {
+li.icon-badge {
     border: 0.1em solid;
     border-radius: 1em;
     padding: 0.3em 0.5em;
-
+    margin: 0.2em;
 }
 
-span.icon-badge > i {
+li.icon-badge > i {
     margin-right: 0.3em;
 
 }
 
+hr.tight {
+    margin: 0em;
+    padding: 0em;
+}
+
 .framed {
     border: 0.1em solid;
+    padding: 0.5em;
+}
+
+.framed-rounded {
+    border: 0.1em solid;
+    border-radius: 1em;
     padding: 0.5em;
 }
