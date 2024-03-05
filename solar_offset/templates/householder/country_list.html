@@ -24,14 +24,24 @@
             <ul class="list-inline">
                 <li><span class="icon-badge" title="Hours of Sun Per Year"><i class="bi bi-sun"></i>{{ country.solar_hours }}h</span></li>
                 <li><span class="icon-badge" title="Carbon Emissions per Year (in Mega-tons)"><i class="bi bi-clouds"></i>{{ country.carbon_emissions / 1000000.0 }}Mt</span></li>
-                <li><span class="icon-badge" title="Solar Panel Construction Price (£)"><i class="bi bi-currency-pound"></i>{{ country.solar_panel_price }} /kW</span></li>
+                <li><span class="icon-badge" title="Solar Panel Construction Price (£ / kW)"><i class="bi bi-currency-pound"></i>{{ country.solar_panel_price }} /kW</span></li>
                 <li><span class="icon-badge" title="Percentage of Solar Energy in Electricity Mix"><i class="bi bi-plug"></i>{{ country.electricity_mix_percentage *100 }}%</span></li>
             </ul>
         </div>
         <div>
-            <ul class="list-inline">
-                <li><span>0</span> <span>Donations Made</span></li>
-                <li><span>£0</span> <span>Funds Raised</span></li>
+            <ul class="list-inline gap-large">
+                <li>
+                    <div class="fit-tight text-center">
+                        <div style="border: 0.1em solid; border-radius: 1em;">0</div>
+                        <div>Donations Made</div>
+                    </div>
+                </li>
+                <li>
+                    <div class="fit-tight text-center">
+                        <div style="border: 0.1em solid; border-radius: 1em;">£0</div>
+                        <div>Solar Funds Raised</div>
+                    </div>
+                </li>
             </ul>
         </div>
     </li>
