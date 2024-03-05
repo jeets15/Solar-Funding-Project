@@ -5,7 +5,7 @@
 {% block body %}
 <h2>Country List</h2>
 {% if countries %}
-<ul class="no-bullet">
+<ul class="no-bullet vgap-1">
     {% for country in countries %}
     <li class="framed">
         <div>
@@ -22,23 +22,23 @@
         </div>
         <div>
             <ul class="list-inline">
-                <li><span class="icon-badge" title="Hours of Sun Per Year"><i class="bi bi-sun"></i>{{ country.solar_hours }}h</span></li>
-                <li><span class="icon-badge" title="Carbon Emissions per Year (in Mega-tons)"><i class="bi bi-clouds"></i>{{ country.carbon_emissions / 1000000.0 }}Mt</span></li>
-                <li><span class="icon-badge" title="Solar Panel Construction Price (£ / kW)"><i class="bi bi-currency-pound"></i>{{ country.solar_panel_price }} /kW</span></li>
-                <li><span class="icon-badge" title="Percentage of Solar Energy in Electricity Mix"><i class="bi bi-plug"></i>{{ country.electricity_mix_percentage *100 }}%</span></li>
+                <li><span class="icon-badge" title="Hours of Sun Per Year"><i class="bi bi-sun"></i>{{ country.solar_hours if country.solar_hours != None else "-/-" }}h</span></li>
+                <li><span class="icon-badge" title="Carbon Emissions per Year (in Mega-tons)"><i class="bi bi-clouds"></i>{{ country.carbon_emissions / 1000000.0 if country.carbon_emissions != None else "-/-"}}Mt</span></li>
+                <li><span class="icon-badge" title="Solar Panel Construction Price (£ / kW)"><i class="bi bi-currency-pound"></i>{{ country.solar_panel_price if country.solar_panel_price != None else "-/-" }} /kW</span></li>
+                <li><span class="icon-badge" title="Percentage of Solar Energy in Electricity Mix"><i class="bi bi-plug"></i>{{ country.electricity_mix_percentage *100 if country.electricity_mix_percentage != None else "-/-" }}%</span></li>
             </ul>
         </div>
         <div>
             <ul class="list-inline gap-large">
                 <li>
                     <div class="fit-tight text-center">
-                        <div style="border: 0.1em solid; border-radius: 1em;">0</div>
+                        <div style="border: 0.1em solid; border-radius: 1em;">{{ country.donation_count if country.donation_count != None else 0 }}</div>
                         <div>Donations Made</div>
                     </div>
                 </li>
                 <li>
                     <div class="fit-tight text-center">
-                        <div style="border: 0.1em solid; border-radius: 1em;">£0</div>
+                        <div style="border: 0.1em solid; border-radius: 1em;">£{{ country.donation_sum if country.donation_sum != None else 0 }}</div>
                         <div>Solar Funds Raised</div>
                     </div>
                 </li>
