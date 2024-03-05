@@ -13,6 +13,12 @@ def home():
     return render_template("householder/home.html")
 
 
+@bp.route("/householder")
+def dashboard():
+    username = session.get('user_id')
+    return render_template("householder/householderdashboard.html", username=username)
+
+
 @bp.route("/about")
 def about():
     return "Hello, About!"
@@ -42,21 +48,38 @@ def login():
         error = None
 
         # If the user is admin, we dont query the db and just check the username
-        if (userid == 'admin'):
-            flash("User login succesfull!", "success")
-            return render_template("./admin/admin.html", username=userid)
         user = db.execute(
             'SELECT * FROM householder WHERE display_name = ?', (userid,)
         ).fetchone()
-        if user is None:
+        admin = db.execute(
+            'SELECT * FROM administrator WHERE username = ?', (userid,)
+        ).fetchone()
+        staff = db.execute(
+            'SELECT * FROM staff WHERE username = ?', (userid,)
+        ).fetchone()
+        if user is None and admin is None and staff is None:
             error = 'Incorrect username.'
-        elif not check_password_hash(user['password_hash'], password):
+        elif user is not None and not check_password_hash(user['password_hash'], password):
             error = 'Incorrect password.'
-        if error is None:
+        elif staff is not None and not check_password_hash(staff['password_hash'], password):
+            error = 'Incorrect password.'
+        elif admin is not None and not check_password_hash(admin['password_hash'], password):
+            error = 'Incorrect password.'
+        if error is None and user is not None:
             session.clear()
-            session['user_id'] = user['id']
+            session['user_id'] = user['display_name']
             flash("User login succesfull!", "success")
-            return render_template("./householder/householderdashboard.html", username=user["display_name"])
+            return redirect(url_for("householder.dashboard"))
+        elif error is None and staff is not None:
+            session.clear()
+            session['staff_id'] = staff['username']
+            flash("Staff login succesfull!", "success")
+            return redirect(url_for("staff.staff"))
+        elif error is None and admin is not None:
+            session.clear()
+            session['admin_id'] = admin['username']
+            flash("Admin login succesfull!", "success")
+            return redirect(url_for("admin.admin"))
         flash(error, "danger")
     return render_template("login.html")
 
@@ -79,8 +102,10 @@ def register():
         except db.IntegrityError:
             error = f"User {userid} is already registered."
         else:
+            session.clear()
+            session['user_id'] = userid
             flash("User registered succesfully!", "success")
-            return render_template("./admin/admin.html", username=userid)
+            return redirect(url_for("householder.dashboard"))
 
         print("Error", error)
 
