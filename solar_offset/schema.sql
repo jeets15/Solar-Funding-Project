@@ -8,23 +8,26 @@ DROP TABLE IF EXISTS organization;
 DROP TABLE IF EXISTS donation;
 
 
-CREATE TABLE householder (
-    id CHAR(36) PRIMARY KEY, -- Entries to the id column will be generated using uuid.uuid4(), a random 36 character string
-    email VARCHAR(70) UNIQUE NOT NULL, -- 70 as an upper limit for e-mail length is already very long
-    display_name VARCHAR(70) NOT NULL, -- Display name is how the householder will be adressed
-    password_hash TEXT NOT NULL -- Password hashes will be generated using werkzeug.security.generate_password_hash and checked with werkzeug.security.check_password_hash
-);
-
-CREATE TABLE staff (
-     id CHAR(36) PRIMARY KEY, -- Entries to the id column will be generated using uuid.uuid4(), a random 36 character string
-     username VARCHAR(70) UNIQUE NOT NULL, -- Unique username that staff will use to log in
-     password_hash TEXT NOT NULL -- Password hashes will be generated using werkzeug.security.generate_password_hash and checked with werkzeug.security.check_password_hash
-);
-
-CREATE TABLE administrator (
-     id CHAR(36) PRIMARY KEY, -- Entries to the id column will be generated using uuid.uuid4(), a random 36 character string
-     username VARCHAR(70) UNIQUE NOT NULL, -- Unique username that administrators will use to log in
-     password_hash TEXT NOT NULL -- Password hashes will be generated using werkzeug.security.generate_password_hash and checked with werkzeug.security.check_password_hash
+CREATE TABLE user (
+    -- id: A unique id for each user; this value should only be used in the back-end or as a session cookie
+    -- Users should normally not have access to this id
+    -- Entries to the id column will be generated using
+    --   uuid.uuid4(), a random 36 character string
+    id TEXT CHECK( LENGTH(id) == 36 ) PRIMARY KEY, 
+    -- email_username: The e-mail address of a registered householder
+    -- internal account types like admin and staff will usually have a username instead of an e-mail
+    -- this column must be unique as users will use e-mail/username to log in to solar offset
+    -- 70 as an upper limit is already very long
+    email_username TEXT CHECK( LENGTH(id) <= 70 ) UNIQUE NOT NULL,
+    -- password_hash: The hashed password that the login will be compared against
+    -- Password hashes will be generated using werkzeug.security.generate_password_hash
+    --   and checked with werkzeug.security.check_password_hash
+    password_hash TEXT NOT NULL,
+    -- display_name: optional entry that will be shown on personalised pages
+    -- usually only used for the householder user type
+    display_name TEXT CHECK( LENGTH(id) <= 70 ),
+    -- user_type: defines which type of user this entry belongs to
+    user_type TEXT CHECK( user_type IN ('admin', 'staff', 'householder') )
 );
 
 CREATE TABLE country (
