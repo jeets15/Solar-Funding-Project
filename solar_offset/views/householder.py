@@ -41,6 +41,10 @@ def country_list():
         return country_dicts
     else:
         return render_template("householder/country_list.html", countries=country_dicts)
+    
+@bp.route("/countries/<country_code>")
+def country(country_code):
+    return country_code
 
 @bp.route("/login")
 def login():
