@@ -11,16 +11,17 @@
         <li class="framed">
             <div style="display: flex;">
                 <div>
-                    <h3>
+                    <a style="color:inherit;" clllllass="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                        href={{ url_for('householder.country', country_code=country.country_code) | lower }}><h3>
                         {% if country.short_code %}
                         <!-- Taken from https://flagpedia.net/download/api -->
-                        <img src="https://flagcdn.com/h30/{{country.short_code | lower}}.png" 
-                            srcset="https://flagcdn.com/h60/{{country.short_code | lower}}.png 2x"
-                            height="30"
+                        <img src="https://flagcdn.com/h40/{{country.short_code | lower}}.png" 
+                            srcset="https://flagcdn.com/h80/{{country.short_code | lower}}.png 2x"
+                            height="40"
                             alt="{{country.name}} Flag Icon">
                         {% endif %}
-                        {{ country.name }}
-                    </h3>
+                        {{ country.name }} ➥
+                    </h3></a>
                 </div>
                 <div style="margin-left: auto;" class="fit-tight text-center framed">
                     <div>{{ country.carbon_offset }}g / 1£ Donated</div>
