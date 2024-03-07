@@ -22,3 +22,5 @@ def test_countries(app, client):
         count_countries = db.execute("SELECT COUNT(country_code) AS code_count \
                                      FROM country;").fetchone()["code_count"]
         assert count_countries == len(r_json)
+
+        ## TODO Once donations are added to the test database, ensure that the donations sum and counts are right
