@@ -1,0 +1,25 @@
+/* projectsstyle.css */
+
+#projectsContainer {
+    background-color: #ffffff;
+    border-radius: 1px;
+    padding: 1px 1px;
+    width: 10%;
+    height: 10%;
+    margin: auto; /* Center the container */
+    position: absolute; /* Position the container */
+    left: 0; /* Align to left side */
+    top: 2%; /* Center vertically */
+
+}
+
+.project-btn {
+    margin-bottom: 5px;
+}
+
+body {
+    background-image: url("../images/spain.jpg");
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+    font-family: Arial, sans-serif; /* Set a font if needed */
+}

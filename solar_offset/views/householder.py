@@ -32,3 +32,7 @@ def login():
 @bp.route("/register")
 def register():
     return render_template("register.html")
+
+@bp.route("/projects")
+def projects():
+    return render_template("householder/projects.html")
