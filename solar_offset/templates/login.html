@@ -3,23 +3,18 @@
 {% extends 'base.html' %}
 {% block title %}Login{% endblock %}
 {% block body %}
+    {% include 'errorflashmessage.html' %}
     <div class="text-center mt-5">
-        <div id="flash-messages">
-            {% for message in get_flashed_messages() %}
-                <div class="container text-center">
-                    <div class="p-3 mb-2 text-[12px] text-success">{{ message }}</div>
-                </div>
-                <br>
-            {% endfor %}
-        </div>
+
         <h2>Solar Offset Login Form</h2>
     </div>
     <div>
         <form style="margin: auto;" id="loginform" action="login" method="post">
             <div class="mb-3 mt-5">
-                <label for="userid" class="form-label">UserID: </label>
-                <input type="text" id="userid" name="userid" class="form-control " style="margin-bottom: 2.5rem;"
-                       autofocus required placeholder="Enter userid: ">
+                <label for="emailusrname" class="form-label">Email/Username: </label>
+                <input type="text" id="emailusrname" name="emailusrname" class="form-control "
+                       style="margin-bottom: 2.5rem;"
+                       autofocus placeholder="Enter email/username: ">
             </div>
             <div class="mb-3 mt-5" id="passwordfield">
 
