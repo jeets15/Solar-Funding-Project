@@ -8,14 +8,7 @@
     <title>Admin</title>
 </head>
 <body>
-<div id="flash-messages">
-    {% for message in get_flashed_messages() %}
-        <div class="container text-center">
-            <div class="p-3 mb-2 text-[12px] text-success">{{ message }}</div>
-        </div>
-        <br>
-    {% endfor %}
-</div>
+{% include 'flashmessage.html' %}
 <div class="text-center">
     <h2>Welcome to Solar Offset Admin DashBoard: {{ adminname }}</h2>
 

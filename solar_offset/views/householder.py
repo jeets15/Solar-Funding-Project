@@ -42,44 +42,37 @@ def country_list():
 def login():
     session.clear()
     if request.method == 'POST':
-        userid = request.form['userid']
+        username = request.form["emailusrname"]
         password = request.form['password']
         db = get_db()
         error = None
 
-        # If the user is admin, we dont query the db and just check the username
         user = db.execute(
-            'SELECT * FROM householder WHERE display_name = ?', (userid,)
+            'SELECT * FROM user WHERE email_username = ?', (username,)
         ).fetchone()
-        admin = db.execute(
-            'SELECT * FROM administrator WHERE username = ?', (userid,)
-        ).fetchone()
-        staff = db.execute(
-            'SELECT * FROM staff WHERE username = ?', (userid,)
-        ).fetchone()
-        if user is None and admin is None and staff is None:
-            error = 'Incorrect username.'
-        elif user is not None and not check_password_hash(user['password_hash'], password):
-            error = 'Incorrect password.'
-        elif staff is not None and not check_password_hash(staff['password_hash'], password):
-            error = 'Incorrect password.'
-        elif admin is not None and not check_password_hash(admin['password_hash'], password):
-            error = 'Incorrect password.'
-        if error is None and user is not None:
+        if user is None:
+            error = 'Incorrect username!!'
+        elif check_password_hash(user['password_hash'], password) == False:
+            error = 'Incorrect password!!'
+        if error is None:
             session.clear()
-            session['user_id'] = user['display_name']
-            flash("User login succesfull!", "success")
-            return redirect(url_for("householder.dashboard"))
-        elif error is None and staff is not None:
-            session.clear()
-            session['staff_id'] = staff['username']
-            flash("Staff login succesfull!", "success")
-            return redirect(url_for("staff.staff"))
-        elif error is None and admin is not None:
-            session.clear()
-            session['admin_id'] = admin['username']
-            flash("Admin login succesfull!", "success")
-            return redirect(url_for("admin.admin"))
+            if (user['display_name'] is not None):
+                session['user_id'] = user['display_name']
+            else:
+                session['user_id'] = user['email_username']
+
+            usertype = user["user_type"]
+
+            if (usertype == "householder"):
+                flash("User login succesfull!", "success")
+                return redirect(url_for("householder.dashboard"))
+            elif (usertype == "staff"):
+                flash("Staff login succesfull!", "success")
+                return redirect(url_for("staff.staff"))
+            else:
+                flash("Admin login succesfull!", "success")
+                return redirect(url_for("admin.admin"))
+
         flash(error, "danger")
     return render_template("login.html")
 
@@ -87,23 +80,34 @@ def login():
 @bp.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == 'POST':
-        userid = request.form['userid']
+        if (request.form['username'] != ""):
+            username = request.form['username']
         email = request.form['emailaddress']
         password = request.form['password']
         db = get_db()
         error = None
-
+        userid = str(uuid4())
         try:
-            db.execute(
-                "INSERT INTO householder (id,email,display_name,password_hash) VALUES (?,?,?,?)",
-                (str(uuid4()), email, userid, generate_password_hash(password)),
-            )
+            if (username != ""):
+                db.execute(
+                    "INSERT INTO user (id, email_username, password_hash, user_type,display_name) VALUES (?,?,?,?,?)",
+                    (userid, email, generate_password_hash(password), "householder", username),
+                )
+            else:
+
+                db.execute(
+                    "INSERT INTO user (id, email_username, password_hash, user_type) VALUES (?,?,?,?)",
+                    (userid, email, generate_password_hash(password), "householder"),
+                )
             db.commit()
         except db.IntegrityError:
-            error = f"User {userid} is already registered."
+            error = f"Email ID: {email} is already registered."
         else:
             session.clear()
-            session['user_id'] = userid
+            if (username != ""):
+                session["user_id"] = username
+            else:
+                session["user_id"] = email
             flash("User registered succesfully!", "success")
             return redirect(url_for("householder.dashboard"))
 

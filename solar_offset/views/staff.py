@@ -5,5 +5,5 @@ bp = Blueprint("staff", __name__)
 
 @bp.route("/staff", methods=["GET", "POST"])
 def staff():
-    staffname = session.get('staff_id')
+    staffname = session.get('user_id')
     return render_template("./staff/staffdashboard.html", staffname=staffname)
