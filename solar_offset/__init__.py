@@ -1,9 +1,7 @@
 import os
 from flask import Flask, url_for
 
-
-# `+++++++` to run the development server
-# TODO `python -m flask --app solar_offset init-db` to create an sqlite database file
+# `python -m flask --app solar_offset run --port 8000 --debug` to run the development server
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)

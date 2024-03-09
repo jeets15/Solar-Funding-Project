@@ -1,9 +1,12 @@
 from flask import Blueprint, render_template, flash, request, session, redirect, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 from solar_offset.db import get_db
+from solar_offset.util import calc_carbon_offset
+
+from math import floor
+from uuid import uuid4
 
 bp = Blueprint("householder", __name__)
-from uuid import uuid4
 
 
 @bp.route("/")
@@ -24,16 +27,35 @@ def about():
 
 @bp.route("/countries")
 def country_list():
-    # TODO Add calculated Potential Carbon Offset for each country
     db = get_db()
     countries = db.execute(
         "SELECT country.*, COUNT(donation_amount) AS donation_count, SUM(donation_amount) AS donation_sum \
             FROM country LEFT JOIN donation \
             ON (country.country_code == donation.country_code) \
-            GROUP BY country.country_code;"
+            GROUP BY country.country_code \
+            ORDER BY country.name ASC;"
     ).fetchall()
-    country_dicts = [dict(c) for c in countries]
-    return render_template("householder/country_list.html", countries=country_dicts)
+
+    country_dicts = []
+    for c_row in countries:
+        cd = dict(c_row)
+        if not cd["donation_sum"]:
+            cd["donation_sum"] = 0
+        cd["carbon_offset"] = floor(calc_carbon_offset(c_row))
+        country_dicts.append(cd)
+
+    if "raw" in request.args:
+        for cd in country_dicts:
+            cd.pop("description")
+            cd.pop("electricty_consumption")
+            cd.pop("short_code")
+        return country_dicts
+    else:
+        return render_template("householder/country_list.html", countries=country_dicts)
+    
+@bp.route("/countries/<country_code>")
+def country(country_code):
+    return country_code
 
 
 @bp.route("/login", methods=["GET", "POST"])
