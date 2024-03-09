@@ -15,7 +15,7 @@ def home():
 
 @bp.route("/householder")
 def dashboard():
-    username = session.get('user_id')
+    username = session.get('username')
     return render_template("householder/householderdashboard.html", username=username)
 
 
@@ -56,10 +56,11 @@ def login():
             error = 'Incorrect password!!'
         if error is None:
             session.clear()
+            session['user_id'] = user['id']
             if (user['display_name'] is not None):
-                session['user_id'] = user['display_name']
+                session['username'] = user['display_name']
             else:
-                session['user_id'] = user['email_username']
+                session['username'] = user['email_username']
 
             usertype = user["user_type"]
 
@@ -104,10 +105,11 @@ def register():
             error = f"Email ID: {email} is already registered."
         else:
             session.clear()
+            session["user_id"] = userid
             if (username != ""):
-                session["user_id"] = username
+                session["username"] = username
             else:
-                session["user_id"] = email
+                session["username"] = email
             flash("User registered succesfully!", "success")
             return redirect(url_for("householder.dashboard"))
 
