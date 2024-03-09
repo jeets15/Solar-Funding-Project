@@ -1,8 +1,6 @@
 
 -- Drop all tables to reset DB
-DROP TABLE IF EXISTS householder;
-DROP TABLE IF EXISTS staff;
-DROP TABLE IF EXISTS administrator;
+DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS country;
 DROP TABLE IF EXISTS organization;
 DROP TABLE IF EXISTS donation;

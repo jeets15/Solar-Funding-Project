@@ -17,4 +17,4 @@ VALUES ("8b1a1136-0024-477f-9e29-cb7266cb46d6", "admin1@12",
 INSERT INTO user (id, email_username, password_hash, user_type)
 VALUES ("ed8425f7-8313-4382-9d7d-2b061eb890c5", "staff3881@hhrs",
         "scrypt:32768:8:1$oXJ7HMTqbUOnRQ51$4f70127d583052d1195fed4d00a1ba879b44d4c203173d2fa890d1f2f217ad5abc398ff31dac9415d51c4beb5035a5ad8034fce57afb3820a0d28c71b0f89b51",
-        "staff") -- Password = "staff@29r83910"
+        "staff"); -- Password = "staff@29r83910"
