@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Solar Offset - {% block title %}{% endblock %}</title>
+    <title>SolarSave - {% block title %}{% endblock %}</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
@@ -10,13 +10,63 @@
     <meta>
 </head>
 <body>
-<header>
-    <a href="/" style="text-decoration: none; color: black">Solar Offset</a>
-    <button onclick="location.href='/login'" class="btn btn-success">Login</button>
-    <button onclick="location.href='/register'" class="btn btn-outline-success">Register</button>
-</header>
+
+<!-- Header Section -->
+<div class="popover-header">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-2">
+
+        <!-- Company Logo -->
+        <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
+           style="font-size: xx-large">
+            SolarSave
+        </a>
+
+        <!-- Navigation Bar -->
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a onclick="location.href='/householder/home'" class="nav-link px-2 link-secondary"
+                   style="font-size: large">Home</a></li>
+            <li><a onclick="location.href='/householder/home'" class="nav-link px-2 link-dark" style="font-size: large">Donate</a>
+            </li>
+            <li><a onclick="location.href='/householder/home'" class="nav-link px-2 link-dark" style="font-size: large">Contact</a>
+            </li>
+            <li><a onclick="location.href='/householder/home'" class="nav-link px-2 link-dark" style="font-size: large">FAQs</a>
+            </li>
+            <li><a onclick="location.href='/householder/home'" class="nav-link px-2 link-dark" style="font-size: large">About</a>
+            </li>
+        </ul>
+
+        <!-- Login & Register Section -->
+        <div class="col-md-3 text-end">
+            <button onclick="location.href='/login'" type="button" class="btn btn-outline-dark me-2 px-4">Login</button>
+            <button onclick="location.href='/register'" type="button" class="btn btn-outline-warning px-3">Sign up
+            </button>
+        </div>
+    </header>
+</div>
+
+<!-- Main Section -->
 <main style="height: 90vh">{% block body %}{% endblock %}</main>
-<footer></footer>
+
+<!-- Footer Section -->
+<div class="footer">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+
+        <!-- Company Trademark Section -->
+        <div class="col-md-4 d-flex align-items-center">
+            <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+            </a>
+            <span class="text-muted">© 2024 SolarSave</span>
+        </div>
+
+        <!-- Social media section -->
+        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+            <li class="ms-3"><a class="text-muted" href="#"></a></li>
+            <li class="ms-3"><a class="text-muted" href="#"></a></li>
+            <li class="ms-3"><a class="text-muted" href="#"></a></li>
+        </ul>
+    </footer>
+</div>
+
 <script src="{{ url_for('static', filename='jquery-3.3.1.slim.min.js') }}"></script>
 <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
 <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
