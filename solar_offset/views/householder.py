@@ -1,9 +1,7 @@
-from flask import Flask, Blueprint, render_template, flash, request, session, redirect, url_for
+from flask import Blueprint, render_template, flash, request, session, redirect, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 from solar_offset.db import get_db
 
-app = Flask(__name__)
-app.secret_key = 'hkekekkwlbmvjtj'
 bp = Blueprint("householder", __name__)
 from uuid import uuid4
 
