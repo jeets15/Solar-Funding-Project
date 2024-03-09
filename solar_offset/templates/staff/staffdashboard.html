@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="../static/js/admin.js" defer></script>
+    <script src="../static/js/staff.js" defer></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles_base.css') }}">
     <title>Admin</title>
@@ -10,7 +10,7 @@
 <body>
 {% include 'flashmessage.html' %}
 <div class="text-center">
-    <h2>Welcome to Solar Offset Admin DashBoard: {{ adminname }}</h2>
+    <h2>Welcome to Solar Offset Staff DashBoard: {{ staffname }}</h2>
 
     <button onclick="location.href='/login'" class="btn btn-success">Logout</button>
 </div>
