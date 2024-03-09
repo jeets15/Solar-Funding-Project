@@ -5,5 +5,5 @@ bp = Blueprint("admin", __name__)
 
 @bp.route("/admin", methods=["GET", "POST"])
 def admin():
-    adminname = session.get('user_id')
+    adminname = session.get('username')
     return render_template("./admin/admin.html", adminname=adminname)
