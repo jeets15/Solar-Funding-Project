@@ -4,7 +4,7 @@ bp = Blueprint("householder", __name__)
 
 @bp.route("/")
 def home():
-    return render_template("householder/home.html")
+    return render_template("/home.html")
 
 @bp.route("/about")
 def about():

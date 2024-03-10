@@ -38,7 +38,7 @@
         <!-- Login & Register Section -->
         <div class="col-md-3 text-end">
             <button onclick="location.href='/login'" type="button" class="btn btn-outline-dark me-2 px-4">Login</button>
-            <button onclick="location.href='/register'" type="button" class="btn btn-outline-warning px-3">Sign up
+            <button onclick="location.href='/register'" type="button" class="btn btn-outline-success px-3">Sign up
             </button>
         </div>
     </header>
@@ -48,24 +48,22 @@
 <main style="height: 90vh">{% block body %}{% endblock %}</main>
 
 <!-- Footer Section -->
-<div class="footer">
-    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+<footer class="footer d-flex flex-wrap justify-content-between align-items-center py-3 my-3 border-top">
 
-        <!-- Company Trademark Section -->
-        <div class="col-md-4 d-flex align-items-center">
-            <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
-            </a>
-            <span class="text-muted">© 2024 SolarSave</span>
-        </div>
+    <!-- Company Trademark Section -->
+    <div class="col-md-4 d-flex align-items-center">
+        <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+        </a>
+        <span class="text-muted">© 2024 SolarSave</span>
+    </div>
 
-        <!-- Social media section -->
-        <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-            <li class="ms-3"><a class="text-muted" href="#"></a></li>
-            <li class="ms-3"><a class="text-muted" href="#"></a></li>
-            <li class="ms-3"><a class="text-muted" href="#"></a></li>
-        </ul>
-    </footer>
-</div>
+    <!-- Social media section -->
+    <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+        <li class="ms-3"><a class="text-muted" href="#"></a></li>
+        <li class="ms-3"><a class="text-muted" href="#"></a></li>
+        <li class="ms-3"><a class="text-muted" href="#"></a></li>
+    </ul>
+</footer>
 
 <script src="{{ url_for('static', filename='jquery-3.3.1.slim.min.js') }}"></script>
 <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
