@@ -41,7 +41,7 @@ def init_db_command(files):
     init_db()
     click.echo('Initialized the database.')
     if files:
-        click.echo('Executing script sql scripts...')
+        click.echo('Executing sql scripts...')
         for f in files:
             db_executescript(f)
         click.echo('Success.')
