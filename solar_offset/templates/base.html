@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <meta>
 </head>
-<body>
+<body style="min-height: 100vh; display: flex; flex-direction: column">
 
 <!-- Header Section -->
 <div class="popover-header">
@@ -45,7 +45,7 @@
 </div>
 
 <!-- Main Section -->
-<main style="height: 90vh">{% block body %}{% endblock %}</main>
+<main style="flex: 1; overflow-y: auto">{% block body %}{% endblock %}</main>
 
 <!-- Footer Section -->
 <footer class="footer d-flex flex-wrap justify-content-between align-items-center py-3 my-3 border-top">
