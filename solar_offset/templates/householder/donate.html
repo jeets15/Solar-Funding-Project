@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block body %}
+<div style="max-width: 50em; min-width: 20em; margin: 1em auto; padding: 1em;">
+    <h3 style="text-align: center;">
+        Donate to {{ organization.name }}
+        <br>({{ country.name }})
+    </h3>
+    <form id="form-donate" action="donate" method="post" style="max-width: 20em; margin: 0 auto;">
+        <input type="hidden" id="organization_slug" name="organization_slug" value="{{ organization.name_slug }}">
+        <input type="hidden" id="country_code" name="country_code" value="{{ organization.country_code }}">
+        <div>
+            <label for="donation_amount" class="form-label">Donation Amount</label>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                <span class="input-group-text">£</span>
+                </div>
+                <input type="number" min="1" step="1" class="form-control" id="donation_amount" name="donation_amount"
+                    aria-label="Amount (to the nearest GB pound)"
+                    pattern=" 0+\.[0-9]*[1-9][0-9]*$"
+                    onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57">
+                    <!-- The onkeypress function ensures that only a certain range of keys can be input (DELETE, BACKSPACE, ENTER, 0-9) -->
+                <div class="input-group-append">
+                <span class="input-group-text">.00</span>
+                </div>
+            </div>
+        </div>
+        <button class="btn-primary" style="width: 100%;">Donate</button>
+    </form>
+</div>
+{% endblock %}
