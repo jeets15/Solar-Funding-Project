@@ -6,12 +6,13 @@ bp = Blueprint("admin", __name__)
 
 @bp.route("/admin", methods=["GET", "POST"])
 def admin():
-    adminname = session.get('username')
-    db = get_db()
-    users = db.execute(
-        'SELECT * FROM user WHERE user_type != ? ', ('admin',)
-    ).fetchall()
-    return render_template("./admin/admin.html", adminname=adminname, users=users)
+    if request.method == "POST":
+        adminname = session.get('username')
+        db = get_db()
+        users = db.execute(
+            'SELECT * FROM user WHERE user_type != ? ', ('admin',)
+        ).fetchall()
+        return render_template("./admin/admin.html", adminname=adminname, users=users)
 
 
 @bp.route('/delete_user', methods=['POST'])
