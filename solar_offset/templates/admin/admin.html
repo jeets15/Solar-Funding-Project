@@ -1,26 +1,20 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Solar Offset - Admin DashBoard</title>
-    <meta charset="UTF-8">
-    <script src="../static/js/admin.js" defer></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles_base.css') }}">
-    <title>Admin</title>
-</head>
-<body>
-{% include 'flashmessage.html' %}
-<div class="text-center">
-    <h2>Welcome to Solar Offset Admin DashBoard: {{ adminname }}</h2>
+<link rel="stylesheet" href="../static/css/homestyle.css">
 
-    <button onclick="location.href='/login'" class="btn btn-success">Logout</button>
-</div>
-<div class="row mt-4
-         align-items-center
-         justify-content-center">
-    <div class="row">
-        <div class="col-12 text-center">
-            <table class="table table-striped table-hover table-bordered table-responsive">
+{% extends 'base.html' %}
+<!-- Title Section -->
+{% block title %}Admin DashBoard{% endblock %}
+
+<!-- Body Section -->
+{% block body %}
+
+    {% include 'flashmessage.html' %}
+    <div class="text-center">
+        <h2>Welcome to Solar Offset Admin DashBoard: {{ adminname }}</h2>
+    </div>
+    <div class="position-relative overflow-hidden m-md-3 text-center">
+        <div class="col-md-6  mx-auto mt-5">
+
+            <table class="table table-striped table-hover table-bordered table-responsive" style="min-height: 20vh;">
                 <thead>
                 <tr>
                     <th scope="col">User Type</th>
@@ -47,9 +41,7 @@
             </table>
         </div>
     </div>
-</div>
-<script src="{{ url_for('static', filename='jquery-3.3.1.slim.min.js') }}"></script>
-<script src="{{ url_for('static', filename='popper.min.js') }}"></script>
-<script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
-</body>
-</html>
+    <script src="{{ url_for('static', filename='jquery-3.3.1.slim.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+{% endblock %}
