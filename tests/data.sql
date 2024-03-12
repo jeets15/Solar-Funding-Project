@@ -12,7 +12,9 @@ VALUES
     -- Password = "staff@29r83910"
     ('_s_', "staff3881@hhrs", NULL, 'ed8425f7-8313-4382-9d7d-2b061eb890c5', 'scrypt:32768:8:1$oXJ7HMTqbUOnRQ51$4f70127d583052d1195fed4d00a1ba879b44d4c203173d2fa890d1f2f217ad5abc398ff31dac9415d51c4beb5035a5ad8034fce57afb3820a0d28c71b0f89b51'),
     -- Password = "admin$219047"
-    ('__a', 'admin1@12', NULL, '8b1a1136-0024-477f-9e29-cb7266cb46d6', 'scrypt:32768:8:1$FnYQbrFKnN0hzMVS$3bd8242911240ebfc967a338f3cb3e656ad2ff9d8f07ea14280a11aec492508bf191880c19fbcbdd8d3f644638f37415c53a61e7432ccbe6a3af011f18555e54');
+    ('__a', 'admin1@12', NULL, '8b1a1136-0024-477f-9e29-cb7266cb46d6', 'scrypt:32768:8:1$FnYQbrFKnN0hzMVS$3bd8242911240ebfc967a338f3cb3e656ad2ff9d8f07ea14280a11aec492508bf191880c19fbcbdd8d3f644638f37415c53a61e7432ccbe6a3af011f18555e54'),
+    -- Password = "staffmin12"
+    ('_sa', 'staffmin12', 'Mark', '4912602e-457a-45fb-90f9-d334606ca434', 'scrypt:32768:8:1$qu3NWpxv1Iob8Vjj$fc897b83583c38c42c543b68671be107673c962842b6c3927c92ad9ccc10a5eabfdd3798b0ce1662f074f9cd3dea62c0f9e8b6212aec24e58d6402bf2035e970');
 
 
 -- Country Codes taken from https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
