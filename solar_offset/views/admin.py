@@ -11,7 +11,7 @@ def admin():
     is_logged_in = True if adminname else False
     print(is_logged_in)
     users = db.execute(
-        'SELECT * FROM user WHERE user_type != ? ', ('admin',)
+        'SELECT * FROM user WHERE user_type != ? ', ('__a',)
     ).fetchall()
     return render_template("./admin/admin.html", adminname=adminname, users=users, is_logged_in=is_logged_in)
 

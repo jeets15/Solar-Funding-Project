@@ -52,7 +52,8 @@ def country_list():
         return country_dicts
     else:
         return render_template("householder/country_list.html", countries=country_dicts)
-    
+
+
 @bp.route("/countries/<country_code>")
 def country(country_code):
     return country_code
@@ -112,13 +113,13 @@ def register():
             if (username != ""):
                 db.execute(
                     "INSERT INTO user (id, email_username, password_hash, user_type,display_name) VALUES (?,?,?,?,?)",
-                    (userid, email, generate_password_hash(password), "householder", username),
+                    (userid, email, generate_password_hash(password), "h__", username),
                 )
             else:
 
                 db.execute(
                     "INSERT INTO user (id, email_username, password_hash, user_type) VALUES (?,?,?,?)",
-                    (userid, email, generate_password_hash(password), "householder"),
+                    (userid, email, generate_password_hash(password), "h__"),
                 )
             db.commit()
         except db.IntegrityError:

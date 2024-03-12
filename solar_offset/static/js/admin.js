@@ -4,11 +4,3 @@ setTimeout(function () {
         flashMessages.style.display = 'none';
     }
 }, 5000);
-
-.table-container{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: auto;
-}
