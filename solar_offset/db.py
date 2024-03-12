@@ -28,11 +28,24 @@ def init_db():
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
+def db_executescript(f):
+    db = get_db()
+    db.executescript(f.read())
+
 @click.command('init-db')
-def init_db_command():
+@click.argument("files", nargs=-1, type=click.File('r'))
+# @click.option('-f', '--file', 'population_script', default=None, type=click.File('r'))
+def init_db_command(files):
     """Clear the existing data and create new tables."""
+    """Optionally, execute a population script to populate the database table with records."""
     init_db()
     click.echo('Initialized the database.')
+    if files:
+        click.echo('Executing sql scripts...')
+        for f in files:
+            db_executescript(f)
+        click.echo('Success.')
+
 
 
 

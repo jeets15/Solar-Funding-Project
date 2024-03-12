@@ -24,7 +24,7 @@ def test_init_db_command(runner, monkeypatch):
         Recorder.called = True
 
     # Replace init_db function with fake one
-    # to test whether this function is actually called witht the command
+    # to test whether this function is actually called with the command
     monkeypatch.setattr('solar_offset.db.init_db', fake_init_db)
     result = runner.invoke(args=['init-db'])
     assert 'Initialized' in result.output

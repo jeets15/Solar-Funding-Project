@@ -1,11 +1,9 @@
 import os
-from flask import Flask,url_for
+from flask import Flask, url_for
 
 # `python -m flask --app solar_offset run --port 8000 --debug` to run the development server
-# TODO `python -m flask --app solar_offset init-db` to create an sqlite database file
 
 def create_app(test_config=None):
-
     app = Flask(__name__, instance_relative_config=True)
     app.config.from_mapping(
         SECRET_KEY='dev',
@@ -25,8 +23,9 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
-    from .views import householder,admin
+    from .views import householder, admin, staff
     app.register_blueprint(householder.bp)
     app.register_blueprint(admin.bp)
-    
+    app.register_blueprint(staff.bp)
+
     return app
