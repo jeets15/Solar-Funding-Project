@@ -92,6 +92,10 @@ def donate():
             ).fetchone() is None:
             return "Specified Organization does not Exist", 400
         donation_amount = request.form["donation_amount"]
+        if not donation_amount.isdigit():
+            return "Donation Amount must be a positive integer", 400
+        else:
+            donation_amount = int(donation_amount)
         if donation_amount < 1 \
             or donation_amount != int(donation_amount):
             return "Donation Amount must be a positive integer", 400
@@ -103,7 +107,8 @@ def donate():
             VALUES (?, ?, ?, ?, ?);",
             [timestamp_now, sess_user_id, country_code, organization_slug, donation_amount]
         )
-        return 200
+        db.commit()
+        return {"success": True}, 200
     
     else:
         organization_slug = request.args.get('orga', None)
