@@ -17,7 +17,8 @@ def home():
 @bp.route("/householder")
 def dashboard():
     username = session.get('username')
-    return render_template("householder/householderdashboard.html", username=username)
+    is_logged_in = True if username else False
+    return render_template("householder/householderdashboard.html", username=username, is_logged_in=is_logged_in)
 
 
 @bp.route("/about")
@@ -85,10 +86,10 @@ def login():
 
             usertype = user["user_type"]
 
-            if (usertype == "householder"):
+            if (usertype == "h__"):
                 flash("User login succesfull!", "success")
                 return redirect(url_for("householder.dashboard"))
-            elif (usertype == "staff"):
+            elif (usertype == "_s_"):
                 flash("Staff login succesfull!", "success")
                 return redirect(url_for("staff.staff"))
             else:

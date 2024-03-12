@@ -1,21 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <script src="../static/js/staff.js" defer></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles_base.css') }}">
-    <title>Admin</title>
-</head>
-<body>
-{% include 'flashmessage.html' %}
-<div class="text-center">
-    <h2>Welcome to Solar Offset Staff DashBoard: {{ staffname }}</h2>
+<link rel="stylesheet" href="../static/css/homestyle.css">
+{% extends 'base.html' %}
+{% block title %}Staff DashBoard{% endblock %}
 
-    <button onclick="location.href='/login'" class="btn btn-success">Logout</button>
-</div>
-<script src="{{ url_for('static', filename='jquery-3.3.1.slim.min.js') }}"></script>
-<script src="{{ url_for('static', filename='popper.min.js') }}"></script>
-<script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
-</body>
-</html>
+{% block body %}
+    {% include 'flashmessage.html' %}
+    <div class="text-center">
+        <h2>Welcome to Solar Offset Staff DashBoard: {{ staffname }}</h2>
+    </div>
+    <script src="{{ url_for('static', filename='jquery-3.3.1.slim.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+{% endblock %}

@@ -6,4 +6,5 @@ bp = Blueprint("staff", __name__)
 @bp.route("/staff", methods=["GET", "POST"])
 def staff():
     staffname = session.get('username')
-    return render_template("./staff/staffdashboard.html", staffname=staffname)
+    is_logged_in = True if staffname else False
+    return render_template("./staff/staffdashboard.html", staffname=staffname, is_logged_in=is_logged_in)
