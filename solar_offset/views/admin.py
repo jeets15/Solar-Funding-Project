@@ -9,11 +9,21 @@ def admin():
     adminname = session.get('username')
     db = get_db()
     is_logged_in = True if adminname else False
+    user_types = ["admin", "householder", "staff"]
     print(is_logged_in)
     users = db.execute(
-        'SELECT * FROM user WHERE user_type != ? ', ('__a',)
+        'SELECT * FROM user WHERE user_type NOT LIKE ? ', ('%a%',)
     ).fetchall()
-    return render_template("./admin/admin.html", adminname=adminname, users=users, is_logged_in=is_logged_in)
+    user_dicts = []
+    for user_row in users:
+        userdict = dict(user_row)
+        if ("h__" in userdict["user_type"]):
+            userdict["user_type"] = "householder"
+        else:
+            userdict["user_type"] = "staff"
+        user_dicts.append(userdict)
+
+    return render_template("./admin/admin.html", adminname=adminname, users=user_dicts, is_logged_in=is_logged_in)
 
 
 @bp.route('/delete_user', methods=['POST'])

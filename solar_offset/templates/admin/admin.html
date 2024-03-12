@@ -28,13 +28,12 @@
                 {% for user in users %}
                     <tr>
                         <td>
-                            {% set user_type = "householder" if user[4] == "h__" else "staff" %}
-                            {{ user_type }}
+                            {{ user["user_type"] }}
 
 
                         </td>
-                        <td>{{ user[0] }}</td>
-                        <td>{{ user[1] }}</td>
+                        <td>{{ user["id"] }}</td>
+                        <td>{{ user["email_username"] }}</td>
                         <td>
                             <form action="/delete_user" method="post">
                                 <input type="hidden" name="user_id" value="{{ user['id'] }}">
