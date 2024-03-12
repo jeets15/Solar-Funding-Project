@@ -17,7 +17,8 @@ def home():
 @bp.route("/householder")
 def dashboard():
     username = session.get('username')
-    return render_template("householder/householderdashboard.html", username=username)
+    is_logged_in = True if username else False
+    return render_template("householder/householderdashboard.html", username=username, is_logged_in=is_logged_in)
 
 
 @bp.route("/about")
@@ -52,7 +53,8 @@ def country_list():
         return country_dicts
     else:
         return render_template("householder/country_list.html", countries=country_dicts)
-    
+
+
 @bp.route("/countries/<country_code>")
 def country(country_code):
     return country_code
@@ -84,10 +86,10 @@ def login():
 
             usertype = user["user_type"]
 
-            if (usertype == "householder"):
+            if (usertype == "h__"):
                 flash("User login succesfull!", "success")
                 return redirect(url_for("householder.dashboard"))
-            elif (usertype == "staff"):
+            elif (usertype == "_s_"):
                 flash("Staff login succesfull!", "success")
                 return redirect(url_for("staff.staff"))
             else:
@@ -112,13 +114,13 @@ def register():
             if (username != ""):
                 db.execute(
                     "INSERT INTO user (id, email_username, password_hash, user_type,display_name) VALUES (?,?,?,?,?)",
-                    (userid, email, generate_password_hash(password), "householder", username),
+                    (userid, email, generate_password_hash(password), "h__", username),
                 )
             else:
 
                 db.execute(
                     "INSERT INTO user (id, email_username, password_hash, user_type) VALUES (?,?,?,?)",
-                    (userid, email, generate_password_hash(password), "householder"),
+                    (userid, email, generate_password_hash(password), "h__"),
                 )
             db.commit()
         except db.IntegrityError:

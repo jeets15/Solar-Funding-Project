@@ -17,7 +17,8 @@
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-2">
 
         <!-- Company Logo -->
-        <a onclick="location.href='/'" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
+        <a onclick="location.href='/'"
+           class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
            style="font-size: xx-large">
             SolarSave
         </a>
@@ -38,9 +39,12 @@
 
         <!-- Login & Register Section -->
         <div class="col-md-3 text-end">
-            <button onclick="location.href='/login'" type="button" class="btn btn-outline-dark me-2 px-4">Login</button>
-            <button onclick="location.href='/register'" type="button" class="btn btn-outline-success px-3">Sign up
-            </button>
+            {% if is_logged_in %}
+                <button onclick="location.href='/login'" class="btn btn-outline-dark me-2 px-4">Logout</button>
+            {% else %}
+                <button onclick="location.href='/login'" class="btn btn-outline-dark me-2 px-4">Login</button>
+                <button onclick="location.href='/register'" class="btn btn-outline-success px-3">Register</button>
+            {% endif %}
         </div>
     </header>
 </div>
@@ -70,4 +74,5 @@
 <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
 <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
 </body>
+
 </html>
