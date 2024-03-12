@@ -38,3 +38,9 @@ VALUES
 INSERT INTO organization (name_slug, country_code, name, details_paypal, details_stripe, description)
 VALUES
     ('antarctica_solar_project', 'ATA', 'Antarctica Solar Project', NULL, NULL, 'This project is completely made up. Nobody lives in antarctica so why would you invest here?');
+
+
+INSERT INTO donation (created, country_code, organization_slug, donation_amount, householder_id)
+VALUES
+    ('2024-03-12 16:15:38.587367', 'ATA', 'antarctica_solar_project', 10, '47fa9dc4-cb7a-44c0-ace2-a65d8705495e'),
+    ('2024-03-12 16:15:49.565309', 'ATA', 'antarctica_solar_project', 5, '47fa9dc4-cb7a-44c0-ace2-a65d8705495e');
