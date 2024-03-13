@@ -5,6 +5,7 @@ DROP TABLE IF EXISTS user_status;
 DROP TABLE IF EXISTS country;
 DROP TABLE IF EXISTS organization;
 DROP TABLE IF EXISTS donation;
+DROP TABLE IF EXISTS projects;
 
 
 CREATE TABLE user (
@@ -72,4 +73,14 @@ CREATE TABLE donation (
     FOREIGN KEY (householder_id) REFERENCES user (id),
     FOREIGN KEY (country_code) REFERENCES organization (country_code),
     FOREIGN KEY (organization_slug) REFERENCES organization (name_slug)
+);
+
+CREATE TABLE projects (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    description TEXT,
+    sites TEXT,
+    status TEXT,
+    country_code TEXT,
+    FOREIGN KEY (country_code) REFERENCES countries(country_code)
 );

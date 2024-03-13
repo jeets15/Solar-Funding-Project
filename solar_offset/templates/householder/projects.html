@@ -3,13 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects</title>
-    <link rel="stylesheet" href="../../static/css/projectsstyle.css">
+    <title>Projects for {{ country_code }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='projectsstyle.css') }}">
 </head>
 <body>
-    <div id="projectsContainer">
-        <h1>Projects</h1>
-        <!-- Your project content can go here -->
+    <h2>Projects for {{ country_code }}</h2>
+    {% if projects %}
+    <div class="project-container">
+        {% for project in projects %}
+        <div class="project">
+            <h3>{{ project.project_name }}</h3> <!-- Adjusted to project.project_name -->
+            <p>{{ project.description }}</p>
+            <p><strong>Status:</strong> {{ project.status }}</p>
+            <p><strong>Budget:</strong> {{ project.budget }}</p> <!-- Added budget -->
+        </div>
+        {% endfor %}
     </div>
+    {% else %}
+    <p>No projects found for this country.</p>
+    {% endif %}
 </body>
 </html>
