@@ -35,29 +35,46 @@ def register():
 
 
 
-@bp.route("/countries/projects")
+@bp.route("/projects")
 def projects():
     # Assuming you want to render projects.html without specific country data
     return render_template("householder/projects.html")
 
-@bp.route('/countries/projects/<country_code>')
+# Sample data for projects
+project_data = {
+    'ESP': [
+        {
+            'project_name': 'Solar Power Plant Installation',
+            'description': 'A project to install a solar power plant in California.',
+            'budget': '$1,000,000',
+            'status': 'Ongoing'
+        },
+        {
+            'project_name': 'Renewable Energy Research Center',
+            'description': 'Establishment of a research center for renewable energy technologies.',
+            'budget': '$500,000',
+            'status': 'Planned'
+        }
+    ],
+    'India': [
+        {
+            'project_name': 'Rural Electrification Initiative',
+            'description': 'Electrification of remote villages using solar energy.',
+            'budget': '₹50,00,000',
+            'status': 'Completed'
+        },
+        {
+            'project_name': 'Smart Cities Project',
+            'description': 'Development of smart cities with renewable energy infrastructure.',
+            'budget': '₹1,000,000,000',
+            'status': 'In Progress'
+        }
+    ]
+}
+
+@bp.route('/projects/<country_code>')
 def projects_by_country(country_code):
-    # Connect to the database
-    db = get_db()
-    cursor = db.cursor()
+    country_projects = project_data.get(country_code)
+    return render_template('householder/projects.html', country_code=country_code, projects=country_projects)
 
-    # Fetch country description from the database
-    cursor.execute("SELECT description FROM countryinfo WHERE country_code = ?", (country_code,))
-    country_description = cursor.fetchone()
-
-    # Fetch projects for the selected country from the database
-    cursor.execute("SELECT name, description, sites, status "
-                   "FROM projects "
-                   "WHERE country_code = ?", (country_code,))
-    projects = cursor.fetchall()
-
-    # Close the database cursor
-    cursor.close()
-
-    return render_template("householder/projects.html", country_code=country_code, projects=projects, country_description=country_description)
 
