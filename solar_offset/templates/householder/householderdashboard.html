@@ -1,0 +1,13 @@
+<link rel="stylesheet" href="../static/css/homestyle.css">
+{% extends 'base.html' %}
+{% block title %}Householder DashBoard{% endblock %}
+
+{% block body %}
+    {% include 'flashmessage.html' %}
+    <div class="text-center">
+        <h2>Welcome to Solar Offset Householder Dashboard: {{ username }}</h2>
+    </div>
+    <script src="{{ url_for('static', filename='jquery-3.3.1.slim.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+{% endblock %}

@@ -3,7 +3,7 @@
     border-radius: 5px;
     padding: 3px 40px;
     width: 30%;
-    height: 120vh;
+    height: 90vh;
 }
 
 body {
@@ -11,59 +11,4 @@ body {
     background-repeat: no-repeat; /* Do not repeat the image */
     background-size: cover;
 
-}
-
-#passwordfield i {
-    right: 37%;
-    bottom: 34%;
-    font-size: 1.2rem;
-    color: #999;
-    cursor: pointer;
-    position: absolute;
-}
-
-#confirmpasswordfield i {
-    right: 37%;
-    bottom: -18%;
-    font-size: 1.2rem;
-    color: #999;
-    cursor: pointer;
-    position: absolute;
-}
-
-.validationrules p {
-    color: #333;
-    font-size: 1rem;
-}
-
-.validationrules .requirement-list {
-    margin-top: 20px;
-}
-
-.requirement-list li {
-    font-size: 1rem;
-    list-style: none;
-    display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-}
-
-.requirement-list li i {
-    width: 20px;
-    color: #aaa;
-    font-size: 0.2rem;
-}
-
-.requirement-list li.valid i {
-    font-size: 1.2rem;
-    color: #28a745;
-}
-
-.requirement-list li span {
-    margin-left: 12px;
-    color: #333;
-}
-
-.requirement-list li.valid span {
-    color: #999;
 }

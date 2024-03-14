@@ -3,49 +3,65 @@
 {% block title %}Country List{% endblock %}
 
 {% block body %}
-<h2>Country List</h2>
-{% if countries %}
-<ul class="no-bullet vgap-1">
-    {% for country in countries %}
-    <li class="framed">
-        <div>
-            <h3>
-                {% if country.short_code %}
-                <!-- Taken from https://flagpedia.net/download/api -->
-                <img src="https://flagcdn.com/h24/{{country.short_code | lower}}.png" 
-                    srcset="https://flagcdn.com/h48/{{country.short_code | lower}}.png 2x"
-                    height="24"
-                    alt="{{country.name}} Flag Icon">
-                {% endif %}
-                {{ country.name }}
-            </h3>
-        </div>
-        <div>
-            <ul class="list-inline">
-                <li><span class="icon-badge" title="Hours of Sun Per Year"><i class="bi bi-sun"></i>{{ country.solar_hours if country.solar_hours != None else "-/-" }}h</span></li>
-                <li><span class="icon-badge" title="Carbon Emissions per Year (in Mega-tons)"><i class="bi bi-clouds"></i>{{ country.carbon_emissions / 1000000.0 if country.carbon_emissions != None else "-/-"}}Mt</span></li>
-                <li><span class="icon-badge" title="Solar Panel Construction Price (£ / kW)"><i class="bi bi-currency-pound"></i>{{ country.solar_panel_price if country.solar_panel_price != None else "-/-" }} /kW</span></li>
-                <li><span class="icon-badge" title="Percentage of Solar Energy in Electricity Mix"><i class="bi bi-plug"></i>{{ country.electricity_mix_percentage *100 if country.electricity_mix_percentage != None else "-/-" }}%</span></li>
-            </ul>
-        </div>
-        <div>
-            <ul class="list-inline gap-large">
-                <li>
-                    <div class="fit-tight text-center">
-                        <div style="border: 0.1em solid; border-radius: 1em;">{{ country.donation_count if country.donation_count != None else 0 }}</div>
-                        <div>Donations Made</div>
-                    </div>
-                </li>
-                <li>
-                    <div class="fit-tight text-center">
-                        <div style="border: 0.1em solid; border-radius: 1em;">£{{ country.donation_sum if country.donation_sum != None else 0 }}</div>
-                        <div>Solar Funds Raised</div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </li>
-    {% endfor %}
-</ul>
-{% endif %}
+<div style="max-width: 50em; mind-width: 20em; margin: 1em auto; padding: 1em;">
+    <h2>Country List</h2>
+    {% if countries %}
+    <ul class="no-bullet vgap-1">
+        {% for country in countries %}
+        <li class="framed">
+            <div style="display: flex;">
+                <div>
+                    <a style="color:inherit;" clllllass="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                        href={{ url_for('householder.country', country_code=country.country_code) | lower }}><h3>
+                        {% if country.short_code %}
+                        <!-- Taken from https://flagpedia.net/download/api -->
+                        <img src="https://flagcdn.com/h40/{{country.short_code | lower}}.png" 
+                            srcset="https://flagcdn.com/h80/{{country.short_code | lower}}.png 2x"
+                            height="40"
+                            alt="{{country.name}} Flag Icon">
+                        {% endif %}
+                        {{ country.name }} ➥
+                    </h3></a>
+                </div>
+                <div style="margin-left: auto;" class="fit-tight text-center framed">
+                    <div>{{ country.carbon_offset }}g / 1£ Donated</div>
+                    <div><b>Potential Carbon Offset</b></div>
+                </div>
+            </div>
+            <div>
+                <ul class="list-inline">
+                    <li class="icon-badge" title="Hours of Sun Per Year"><i class="bi bi-sun"></i>{{ country.solar_hours if country.solar_hours != None else "-/-" }}h</li>
+                    <li class="icon-badge" title="Carbon Emissions per Year (in Mega-tons)"><i class="bi bi-clouds"></i>{{ country.carbon_emissions / 1000000.0 if country.carbon_emissions != None else "-/-"}}Mt</li>
+                    <li class="icon-badge" title="Solar Panel Construction Price (£ / kW)"><i class="bi bi-currency-pound"></i>{{ country.solar_panel_price if country.solar_panel_price != None else "-/-" }} /kW</li>
+                    <li class="icon-badge" title="Percentage of Solar Energy in Electricity Mix"><i class="bi bi-plug"></i>{{ country.electricity_mix_percentage *100 if country.electricity_mix_percentage != None else "-/-" }}%</li>
+                </ul>
+            </div>
+            <div style="display: flex">
+                <div>
+                    <ul class="list-inline">
+                        <li>
+                            <div class="fit-tight text-center framed-rounded">
+                                <div>{{ country.donation_count if country.donation_count != None else 0 }}</div>
+                                <hr class="tight">
+                                <div>Donations Made</div>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="fit-tight text-center framed-rounded">
+                                <div>£{{ country.donation_sum if country.donation_sum != None else 0 }}</div>
+                                <hr class="tight">
+                                <div>Solar Funds Raised</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div style="display:flex; margin-left: auto;">
+                    <a style="margin-top: auto;" class="btn btn-outline-primary" href="#" role="button">Donate Now</a>
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</div>
 {% endblock %}
