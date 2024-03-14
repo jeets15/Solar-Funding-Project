@@ -16,7 +16,6 @@ def donate():
         
         # Fetch user record from database
         db = get_db()
-        print(sess_user_id)
         user_entry = db.execute("SELECT * FROM user WHERE user.id == ?", [sess_user_id]).fetchone()
 
         # Check that the user id exists in the database (could be forged)
