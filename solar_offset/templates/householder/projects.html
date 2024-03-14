@@ -1,19 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Projects for {{ country_code }}</title>
+{% extends 'base.html' %}
+
+{% block title %}Projects for {{ country_code }}{% endblock %}
+
+{% block body %}
     <link rel="stylesheet" href="{{ url_for('static', filename='projectsstyle.css') }}">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-image: url('/static/images/Spain.jpg'); /* Adjust the path to the background image */
-            background-size: cover;
-        }
-    </style>
-</head>
-<body>
+
     <h2>Projects for {{ country_code }}</h2>
     {% if country_description %}
     <div class="country-description">
@@ -39,5 +30,4 @@
     {% else %}
     <p>No projects found for this country.</p>
     {% endif %}
-</body>
-</html>
+{% endblock %}

@@ -1,10 +1,7 @@
 body {
     font-family: Arial, sans-serif;
-}
-
-.country-description {
     background-color: rgba(255, 255, 255, 0.8); /* White background */
-    background-image: url('/static/images/Spain.jpg');
+    background-image: url('../static/images/Spain.jpg'); /* Adjust the path to the background image */
     background-size: cover;
     padding: 20px;
     margin-bottom: 20px;
