@@ -63,7 +63,7 @@ def country(country_code):
 def donate():
     if request.method == 'POST':
         # Ensure that user is logged into a session
-        sess_user_id = session["user_id"]
+        sess_user_id = session.get("user_id", None)
         if sess_user_id is None:
             return "You must be logged in to donate", 401
         
