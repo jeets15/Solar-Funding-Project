@@ -18,6 +18,8 @@ def home():
 def dashboard():
     username = session.get('username')
     is_logged_in = True if username else False
+    if is_logged_in == False:
+        return redirect("/login")
     return render_template("householder/householderdashboard.html", username=username, is_logged_in=is_logged_in)
 
 
