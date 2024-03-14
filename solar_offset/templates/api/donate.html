@@ -3,7 +3,7 @@
         Donate to {{ organization.name }}
         <br>({{ country.name }})
     </h3>
-    <form id="form-donate" action="{{ url_for('householder.donate') }}" method="post" style="max-width: 20em; margin: 0 auto;">
+    <form id="form-donate" action="{{ url_for('api.donate') }}" method="post" style="max-width: 20em; margin: 0 auto;">
         <input type="hidden" id="organization_slug" name="organization_slug" value="{{ organization.name_slug }}">
         <input type="hidden" id="country_code" name="country_code" value="{{ organization.country_code }}">
         <div>
