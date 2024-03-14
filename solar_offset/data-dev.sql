@@ -14,3 +14,9 @@ VALUES
     ('Solaris', 'A project to install a solar power plant in farmlands .', '348', 'Ongoing', 'ESP'),
     ('Rural Electrification Initiative', 'Electrification of remote villages using solar energy.', '54', 'Completed', 'ESP'),
     ('Sunflower Global Ltd', 'Solar panel installation to Govt housing colonies  ', '273', 'Completed', 'ESP');
+
+
+
+INSERT INTO countryinfo (description,country_code)
+VALUES
+    ('Solar power in Spain has grown significantly due to favorable conditions and government support. Abundant sunshine, coupled with investments in solar technology, has led to increased capacity. There''s still potential for further growth, supported by ongoing advancements in technology and favorable policies aimed at increasing renewable energy usage.','ESP');

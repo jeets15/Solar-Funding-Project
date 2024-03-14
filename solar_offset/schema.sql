@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS country;
 DROP TABLE IF EXISTS organization;
 DROP TABLE IF EXISTS donation;
 DROP TABLE IF EXISTS projects;
+DROP TABLE IF EXISTS countryinfo;
 
 
 CREATE TABLE householder (
@@ -71,3 +72,10 @@ CREATE TABLE projects (
     country_code TEXT,
     FOREIGN KEY (country_code) REFERENCES countries(country_code)
 );
+
+CREATE TABLE countryinfo (
+    description TEXT,
+    country_code TEXT,
+    FOREIGN KEY (country_code) REFERENCES countries(country_code)
+);
+
