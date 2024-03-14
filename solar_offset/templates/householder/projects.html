@@ -5,11 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects for {{ country_code }}</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='projectsstyle.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('/static/images/Spain.jpg'); /* Adjust the path to the background image */
+            background-size: cover;
+        }
+    </style>
 </head>
 <body>
     <h2>Projects for {{ country_code }}</h2>
     {% if country_description %}
-    <p>{{ country_description[0] }}</p>
+    <div class="country-description">
+        <p>{{ country_description[0] }}</p>
+    </div>
     {% endif %}
     {% if projects %}
     <div class="project-container">
@@ -20,7 +29,7 @@
             <p><strong>Status:</strong> {{ project.status }}</p>
             <p><strong>Sites:</strong> {{ project.sites }}</p>
             <!-- Add Donate button -->
-            <form action="/donate" method="post">
+            <form class="donate-form" action="/donate" method="post">
                 <input type="hidden" name="project_id" value="{{ project.id }}">
                 <button type="submit">Donate</button>
             </form>
