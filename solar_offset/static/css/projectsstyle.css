@@ -2,10 +2,19 @@ body {
     font-family: Arial, sans-serif;
 }
 
+.country-description {
+    background-color: rgba(255, 255, 255, 0.8); /* White background */
+    background-image: url('/static/images/Spain.jpg');
+    background-size: cover;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
 .project-container {
     display: flex;
-    flex-wrap: wrap; /* Allow projects to wrap to the next line */
+    flex-wrap: wrap;
     justify-content: center;
+    margin-top: 20px;
 }
 
 .project {
@@ -14,7 +23,9 @@ body {
     padding: 10px;
     margin: 10px;
     max-width: 400px;
-    flex: 1; /* Ensure equal width for all projects */
+    flex: 1;
+    background-color: rgba(255, 255, 255, 0.8); /* White background */
+    position: relative;
 }
 
 .project h3 {
@@ -23,4 +34,10 @@ body {
 
 .project p {
     margin: 5px 0;
+}
+
+.donate-form {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
 }
