@@ -146,6 +146,12 @@ from flask import redirect, url_for
 
 @bp.route("/countries/projects/<country_code>")
 def projects_by_country(country_code):
+    # Ensure that user is logged into a session
+    sess_user_id = session.get("user_id")
+    if sess_user_id is None:
+        # Redirect user to the login page
+        return redirect("/login")
+
     db = get_db()
     cursor = db.cursor()
 
