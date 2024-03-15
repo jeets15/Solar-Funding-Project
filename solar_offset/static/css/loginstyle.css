@@ -2,11 +2,11 @@
     margin-bottom: 5px;
 }
 
-body {
-    background-image: url("../images/solar_offset_login_page.jpeg");
-    background-repeat: no-repeat; /* Do not repeat the image */
-    background-size: cover;
 
+.gradient-text {
+    -webkit-background-clip: text; /* For Safari */
+    background-clip: text;
+    color: transparent;
 }
 
 .login-form {
@@ -14,7 +14,7 @@ body {
     max-width: 400px;
     padding: 25px;
     margin: auto;
-    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.7);
     border-radius: 5px;
 
 }
