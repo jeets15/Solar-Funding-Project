@@ -1,10 +1,7 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: rgba(255, 255, 255, 0.8); /* White background */
-    background-image: url('../static/images/Spain.jpg'); /* Adjust the path to the background image */
+    background-image: url("solar_offset/static/images/solar_offset_login_page.jpeg");
+    background-repeat: no-repeat;
     background-size: cover;
-    padding: 20px;
-    margin-bottom: 20px;
 }
 
 .project-container {
@@ -21,7 +18,7 @@ body {
     margin: 10px;
     max-width: 400px;
     flex: 1;
-    background-color: rgba(255, 255, 255, 0.8); /* White background */
+    background-color: rgba(255, 255, 255, 0.8);
     position: relative;
 }
 
