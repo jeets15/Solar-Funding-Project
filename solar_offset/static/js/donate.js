@@ -10,7 +10,11 @@
 <div id="popup-wrapper"></div>
 
 -- Button that will load the popup
-<button class="btn-orga-donate" ajaxref="{{ url_for('api.donate', country='ATA', orga='antarctica_solar_project') }}">Donate Money</button>
+<button
+    class="btn-orga-donate btn btn-outline-primary"
+    ajaxref="{{ url_for('api.donate', country=country.country_code, orga=orga.name_slug) }}">
+    Donate Now
+</button>
 
 -- Load this javascript code file
 {% block scripts %}
@@ -30,7 +34,6 @@ function prepareDonation(donateForm) {
             submitButton.type = "hidden"
         }
         let donationInput = document.getElementById("form-donation-amount");
-        console.log(donationInput)
         if (donationInput) {
             donationInput.readOnly = true;
             // donationInput.setAttribute('readonly', true);

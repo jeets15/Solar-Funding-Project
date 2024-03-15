@@ -70,7 +70,6 @@ def country(country_code):
     country = db.execute("SELECT * FROM country WHERE country_code == ?", [country_code]).fetchone()
     country = dict(country)
     country["descriptions"] = [ d.strip() for d in country["description"].split(r"\n") ]
-    print(country["descriptions"])
 
     # If country doesn't exist in database, redirect to countries view
     if country is None:
