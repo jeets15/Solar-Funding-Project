@@ -61,10 +61,10 @@ def country_list():
 def country(country_code):
     country_code = str(country_code).upper()
     # Ensure that user is logged into a session
-    sess_user_id = session.get("user_id")
-    if sess_user_id is None:
-        # Redirect user to the login page
-        return redirect("/login")
+    # sess_user_id = session.get("user_id")
+    # if sess_user_id is None:
+    #     # Redirect user to the login page
+    #     return redirect("/login")
     
     db = get_db()
     country = db.execute("SELECT * FROM country WHERE country_code == ?", [country_code]).fetchone()
