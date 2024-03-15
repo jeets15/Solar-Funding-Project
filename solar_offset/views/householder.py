@@ -170,6 +170,3 @@ def projects_by_country(country_code):
                            country_code=country_code,
                            projects=projects,
                            country_description=country_description)
-
-
-

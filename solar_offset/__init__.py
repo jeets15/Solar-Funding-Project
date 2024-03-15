@@ -1,5 +1,6 @@
 import os
-from flask import Flask, url_for
+from flask import Flask
+
 
 # `python -m flask --app solar_offset run --port 8000 --debug` to run the development server
 
