@@ -41,7 +41,7 @@
 
         <!-- Login & Register Section -->
         <div class="col-md-3 text-end">
-            {% if is_logged_in %}
+            {% if g.user %}
                 <button onclick="location.href='/login'" class="btn btn-outline-dark me-2 px-4">Logout</button>
             {% else %}
                 <button onclick="location.href='/login'" class="btn btn-outline-dark me-2 px-4">Login</button>
