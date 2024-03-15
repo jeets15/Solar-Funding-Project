@@ -59,7 +59,32 @@ def country_list():
 
 @bp.route("/countries/<country_code>")
 def country(country_code):
-    return country_code
+    country_code = str(country_code).upper()
+    # Ensure that user is logged into a session
+    sess_user_id = session.get("user_id")
+    if sess_user_id is None:
+        # Redirect user to the login page
+        return redirect("/login")
+    
+    db = get_db()
+    country = db.execute("SELECT * FROM country WHERE country_code == ?", [country_code]).fetchone()
+    country = dict(country)
+    country["descriptions"] = [ d.strip() for d in country["description"].split(r"\n") ]
+    print(country["descriptions"])
+
+    # If country doesn't exist in database, redirect to countries view
+    if country is None:
+        return redirect(url_for('householder.country_list'))
+
+    lst_orga = db.execute("SELECT * FROM organization WHERE country_code == ?", [country_code]).fetchall()
+    lst_orga = [ dict(orga) for orga in lst_orga ]
+    for orga in lst_orga:
+        orga["descriptions"] = [ d.strip() for d in orga["description"].split(r"\n") ]
+
+    return render_template(
+        "householder/projects.html",
+        country=country,
+        organizations=lst_orga)
 
 
 @bp.route("/login", methods=["GET", "POST"])
@@ -140,36 +165,5 @@ def register():
         print("Error", error)
 
     return render_template('./register.html')
-
-
-@bp.route("/countries/projects/<country_code>")
-def projects_by_country(country_code):
-    # Ensure that user is logged into a session
-    sess_user_id = session.get("user_id")
-    if sess_user_id is None:
-        # Redirect user to the login page
-        return redirect("/login")
-
-    db = get_db()
-    cursor = db.cursor()
-
-    # Fetch country description from the database
-    cursor.execute("SELECT description FROM countryinfo WHERE country_code = ?", (country_code,))
-    country_description = cursor.fetchone()
-
-    # Fetch projects for the selected country from the database
-    cursor.execute("SELECT name, description, sites, status "
-                   "FROM projects "
-                   "WHERE country_code = ?", (country_code,))
-    projects = cursor.fetchall()
-
-    # Close the database cursor
-    cursor.close()
-
-    return render_template("householder/projects.html",
-                           country_code=country_code,
-                           projects=projects,
-                           country_description=country_description)
-
 
 
