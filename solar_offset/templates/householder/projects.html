@@ -29,11 +29,23 @@
             <p><strong>Status:</strong> {{ orga.status }}</p>
             <p><strong>Sites:</strong> {{ orga.sites }}</p>
             <!-- Add Donate button with styling -->
-            <button
-                class="btn-orga-donate btn btn-outline-primary"
-                ajaxref="{{ url_for('api.donate', country=country.country_code, orga=orga.name_slug) }}">
-                Donate Now
-            </button>
+            <div class="btn-wrapper-donate">
+                {% if g.user %}
+                    {% if 'h' in g.user.user_type %}
+                    <button
+                        class="btn-orga-donate btn btn-outline-primary"
+                        ajaxref="{{ url_for('api.donate', country=country.country_code, orga=orga.name_slug) }}">
+                        Donate Now
+                    </button>
+                    {% else %}
+                    <a class="btn btn-secondary" href="{{ url_for('householder.home') }}">
+                        Only householder accounts can donate!
+                    </a>
+                    {% endif %}
+                {% else %}
+                <span class="framed-rounded">You must <a href="{{ url_for('householder.login') }}">Log In</a> to donate</span>
+                {% endif %}
+            </div>
         </div>
         {% endfor %}
     </div>
