@@ -2,6 +2,9 @@
     margin-bottom: 5px;
 }
 
+body {
+    overflow: hidden !important;
+}
 
 .gradient-text {
     -webkit-background-clip: text; /* For Safari */
