@@ -140,10 +140,6 @@ def register():
     return render_template('./register.html')
 
 
-
-from flask import redirect, url_for
-
-
 @bp.route("/countries/projects/<country_code>")
 def projects_by_country(country_code):
     # Ensure that user is logged into a session
