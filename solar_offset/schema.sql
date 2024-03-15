@@ -1,10 +1,10 @@
-
--- Drop all tables to reset DB
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS user_status;
 DROP TABLE IF EXISTS country;
 DROP TABLE IF EXISTS organization;
 DROP TABLE IF EXISTS donation;
+DROP TABLE IF EXISTS projects;
+DROP TABLE IF EXISTS countryinfo;
 
 
 CREATE TABLE user (
@@ -12,7 +12,7 @@ CREATE TABLE user (
     -- Users should normally not have access to this id
     -- Entries to the id column will be generated using
     --   uuid.uuid4(), a random 36 character string
-    id CHAR(36) CHECK( LENGTH(id) == 36 ) PRIMARY KEY, 
+    id CHAR(36) CHECK( LENGTH(id) == 36 ) PRIMARY KEY,
     -- email_username: The e-mail address of a registered householder
     -- internal account types like admin and staff will usually have a username instead of an e-mail
     -- this column must be unique as users will use e-mail/username to log in to solar offset
@@ -73,3 +73,20 @@ CREATE TABLE donation (
     FOREIGN KEY (country_code) REFERENCES organization (country_code),
     FOREIGN KEY (organization_slug) REFERENCES organization (name_slug)
 );
+
+CREATE TABLE projects (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    name TEXT NOT NULL,
+    description TEXT,
+    sites TEXT,
+    status TEXT,
+    country_code TEXT,
+    FOREIGN KEY (country_code) REFERENCES countries(country_code)
+);
+
+CREATE TABLE countryinfo (
+    description TEXT,
+    country_code TEXT,
+    FOREIGN KEY (country_code) REFERENCES countries(country_code)
+);
+

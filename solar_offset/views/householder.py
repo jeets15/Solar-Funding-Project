@@ -140,3 +140,36 @@ def register():
         print("Error", error)
 
     return render_template('./register.html')
+
+
+@bp.route("/countries/projects/<country_code>")
+def projects_by_country(country_code):
+    # Ensure that user is logged into a session
+    sess_user_id = session.get("user_id")
+    if sess_user_id is None:
+        # Redirect user to the login page
+        return redirect("/login")
+
+    db = get_db()
+    cursor = db.cursor()
+
+    # Fetch country description from the database
+    cursor.execute("SELECT description FROM countryinfo WHERE country_code = ?", (country_code,))
+    country_description = cursor.fetchone()
+
+    # Fetch projects for the selected country from the database
+    cursor.execute("SELECT name, description, sites, status "
+                   "FROM projects "
+                   "WHERE country_code = ?", (country_code,))
+    projects = cursor.fetchall()
+
+    # Close the database cursor
+    cursor.close()
+
+    return render_template("householder/projects.html",
+                           country_code=country_code,
+                           projects=projects,
+                           country_description=country_description)
+
+
+
