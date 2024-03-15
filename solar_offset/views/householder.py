@@ -139,18 +139,14 @@ def register():
 
     return render_template('./register.html')
 
-@bp.route("/countries/projects")
-def projects():
-    # Assuming you want to render projects.html without specific country data
-    return render_template("householder/projects.html")
-
-
-
-
 
 @bp.route("/countries/projects/<country_code>")
 def projects_by_country(country_code):
-    # Connect to the database
+    # Ensure that user is logged into a session
+    sess_user_id = session.get("user_id")
+    if sess_user_id is None:
+        return "You must be logged in to donate", 401
+
     db = get_db()
     cursor = db.cursor()
 
@@ -167,5 +163,10 @@ def projects_by_country(country_code):
     # Close the database cursor
     cursor.close()
 
-    return render_template("householder/projects.html", country_code=country_code, projects=projects, country_description=country_description)
+    return render_template("householder/projects.html",
+                           country_code=country_code,
+                           projects=projects,
+                           country_description=country_description)
+
+
 
