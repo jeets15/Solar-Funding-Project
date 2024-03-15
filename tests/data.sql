@@ -34,12 +34,16 @@ VALUES
     -- Carbon Emissions for 2023 taken from https://app.electricitymaps.com/zone/ES (39.2 Megatons)
     -- Price for Solar Panel taken from https://murciatoday.com/how-much-does-it-cost-to-install-solar-panels-in-spain_1672684-a.html (2000€/kW ~= £1800/kW)
     ('ESP', 'ES', 'Spain', 2445, 39200000, 1800, 0.1617, 259,
-        'Spain (España), or the Kingdom of Spain (Reino de España), is a country located in Southwestern Europe, with parts of its territory in the Atlantic Ocean, the Mediterranean Sea and Africa. It is the largest country in Southern Europe and the fourth-most populous European Union member state. [https://en.wikipedia.org/wiki/Spain]');
+        'Spain (España), or the Kingdom of Spain (Reino de España), is a country located in Southwestern Europe, with parts of its territory in the Atlantic Ocean, the Mediterranean Sea and Africa. It is the largest country in Southern Europe and the fourth-most populous European Union member state. [https://en.wikipedia.org/wiki/Spain]
+        \nSolar power in Spain has grown significantly due to favorable conditions and government support. Abundant sunshine, coupled with investments in solar technology, has led to increased capacity. There''s still potential for further growth, supported by ongoing advancements in technology and favorable policies aimed at increasing renewable energy usage.');
 
 
-INSERT INTO organization (name_slug, country_code, name, details_paypal, details_stripe, description)
+INSERT INTO organization (name_slug, country_code, name, details_paypal, details_stripe, sites, status, description)
 VALUES
-    ('antarctica_solar_project', 'ATA', 'Antarctica Solar Project', NULL, NULL, 'This project is completely made up. Nobody lives in antarctica so why would you invest here?');
+    ('antarctica_solar_project', 'ATA', 'Antarctica Solar Project', NULL, NULL, NULL, NULL, 'This project is completely made up. Nobody lives in antarctica so why would you invest here?'),
+    ('solaris', 'ESP', 'Solaris', NULL, NULL, '348', 'Ongoing', 'A project to install a solar power plant in farmlands .'),
+    ('rural_electrification_initiative', 'ESP', 'Rural Electrification Initiative', NULL, NULL, '54', 'Completed', 'Electrification of remote villages using solar energy.'),
+    ('sunflower_global_ltd', 'ESP', 'Sunflower Global Ltd', NULL, NULL, '273', 'Completed', 'Solar panel installation for Govt housing colonies.');
 
 
 INSERT INTO donation (created, country_code, organization_slug, donation_amount, householder_id)
