@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, flash, request, session, redirect, url_for
+from flask import Blueprint, g, render_template, flash, request, session, redirect, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 from solar_offset.db import get_db
 from solar_offset.util import calc_carbon_offset
@@ -166,4 +166,15 @@ def register():
 
     return render_template('./register.html')
 
+# This function is called before every request is processed by a view
+# Assigns the record of the currently logged in user to g.user
+# Otherwise g.user is None
+# g is a variable that can be used in templates
+@bp.before_app_request
+def load_logged_in_user():
+    user_id = session.get('user_id')
 
+    if user_id is None:
+        g.user = None
+    else:
+        g.user = get_db().execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
