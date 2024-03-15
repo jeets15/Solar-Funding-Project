@@ -10,7 +10,7 @@
 <div id="popup-wrapper"></div>
 
 -- Button that will load the popup
-<button class="btn-orga-donate" ajaxref="{{ url_for('householder.donate', country='ATA', orga='antarctica_solar_project') }}">Donate Money</button>
+<button class="btn-orga-donate" ajaxref="{{ url_for('api.donate', country='ATA', orga='antarctica_solar_project') }}">Donate Money</button>
 
 -- Load this javascript code file
 {% block scripts %}
@@ -22,6 +22,19 @@
 function prepareDonation(donateForm) {
     donateForm.addEventListener("submit", (event) => {
         event.preventDefault();
+        if (document.getElementById("flash-banner")) {
+            document.getElementById("flash-banner").innerHTML = "";
+        }
+        let submitButton = document.getElementById("form-donate-submit");
+        if (submitButton) {
+            submitButton.type = "hidden"
+        }
+        let donationInput = document.getElementById("form-donation-amount");
+        console.log(donationInput)
+        if (donationInput) {
+            donationInput.readOnly = true;
+            // donationInput.setAttribute('readonly', true);
+        }
         let xhr = new XMLHttpRequest();
         xhr.open("POST", donateForm.action, true);
         xhr.onload = () => {
@@ -34,13 +47,14 @@ function prepareDonation(donateForm) {
                             Oh no! We couldn't Process your Donation!<br>Reason: ${xhr.responseText}</div>`;
             }
             let bannerWrapper = document.createElement("div");
+            bannerWrapper.id = "flash-banner";
             bannerWrapper.innerHTML = banner;
-            document.getElementById("popup-wrapper").childNodes[0].prepend(bannerWrapper);
+            document.getElementById("popup-wrapper").firstElementChild.prepend(bannerWrapper);
             setTimeout(() => {
                 document.getElementById("popup-wrapper").innerHTML = "";
             }, 5000);
         };
-        xhr.send();
+        xhr.send(new FormData(donateForm));
     });
 }
 
