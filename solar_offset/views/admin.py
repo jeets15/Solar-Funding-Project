@@ -12,7 +12,6 @@ def admin():
     if is_logged_in == False:
         return redirect("/login")
     user_types = ["admin", "householder", "staff"]
-    print(is_logged_in)
     users = db.execute(
         'SELECT * FROM user WHERE user_type NOT LIKE ? ', ('%a%',)
     ).fetchall()
@@ -24,7 +23,6 @@ def admin():
         userstatusdict = dict(user_row)
         user_status_dict.append(userstatusdict)
 
-    print(user_status_dict)
     user_dicts = []
     for user_row in users:
         userdict = dict(user_row)
@@ -34,7 +32,9 @@ def admin():
             userdict["user_type"] = "staff"
         user_dicts.append(userdict)
 
-    return render_template("./users/admin/admin.html", adminname=adminname, users=user_dicts, is_logged_in=is_logged_in)
+        user_statuses = [item['user_id'] for item in user_status_dict]
+    return render_template("./users/admin/admin.html", adminname=adminname, users=user_dicts, is_logged_in=is_logged_in,
+                           user_status_list=user_statuses)
 
 
 @bp.route('/delete_user', methods=['POST'])
