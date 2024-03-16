@@ -11,14 +11,16 @@ bp = Blueprint("householder", __name__)
 
 @bp.route("/")
 def home():
-    return render_template("home/home.html")
+    return render_template("home.html")
 
 
 @bp.route("/householder")
 def dashboard():
     username = session.get('username')
     is_logged_in = True if username else False
-    return render_template("users/householder/householderdashboard.html", username=username, is_logged_in=is_logged_in)
+    if is_logged_in == False:
+        return redirect("/login")
+    return render_template("householder/householderdashboard.html", username=username, is_logged_in=is_logged_in)
 
 
 @bp.route("/about")
@@ -52,7 +54,7 @@ def country_list():
             cd.pop("short_code")
         return country_dicts
     else:
-        return render_template("users/householder/country_list.html", countries=country_dicts)
+        return render_template("householder/country_list.html", countries=country_dicts)
 
 
 @bp.route("/countries/<country_code>")
@@ -97,7 +99,7 @@ def login():
                 return redirect(url_for("admin.admin"))
 
         flash(error, "danger")
-    return render_template("auth-engine/login.html")
+    return render_template("login.html")
 
 
 @bp.route("/register", methods=["GET", "POST"])
@@ -137,4 +139,34 @@ def register():
 
         print("Error", error)
 
-    return render_template('./auth-engine/register.html')
+    return render_template('./register.html')
+
+
+@bp.route("/countries/projects/<country_code>")
+def projects_by_country(country_code):
+    # Ensure that user is logged into a session
+    sess_user_id = session.get("user_id")
+    if sess_user_id is None:
+        # Redirect user to the login page
+        return redirect("/login")
+
+    db = get_db()
+    cursor = db.cursor()
+
+    # Fetch country description from the database
+    cursor.execute("SELECT description FROM countryinfo WHERE country_code = ?", (country_code,))
+    country_description = cursor.fetchone()
+
+    # Fetch projects for the selected country from the database
+    cursor.execute("SELECT name, description, sites, status "
+                   "FROM projects "
+                   "WHERE country_code = ?", (country_code,))
+    projects = cursor.fetchall()
+
+    # Close the database cursor
+    cursor.close()
+
+    return render_template("householder/projects.html",
+                           country_code=country_code,
+                           projects=projects,
+                           country_description=country_description)

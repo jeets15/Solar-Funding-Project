@@ -1,19 +1,24 @@
-#loginform {
-    background-color: #ffffff;
-    border-radius: 5px;
-    padding: 3px 40px;
-    width: 30%;
-    height: 80%;
-}
-
 #loginbtns {
     margin-bottom: 5px;
 }
 
 body {
-    background-image: url("../../images/solar_offset_login_page.jpeg");
-    background-repeat: no-repeat; /* Do not repeat the image */
-    background-size: cover;
+    overflow: hidden !important;
+}
+
+.gradient-text {
+    -webkit-background-clip: text; /* For Safari */
+    background-clip: text;
+    color: transparent;
+}
+
+.login-form {
+    width: 100%;
+    max-width: 400px;
+    padding: 25px;
+    margin: auto;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 5px;
 
 }
 

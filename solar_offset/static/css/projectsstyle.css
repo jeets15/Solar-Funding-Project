@@ -1,0 +1,37 @@
+body {
+    background-image: url("solar_offset/static/images/solar_offset_login_page.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.project-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.project {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    max-width: 400px;
+    flex: 1;
+    background-color: rgba(255, 255, 255, 0.8);
+    position: relative;
+}
+
+.project h3 {
+    margin-top: 0;
+}
+
+.project p {
+    margin: 5px 0;
+}
+
+.donate-form {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
