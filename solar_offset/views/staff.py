@@ -7,4 +7,4 @@ bp = Blueprint("staff", __name__)
 def staff():
     staffname = session.get('username')
     is_logged_in = True if staffname else False
-    return render_template("./staff/staffdashboard.html", staffname=staffname, is_logged_in=is_logged_in)
+    return render_template("./users/staff/staffdashboard.html", staffname=staffname, is_logged_in=is_logged_in)
