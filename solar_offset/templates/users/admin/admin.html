@@ -1,10 +1,7 @@
 <link rel="stylesheet" href="../static/css/homestyle.css">
 
 {% extends 'base.html' %}
-<!-- Title Section -->
 {% block title %}Admin DashBoard{% endblock %}
-
-<!-- Body Section -->
 {% block body %}
 
     {% include 'flashmessage.html' %}
@@ -39,10 +36,24 @@
                                     <button class="btn btn-success" type="submit">Delete</button>
 
                                 </form>
-                                <form action="/flag-user" method="post">
-                                    <input type="hidden" name="user_id" value="{{ user['id'] }}">
-                                    <button class="btn btn-outline-success" type="submit">Flag</button>
-                                </form>
+                                {% set flag = namespace(found = false) %}
+                                {% for userstatus in user_status if flag.found== false %}
+                                    {% if user["id"] == userstatus["user_id"] %}
+                                        {% set flag.found = true %}
+                                    {% endif %}
+                                {% endfor %}
+                                {% if not flag.found %}
+                                    <form action="/flag-user" method="post">
+                                        <input type="hidden" name="user_id" value="{{ user['id'] }}">
+                                        <button class="btn btn-outline-success" type="submit">Flag</button>
+                                    </form>
+                                {% else %}
+                                    <form action="/unflag-user" method="post">
+                                        <input type="hidden" name="user_id" value="{{ user['id'] }}">
+                                        <button class="btn btn-outline-success" type="submit">Unflag</button>
+                                    </form>
+
+                                {% endif %}
                             </div>
                         </td>
                     </tr>
