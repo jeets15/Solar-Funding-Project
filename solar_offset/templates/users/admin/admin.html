@@ -1,7 +1,11 @@
-<link rel="stylesheet" href="../static/css/homestyle.css">
-
 {% extends 'base.html' %}
+
 {% block title %}Admin DashBoard{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/homestyle.css') }}">
+{% endblock %}
+
 {% block body %}
 
     {% include 'flashmessage.html' %}
@@ -55,7 +59,4 @@
             </table>
         </div>
     </div>
-    <script src="{{ url_for('static', filename='jquery-3.3.1.slim.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
 {% endblock %}

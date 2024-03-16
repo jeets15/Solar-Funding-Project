@@ -4,6 +4,14 @@ ul.nav a {
     color: inherit;
 }
 
+/* Ensure that background is transparent
+    Used for gradient on Page title in header */
+.gradient-text {
+    -webkit-background-clip: text; /* For Safari */
+    background-clip: text;
+    color: transparent;
+}
+
 
 /* Display main content is a fix-width, centered container */
 .main-content-centered {
