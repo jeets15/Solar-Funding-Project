@@ -4,7 +4,6 @@ import json
 from solar_offset.db import get_db
 
 
-# TODO add more test cases
 def test_countries(app, client):
 
     with app.app_context():
