@@ -21,7 +21,7 @@ VALUES ("ed8425f7-8313-4382-9d7d-2b061eb890c5", "staff3881@hhrs",
 
 
 
-INSERT INTO projects (name, description, sites, status, country_code)
+/*INSERT INTO projects (name, description, sites, status, country_code)
 VALUES
     ('Solaris', 'A project to install a solar power plant in farmlands .', '348', 'Ongoing', 'ESP'),
     ('Rural Electrification Initiative', 'Electrification of remote villages using solar energy.', '54', 'Completed', 'ESP'),
@@ -32,4 +32,4 @@ VALUES
 INSERT INTO countryinfo (description,country_code)
 VALUES
     ('Solar power in Spain has grown significantly due to favorable conditions and government support. Abundant sunshine, coupled with investments in solar technology, has led to increased capacity. There''s still potential for further growth, supported by ongoing advancements in technology and favorable policies aimed at increasing renewable energy usage.','ESP');
-
+*/
