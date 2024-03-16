@@ -78,6 +78,6 @@ def donate():
             return "Organization does not exist", 400
         else:
             return render_template(
-                "api/donate.html",
+                "./api/donate.html",
                 country=country,
                 organization=organization)

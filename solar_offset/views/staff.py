@@ -9,4 +9,4 @@ def staff():
     is_logged_in = True if staffname else False
     if is_logged_in == False:
         return redirect("/login")
-    return render_template("./staff/staffdashboard.html", staffname=staffname, is_logged_in=is_logged_in)
+    return render_template("./users/staff/staffdashboard.html", staffname=staffname, is_logged_in=is_logged_in)

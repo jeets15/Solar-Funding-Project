@@ -11,7 +11,7 @@ bp = Blueprint("householder", __name__)
 
 @bp.route("/")
 def home():
-    return render_template("home.html")
+    return render_template("./home/home.html")
 
 
 @bp.route("/householder")
@@ -20,7 +20,7 @@ def dashboard():
     is_logged_in = True if username else False
     if is_logged_in == False:
         return redirect("/login")
-    return render_template("householder/householderdashboard.html", username=username, is_logged_in=is_logged_in)
+    return render_template("./users/householder/householderdashboard.html", username=username, is_logged_in=is_logged_in)
 
 
 @bp.route("/about")
@@ -54,7 +54,7 @@ def country_list():
             cd.pop("short_code")
         return country_dicts
     else:
-        return render_template("householder/country_list.html", countries=country_dicts)
+        return render_template("./users/householder/country_list.html", countries=country_dicts)
 
 
 @bp.route("/countries/<country_code>")
@@ -99,7 +99,7 @@ def login():
                 return redirect(url_for("admin.admin"))
 
         flash(error, "danger")
-    return render_template("login.html")
+    return render_template("./auth-engine/login.html")
 
 
 @bp.route("/register", methods=["GET", "POST"])
@@ -139,7 +139,7 @@ def register():
 
         print("Error", error)
 
-    return render_template('./register.html')
+    return render_template('./auth-engine/register.html')
 
 
 @bp.route("/countries/projects/<country_code>")
@@ -166,7 +166,7 @@ def projects_by_country(country_code):
     # Close the database cursor
     cursor.close()
 
-    return render_template("householder/projects.html",
+    return render_template("./users/householder/projects.html",
                            country_code=country_code,
                            projects=projects,
                            country_description=country_description)
