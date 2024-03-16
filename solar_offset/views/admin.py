@@ -25,7 +25,7 @@ def admin():
             userdict["user_type"] = "staff"
         user_dicts.append(userdict)
 
-    return render_template("./admin/admin.html", adminname=adminname, users=user_dicts, is_logged_in=is_logged_in)
+    return render_template("./users/admin/admin.html", adminname=adminname, users=user_dicts, is_logged_in=is_logged_in)
 
 
 @bp.route('/delete_user', methods=['POST'])
