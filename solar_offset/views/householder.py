@@ -20,7 +20,8 @@ def dashboard():
     is_logged_in = True if username else False
     if is_logged_in == False:
         return redirect("/login")
-    return render_template("./users/householder/householderdashboard.html", username=username, is_logged_in=is_logged_in)
+    return render_template("./users/householder/householderdashboard.html", username=username,
+                           is_logged_in=is_logged_in)
 
 
 @bp.route("/about")
@@ -65,23 +66,23 @@ def country(country_code):
     # if sess_user_id is None:
     #     # Redirect user to the login page
     #     return redirect("/login")
-    
+
     db = get_db()
     country = db.execute("SELECT * FROM country WHERE country_code == ?", [country_code]).fetchone()
     country = dict(country)
-    country["descriptions"] = [ d.strip() for d in country["description"].split(r"\n") ]
+    country["descriptions"] = [d.strip() for d in country["description"].split(r"\n")]
 
     # If country doesn't exist in database, redirect to countries view
     if country is None:
         return redirect(url_for('householder.country_list'))
 
     lst_orga = db.execute("SELECT * FROM organization WHERE country_code == ?", [country_code]).fetchall()
-    lst_orga = [ dict(orga) for orga in lst_orga ]
+    lst_orga = [dict(orga) for orga in lst_orga]
     for orga in lst_orga:
-        orga["descriptions"] = [ d.strip() for d in orga["description"].split(r"\n") ]
+        orga["descriptions"] = [d.strip() for d in orga["description"].split(r"\n")]
 
     return render_template(
-        "householder/projects.html",
+        "./users/householder/projects.html",
         country=country,
         organizations=lst_orga)
 
@@ -165,6 +166,7 @@ def register():
 
     return render_template('./auth-engine/register.html')
 
+
 # This function is called before every request is processed by a view
 # Assigns the record of the currently logged in user to g.user
 # Otherwise g.user is None
@@ -177,6 +179,7 @@ def load_logged_in_user():
         g.user = None
     else:
         g.user = get_db().execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
+
 
 @bp.route("/countries/projects/<country_code>")
 def projects_by_country(country_code):
