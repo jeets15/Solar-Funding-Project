@@ -2,13 +2,17 @@
 
 {% block title %}Country List{% endblock %}
 
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/projectsstyle.css') }}">
+{% endblock %}
+
 {% block body %}
 <div class="main-content-centered">
     <h2>Country List</h2>
     {% if countries %}
     <ul class="no-bullet vgap-1">
         {% for country in countries %}
-        <li class="framed">
+        <li class="framed project">
             <div style="display: flex;">
                 <div>
                     <a style="color:inherit;" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
