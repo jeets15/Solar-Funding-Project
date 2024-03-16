@@ -4,7 +4,11 @@
 
 {% block styles %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/donate.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='projectsstyle.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/projectsstyle.css') }}">
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/donate.js') }}" defer></script>
 {% endblock %}
 
 {% block body %}
@@ -25,7 +29,7 @@
         {% if organizations %}
         <div class="project-container">
             {% for orga in organizations %}
-            <div class="project framed mb-2">
+            <div class="project mb-2">
                 <h3>{{ orga.name }}</h3>
                 {% for desc in orga.descriptions %}
                 <p>{{ desc }}</p>
@@ -57,8 +61,4 @@
         <p>No projects found for this country.</p>
         {% endif %}
     </div>
-{% endblock %}
-
-{% block scripts %}
-<script src="{{ url_for('static', filename='js/donate.js') }}" defer></script>
 {% endblock %}

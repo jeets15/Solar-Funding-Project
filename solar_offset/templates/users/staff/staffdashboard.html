@@ -1,13 +1,14 @@
-<link rel="stylesheet" href="../static/css/homestyle.css">
 {% extends 'base.html' %}
+
 {% block title %}Staff DashBoard{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/homestyle.css') }}">
+{% endblock %}
 
 {% block body %}
     {% include 'flashmessage.html' %}
     <div class="text-center">
         <h2>Welcome to Solar Offset Staff DashBoard: {{ staffname }}</h2>
     </div>
-    <script src="{{ url_for('static', filename='jquery-3.3.1.slim.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
 {% endblock %}

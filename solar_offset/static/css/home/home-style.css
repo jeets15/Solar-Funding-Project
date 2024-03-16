@@ -5,12 +5,6 @@
     border-radius: 5px;
 }
 
-.gradient-text {
-    -webkit-background-clip: text; /* For Safari */
-    background-clip: text;
-    color: transparent;
-}
-
 /* Carousel Style Properties */
 .carousel-image {
     background-size: contain;
@@ -48,7 +42,3 @@
     background-color: darkslategray; /* Sets thumb color */
     border-radius: 50%; /* Creates a round thumb */
 }
-
-
-
-

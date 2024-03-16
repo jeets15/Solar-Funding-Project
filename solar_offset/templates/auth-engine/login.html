@@ -1,7 +1,14 @@
-<link rel="stylesheet" href="../../static/css/auth-engine/login-style.css">
-<script src="../../static/js/auth-engine/login.js" defer></script>
 {% extends 'base.html' %}
 {% block title %}Login{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth-engine/login-style.css') }}">
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/auth-engine/login.js') }}" defer></script>
+{% endblock %}
+
 {% block body %}
     <section class="vh-10">
         <div class="container-fluid">

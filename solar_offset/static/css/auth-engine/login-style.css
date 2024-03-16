@@ -2,16 +2,6 @@
     margin-bottom: 5px;
 }
 
-body {
-    overflow: hidden !important;
-}
-
-.gradient-text {
-    -webkit-background-clip: text; /* For Safari */
-    background-clip: text;
-    color: transparent;
-}
-
 .login-form {
     width: 100%;
     max-width: 400px;
