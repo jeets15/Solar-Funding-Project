@@ -2,10 +2,12 @@
 <html>
 <head>
     <title>SolarSave - {% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/x-icon" href="../static/images/logo/favicon.ico">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles_base.css') }}">
+    <link rel="stylesheet" href="../../static/css/auth-engine/login-style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     {% block styles %}
@@ -16,20 +18,25 @@
 
 <!-- Header Section -->
 <div class="popover-header">
-    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-2">
+    <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
 
         <!-- Company Logo -->
         <a onclick="location.href='/'"
-           class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none"
+           class="d-flex align-items-center col-md-3 text-dark text-decoration-none"
            style="font-size: xx-large">
-            SolarSave
+            <img src="../static/images/logo/logo.png"
+                 alt="Login image" class="" width="60" height="60"/>
+            <span class="gradient-text"
+                  style="background-image: linear-gradient(90deg, darkgreen 0%, darkgoldenrod 100%); font-weight: bolder;
+                  !important;"> Solar Save </span>
         </a>
 
         <!-- Navigation Bar -->
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+        <ul class=" nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a onclick="location.href='/'" class="nav-link px-2 link-secondary"
                    style="font-size: large">Home</a></li>
-            <li><a href="{{ url_for('householder.country_list') }}" class="nav-link px-2 link-dark" style="font-size: large">Donate</a>
+            <li><a href="{{ url_for('householder.country_list') }}" class="nav-link px-2 link-dark"
+                   style="font-size: large">Donate</a>
             </li>
             <li><a onclick="location.href='/'" class="nav-link px-2 link-dark" style="font-size: large">Contact</a>
             </li>
@@ -60,8 +67,8 @@
     <!-- Company Trademark Section -->
     <div class="col-md-4 d-flex align-items-center">
         <a href="/" class="mb-3 me-2 mb-md-0 text-muted text-decoration-none lh-1">
+            <span class="text-muted">© 2024 Solar Save</span>
         </a>
-        <span class="text-muted">© 2024 SolarSave</span>
     </div>
 
     <!-- Social media section -->
