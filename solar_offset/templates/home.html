@@ -1,5 +1,7 @@
 <!-- Import Section -->
 <link rel="stylesheet" href="../static/css/homestyle.css">
+<script src="../static/js/homepage.js" defer></script>
+<script src="../static/js/solar-energy-offset-calculator.js" defer></script>
 
 {% extends 'base.html' %}
 
@@ -45,7 +47,7 @@
                             areas.</p>
                     </div>
                     <div class="col-md-8 carousel-image">
-                        <img class="carousel-image" src="../static/images/Direct_Normal_Irradiation_Map.png"
+                        <img class="carousel-image" src="../static/images/direct-normal-irradiation-map.png"
                              alt="Direct Normal Irradiation Map">
                     </div>
                 </div>
@@ -53,7 +55,7 @@
             <div class="carousel-item">
                 <div class="row">
                     <div class="col-md-8 carousel-image">
-                        <img class="carousel-image" src="../static/images/Global_Horizontal_Irradiation_Map.png"
+                        <img class="carousel-image" src="../static/images/global-horizontal-irradiation-map.png"
                              alt="Global Horizontal Irradiation Map">
                     </div>
                     <div class="col-md-4">
@@ -81,7 +83,7 @@
                             Identify areas for solar power development and promote sustainability.</p>
                     </div>
                     <div class="col-md-8 carousel-image">
-                        <img class="carousel-image" src="../static/images/Photovoltaic_Power_Potential_Map.png"
+                        <img class="carousel-image" src="../static/images/photovoltaic-power-potential-map.png"
                              alt="Photovoltaic Power Potential Map">
                     </div>
                 </div>
@@ -95,6 +97,39 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="sr-only">Next</span>
         </a>
+    </div>
+
+    <!--- Carbon Emission Calculator -->
+    <div class="row p-3 p-md-5 m-md-3 bg-light rounded">
+        <div class="col-md-7">
+            <br>
+            <h2 class="display-4">Photovoltaic Power Potential Map. <span class="text-muted"
+                                                                          style="font-size: xx-large"><br>Gain the intelligence you need to make strategic solar investments.</span>
+            </h2>
+            <p class="gradient-text"
+               style="font-size: x-large; background-image: linear-gradient(90deg, darkblue 0%, deepskyblue 100%);">
+                Support renewable energy initiatives with strategic planning based on our photovoltaic map.
+                Identify areas for solar power development and promote sustainability.</p>
+        </div>
+        <div class="col-md-5 rounded-lg text-center" style="background-color: lightgray;">
+            <br><br>
+            <h2 class="display-3" style="font-size: xxx-large">Offset your footprint, Power the Planet!</h2>
+            <p class="gradient-text"
+               style="font-size: xx-large; background-image: linear-gradient(90deg, darkslategray 0%, green 100%);">
+                Calculate your carbon footprint with our solar donation tool.</p>
+            <input type="range" id="donation-amount-range" min="0" max="1000" value="10">
+            <br><br>
+            <p style="font-size: large; color: brown">What is your estimated amount for donation?</p>
+            <br>
+            <p class="gradient-text"
+               style="font-size: x-large; background-image: linear-gradient(90deg, darkslategray 0%, green 100%);">
+                You'll reduce your carbon footprint by <span id="weight" class="gradient-text"
+                                                             style="font-size: x-large; background-image: linear-gradient(90deg, darkred 0%, brown 100%);"> 1.00 kg CO2 equivalent (0.00 metric tons) </span>
+                by donating <span id="donation-amount" class="gradient-text"
+                                  style="font-size: x-large; background-image: linear-gradient(90deg, darkred 0%, brown 100%);"> £10 </span>.
+            </p>
+            <br>
+        </div>
     </div>
 
 {% endblock %}
