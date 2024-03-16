@@ -1,33 +1,64 @@
 {% extends 'base.html' %}
 
-{% block title %}Projects for {{ country_code }}{% endblock %}
+{% block title %}Projects for {{ country.name }}{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/donate.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='projectsstyle.css') }}">
+{% endblock %}
 
 {% block body %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='projectsstyle.css') }}">
+    <div id="popup-wrapper"></div>
 
-    <h2>Projects for {{ country_code }}</h2>
-    {% if country_description %}
-    <div class="country-description">
-        <p>{{ country_description[0] }}</p>
-    </div>
-    {% endif %}
-    {% if projects %}
-    <div class="project-container">
-        {% for project in projects %}
-        <div class="project framed mb-2">
-            <h3>{{ project.name }}</h3>
-            <p>{{ project.description }}</p>
-            <p><strong>Status:</strong> {{ project.status }}</p>
-            <p><strong>Sites:</strong> {{ project.sites }}</p>
-            <!-- Add Donate button with styling -->
-            <form class="donate-form" action="/donate" method="post">
-                <input type="hidden" name="project_id" value="{{ project.id }}">
-                <button class="btn btn-outline-primary" type="submit">Donate Now</button>
-            </form>
+    <div class="main-content-centered">
+        <a class="lnk-back" href="{{ url_for('householder.country_list') }}">🢀 Back</a>
+
+        <h2>Projects for {{ country.name }}</h2>
+
+        {% if country.descriptions %}
+        <div class="country-description">
+            {% for desc in country.descriptions %}
+            <p>{{ desc }}</p>
+            {% endfor %}
         </div>
-        {% endfor %}
+        {% endif %}
+        {% if organizations %}
+        <div class="project-container">
+            {% for orga in organizations %}
+            <div class="project framed mb-2">
+                <h3>{{ orga.name }}</h3>
+                {% for desc in orga.descriptions %}
+                <p>{{ desc }}</p>
+                {% endfor %}
+                <p><strong>Status:</strong> {{ orga.status }}</p>
+                <p><strong>Sites:</strong> {{ orga.sites }}</p>
+                <!-- Add Donate button with styling -->
+                <div class="btn-wrapper-donate">
+                    {% if g.user %}
+                        {% if 'h' in g.user.user_type %}
+                        <button
+                            class="btn-orga-donate btn btn-outline-primary"
+                            ajaxref="{{ url_for('api.donate', country=country.country_code, orga=orga.name_slug) }}">
+                            Donate Now
+                        </button>
+                        {% else %}
+                        <a class="btn btn-secondary" href="{{ url_for('householder.home') }}">
+                            Only householder accounts can donate!
+                        </a>
+                        {% endif %}
+                    {% else %}
+                    <span class="framed-rounded">You must <a href="{{ url_for('householder.login') }}">Log In</a> to donate</span>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <p>No projects found for this country.</p>
+        {% endif %}
     </div>
-    {% else %}
-    <p>No projects found for this country.</p>
-    {% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/donate.js') }}" defer></script>
 {% endblock %}

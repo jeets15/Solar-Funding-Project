@@ -4,15 +4,15 @@
         <br>({{ country.name }})
     </h3>
     <form id="form-donate" action="{{ url_for('api.donate') }}" method="post" style="max-width: 20em; margin: 0 auto;">
-        <input type="hidden" id="organization_slug" name="organization_slug" value="{{ organization.name_slug }}">
-        <input type="hidden" id="country_code" name="country_code" value="{{ organization.country_code }}">
+        <input type="hidden" id="form-organization-slug" name="organization_slug" value="{{ organization.name_slug }}">
+        <input type="hidden" id="form-country-code" name="country_code" value="{{ organization.country_code }}">
         <div>
-            <label for="donation_amount" class="form-label">Donation Amount</label>
+            <label for="form-donation-amount" class="form-label">Donation Amount</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                 <span class="input-group-text">£</span>
                 </div>
-                <input type="number" min="1" step="1" value="1" class="form-control" id="donation_amount" name="donation_amount"
+                <input type="number" min="1" step="1" value="1" class="form-control" id="form-donation-amount" name="donation_amount"
                     aria-label="Amount (to the nearest GB pound)"
                     pattern=" 0+\.[0-9]*[1-9][0-9]*$"
                     onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57">
@@ -22,6 +22,6 @@
                 </div>
             </div>
         </div>
-        <input type="submit" value="Donate" class="btn btn-primary" style="width: 100%;">
+        <input id="form-donate-submit" type="submit" value="Donate" class="btn btn-primary" style="width: 100%;">
     </form>
 </div>

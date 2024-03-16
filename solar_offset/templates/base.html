@@ -29,7 +29,7 @@
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a onclick="location.href='/'" class="nav-link px-2 link-secondary"
                    style="font-size: large">Home</a></li>
-            <li><a onclick="location.href='/'" class="nav-link px-2 link-dark" style="font-size: large">Donate</a>
+            <li><a href="{{ url_for('householder.country_list') }}" class="nav-link px-2 link-dark" style="font-size: large">Donate</a>
             </li>
             <li><a onclick="location.href='/'" class="nav-link px-2 link-dark" style="font-size: large">Contact</a>
             </li>
@@ -41,7 +41,7 @@
 
         <!-- Login & Register Section -->
         <div class="col-md-3 text-end">
-            {% if is_logged_in %}
+            {% if g.user %}
                 <button onclick="location.href='/login'" class="btn btn-outline-dark me-2 px-4">Logout</button>
             {% else %}
                 <button onclick="location.href='/login'" class="btn btn-outline-dark me-2 px-4">Login</button>

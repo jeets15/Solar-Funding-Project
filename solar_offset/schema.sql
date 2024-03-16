@@ -3,9 +3,6 @@ DROP TABLE IF EXISTS user_status;
 DROP TABLE IF EXISTS country;
 DROP TABLE IF EXISTS organization;
 DROP TABLE IF EXISTS donation;
-DROP TABLE IF EXISTS projects;
-DROP TABLE IF EXISTS countryinfo;
-
 
 CREATE TABLE user (
     -- id: A unique id for each user; this value should only be used in the back-end or as a session cookie
@@ -58,6 +55,8 @@ CREATE TABLE organization (
     description TEXT, -- Optional organization description
     details_paypal TEXT, -- Optional payment details for paypal
     details_stripe TEXT, -- Optional payment details for stripe
+    sites TEXT, -- #TODO what is the purpose of this column?
+    status TEXT, -- #TODO what is the purpose of this column?
     PRIMARY KEY (name_slug, country_code),
     FOREIGN KEY (country_code) REFERENCES country (country_code)
 );
@@ -73,20 +72,3 @@ CREATE TABLE donation (
     FOREIGN KEY (country_code) REFERENCES organization (country_code),
     FOREIGN KEY (organization_slug) REFERENCES organization (name_slug)
 );
-
-CREATE TABLE projects (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    description TEXT,
-    sites TEXT,
-    status TEXT,
-    country_code TEXT,
-    FOREIGN KEY (country_code) REFERENCES countries(country_code)
-);
-
-CREATE TABLE countryinfo (
-    description TEXT,
-    country_code TEXT,
-    FOREIGN KEY (country_code) REFERENCES countries(country_code)
-);
-
