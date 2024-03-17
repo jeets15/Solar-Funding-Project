@@ -4,18 +4,19 @@
 {% block title %}Home{% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/home/home-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home/home-style.css') }}">
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/home/home.js') }}" defer></script>
-<script src="{{ url_for('static', filename='js/solar-offset-calculator/solar-energy-offset-calculator.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/home/home.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/solar-offset-calculator/solar-energy-offset-calculator.js') }}"
+            defer></script>
 {% endblock %}
 
 <!-- Body Section -->
 {% block body %}
 
-{% include 'flashmessage.html' %}
+    {% include 'flashmessage.html' %}
 
     <!--- Main Marketing Banner with donation button --->
     <div class="">
@@ -34,7 +35,8 @@
                     Reduce your carbon footprint by <span class="gradient-text"
                                                           style="background-image: linear-gradient(90deg, darkorange 0%, orangered 100%);"> 1 Kg </span>
                     annually.</p>
-                <a class="btn btn-outline-warning px-5" href="#">Reduce Your Footprint</a>
+                <a class="btn btn-outline-warning px-5" href="{{ url_for('householder.country_list') }}">Reduce Your
+                    Footprint</a>
             </div>
         </div>
     </div>
@@ -137,20 +139,25 @@
                         <div>
                             <img width="30%" height="30%" src="../../static/images/people-fill.svg" alt=""/>
                             <h4 class="fw-bold mb-0 fs-4 text-body-emphasis" style="color: maroon">Users</h4>
-                            <p>Become part of a movement – join the growing community of {{ statistics[0] }} who choose sustainability.</p>
+                            <p>Become part of a movement – join the growing community of {{ statistics[0] }} who choose
+                                sustainability.</p>
                         </div>
                     </div>
                     <div class="col d-flex align-items-start">
                         <div>
                             <img width="30%" height="30%" src="../../static/images/currency.svg" alt=""/>
-                            <h4 class="fw-bold mb-0 fs-4 text-body-emphasis" style="color: maroon">Total Amount Donated</h4>
-                            <p>Your contribution counts! Together we've raised £{{ statistics[3] }} for a cleaner future.</p>
+                            <h4 class="fw-bold mb-0 fs-4 text-body-emphasis" style="color: maroon">Total Amount
+                                Donated</h4>
+                            <p>Your contribution counts! Together we've raised £{{ statistics[3] }} for a cleaner
+                                future.</p>
                         </div>
                     </div>
                     <div class="col d-flex align-items-start">
                         <div>
-                            <img width="30%" height="30%" src="../../static/images/globe-central-south-asia.svg" alt=""/>
-                            <h4 class="fw-bold mb-0 fs-4 text-body-emphasis" style="color: maroon">Reduced Carbon Emission</h4>
+                            <img width="30%" height="30%" src="../../static/images/globe-central-south-asia.svg"
+                                 alt=""/>
+                            <h4 class="fw-bold mb-0 fs-4 text-body-emphasis" style="color: maroon">Reduced Carbon
+                                Emission</h4>
                             <p>Help us reduce carbon emissions by {{ statistics[4] }} a year.</p>
                         </div>
                     </div>
