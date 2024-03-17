@@ -48,5 +48,11 @@ VALUES
 
 INSERT INTO donation (created, country_code, organization_slug, donation_amount, householder_id)
 VALUES
-    ('2024-03-12 16:15:38.587367', 'ATA', 'antarctica_solar_project', 10, '47fa9dc4-cb7a-44c0-ace2-a65d8705495e'),
-    ('2024-03-12 16:15:49.565309', 'ATA', 'antarctica_solar_project', 5, '47fa9dc4-cb7a-44c0-ace2-a65d8705495e');
+    ('2024-01-12 01:15:38.587367', 'ATA', 'antarctica_solar_project', 10, '47fa9dc4-cb7a-44c0-ace2-a65d8705495e'),
+    ('2024-02-01 03:20:49.565309', 'ATA', 'antarctica_solar_project', 5, '47fa9dc4-cb7a-44c0-ace2-a65d8705495e'),
+    ('2023-03-25 04:01:21.346968', 'ATA', 'antarctica_solar_project', 35, '3d1886b7-abec-49b9-b849-99ceb616b127'),
+    ('2023-04-13 06:33:40.246119', 'ESP', 'solaris', 50, '47fa9dc4-cb7a-44c0-ace2-a65d8705495e'),
+    ('2023-05-19 08:42:16.262143', 'ESP', 'solaris', 10, '47fa9dc4-cb7a-44c0-ace2-a65d8705495e'),
+    ('2023-06-08 10:19:39.237623', 'ESP', 'solaris', 103, '3d1886b7-abec-49b9-b849-99ceb616b127'),
+    ('2023-09-28 11:02:32.332768', 'ESP', 'rural_electrification_initiative', 13, '47fa9dc4-cb7a-44c0-ace2-a65d8705495e'),
+    ('2023-11-03 18:52:04.351058', 'ESP', 'rural_electrification_initiative', 107, '3d1886b7-abec-49b9-b849-99ceb616b127');
