@@ -28,23 +28,32 @@ def donate():
         
         # Validate the Form Entries
         country_code = request.form.get("country_code", None)
+        if country_code is None:
+            return "You must supply a 'country_code' entry", 400
+        country_code = country_code.upper()
+        organization_slug = request.form.get("organization_slug", None)
+        if organization_slug is None:
+            return "You must supply a 'organization_slug' entry", 400
+        organization_slug = organization_slug.lower()
+        donation_amount = request.form.get("donation_amount", None)
+        if donation_amount is None:
+            return "You must supply a 'donation_amount' entry", 400
+        donation_amount = str(donation_amount)
+
         if db.execute(
             "SELECT country_code FROM country WHERE country.country_code == ?", [country_code]
             ).fetchone() is None:
             return "Specified Country does not Exist", 400
-        organization_slug = request.form.get("organization_slug", None)
         if db.execute(
             "SELECT name_slug, country_code FROM organization WHERE name_slug == ? AND country_code == ?", [organization_slug, country_code]
             ).fetchone() is None:
             return "Specified Organization does not Exist", 400
-        donation_amount = request.form.get("donation_amount", None)
-        if donate is None or not donation_amount.isdigit():
+        if not donation_amount.isdigit() \
+            or int(donation_amount) < 1 \
+            or str(int(donation_amount)) != donation_amount:
             return "Donation Amount must be a positive integer", 400
         else:
             donation_amount = int(donation_amount)
-        if donation_amount < 1 \
-            or donation_amount != int(donation_amount):
-            return "Donation Amount must be a positive integer", 400
 
         # Insert new Donation into the Database
         timestamp_now = datetime.now()
