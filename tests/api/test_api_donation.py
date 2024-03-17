@@ -163,3 +163,40 @@ def test_donate_post_logged_in_householder_full_data(client, auth):
             print((res.status_code, res.text))
             print(assertions)
             assert any([ (res.status_code, res.text) == a for a in assertions ])
+
+def test_donate_post_donation_amount(client, auth):
+    with client:
+        auth.login(username="jane.doe15@example.com", password="12Jane!DoeDoe")
+        res = client.post("/api/donate", data={
+            "country_code": "ata",
+            "organization_slug": "antarctica_solar_project",
+            "donation_amount": "1.1"
+        })
+        assert (res.status_code, res.text) == (400, "Donation Amount must be a positive integer")
+    
+    with client:
+        auth.login(username="jane.doe15@example.com", password="12Jane!DoeDoe")
+        res = client.post("/api/donate", data={
+            "country_code": "ata",
+            "organization_slug": "antarctica_solar_project",
+            "donation_amount": "0"
+        })
+        assert (res.status_code, res.text) == (400, "Donation Amount must be a positive integer")
+
+    with client:
+        auth.login(username="jane.doe15@example.com", password="12Jane!DoeDoe")
+        res = client.post("/api/donate", data={
+            "country_code": "ata",
+            "organization_slug": "antarctica_solar_project",
+            "donation_amount": "0.5"
+        })
+        assert (res.status_code, res.text) == (400, "Donation Amount must be a positive integer")
+
+    with client:
+        auth.login(username="jane.doe15@example.com", password="12Jane!DoeDoe")
+        res = client.post("/api/donate", data={
+            "country_code": "ata",
+            "organization_slug": "antarctica_solar_project",
+            "donation_amount": "-1"
+        })
+        assert (res.status_code, res.text) == (400, "Donation Amount must be a positive integer")
