@@ -1,17 +1,12 @@
 from flask import Blueprint, g, render_template, flash, request, session, redirect, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 from solar_offset.db import get_db
-from solar_offset.util import calc_carbon_offset
+from solar_offset.utils.carbon_offset_util import calc_carbon_offset
 
 from math import floor
 from uuid import uuid4
 
 bp = Blueprint("householder", __name__)
-
-
-@bp.route("/")
-def home():
-    return render_template("./home/home.html")
 
 
 @bp.route("/householder")
