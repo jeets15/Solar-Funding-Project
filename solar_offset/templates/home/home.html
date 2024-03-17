@@ -11,6 +11,8 @@
 <!-- Body Section -->
 {% block body %}
 
+{% include 'flashmessage.html' %}
+
     <!--- Main Marketing Banner with donation button --->
     <div class="">
         <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light main-banner">
@@ -117,35 +119,35 @@
                         <div>
                             <img width="30%" height="30%" src="../../static/images/cash-coin.svg" alt=""/>
                             <h4 class="fw-bold mb-0 fs-4 text-body-emphasis" style="color: maroon">Donations</h4>
-                            <p>Paragraph of text beneath the heading to explain the heading.</p>
+                            <p>Join the {{ statistics[2] }} who are powering a brighter future with solar energy.</p>
                         </div>
                     </div>
                     <div class="col d-flex align-items-start">
                         <div>
                             <img width="30%" height="30%" src="../../static/images/pin-map-fill.svg" alt=""/>
                             <h4 class="fw-bold mb-0 fs-4 text-body-emphasis" style="color: maroon">Countries</h4>
-                            <p>Paragraph of text beneath the heading to explain the heading.</p>
+                            <p>Offset Your Footprint in {{ statistics[1] }} Countries</p>
                         </div>
                     </div>
                     <div class="col d-flex align-items-start">
                         <div>
                             <img width="30%" height="30%" src="../../static/images/people-fill.svg" alt=""/>
                             <h4 class="fw-bold mb-0 fs-4 text-body-emphasis" style="color: maroon">Users</h4>
-                            <p>Paragraph of text beneath the heading to explain the heading.</p>
+                            <p>Become part of a movement – join the growing community of {{ statistics[0] }} who choose sustainability.</p>
                         </div>
                     </div>
                     <div class="col d-flex align-items-start">
                         <div>
                             <img width="30%" height="30%" src="../../static/images/currency.svg" alt=""/>
                             <h4 class="fw-bold mb-0 fs-4 text-body-emphasis" style="color: maroon">Total Amount Donated</h4>
-                            <p>Paragraph of text beneath the heading to explain the heading.</p>
+                            <p>Your contribution counts! Together we've raised £{{ statistics[3] }} for a cleaner future.</p>
                         </div>
                     </div>
                     <div class="col d-flex align-items-start">
                         <div>
                             <img width="30%" height="30%" src="../../static/images/globe-central-south-asia.svg" alt=""/>
                             <h4 class="fw-bold mb-0 fs-4 text-body-emphasis" style="color: maroon">Reduced Carbon Emission</h4>
-                            <p>Paragraph of text beneath the heading to explain the heading.</p>
+                            <p>Make a real impact – help us reduce carbon emissions by {{ statistics[4] }} tons a year.</p>
                         </div>
                     </div>
                 </div>
@@ -173,4 +175,7 @@
         </div>
     </div>
 
+    <script src="{{ url_for('static', filename='jquery-3.3.1.slim.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
 {% endblock %}
