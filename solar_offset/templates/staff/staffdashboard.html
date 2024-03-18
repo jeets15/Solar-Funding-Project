@@ -1,5 +1,5 @@
-<link rel="stylesheet" href="../static/css/homestyle.css">
 <link rel="stylesheet" href="../static/css/staff.css">
+<link rel="stylesheet" href="../static/css/homestyle.css">
 
 {% extends 'base.html' %}
 <!-- Title Section -->
@@ -10,7 +10,7 @@
 
     {% include 'flashmessage.html' %}
     <div class="text-center">
-        <h2>Welcome to Solar Offset Staff DashBoard: {{ staffname }}</h2>         <!--add this variable to staff.py -->
+        <h3>Welcome to Solar Offset Staff DashBoard: {{ staffname }}</h3>         <!--add this variable to staff.py -->
     </div>
     <div class="container">
         <div class="left-section">
@@ -20,49 +20,63 @@
         <div class="right-section">
             {% if countries %}
             <label for="country">Select Country:</label>
-            <select id="country" onchange="updateOrganizations()">
-                {% for country in countries %}
-                <option value="{{ country.name }}">{{ country.name }}</option>
-                {% endfor %}
-            </select>
-        
+            <select id="country" onchange="updateOrganizations()"></select>
+
             <label for="organization">Select Organization:</label>
             <select id="organization"></select>
-        
+
             <br>
-            <button onclick="location.href='/staff/report'" class="btn btn-outline-success px-3">Generate</button>
-            <button onclick="location.href='/staff/report'" class="btn btn-outline-success px-3">Export</button>
+            <button onclick="location.href='/staff/report'" class="btn btn-outline-success px-4">Generate</button>
+            <button onclick="location.href='/staff/report'" class="btn btn-outline-success px-4">Export</button>
+           
+
+            <script>
+                var countries = [
+                    {% for country in countries %}
+                    { 
+                        "name": "{{ country.name }}", 
+                        "country_code": "{{ country.country_code }}",
+                        "organizations": "{{ country.org_name }}"
+                    },
+                    {% endfor %}
+                ];
+            
+                function populateDropdown(selectId, options) {
+                    var select = document.getElementById(selectId);
+                    select.innerHTML = ""; // Clear existing options
+            
+                    for (var i = 0; i < options.length; i++) {
+                        var option = document.createElement("option");
+                        option.text = options[i];
+                        option.value = options[i];
+                        select.add(option);
+                    }
+                }
+            
+                function updateOrganizations() {
+                    var countrySelect = document.getElementById("country");
+                    var organizationSelect = document.getElementById("organization");
+                    var selectedCountry = countrySelect.value;
+                    var selectedCountryObjs = countries.filter(country => country.name === selectedCountry);
+        
+                    console.log(selectedCountryObjs)
+                    populateDropdown("organization", selectedCountryObjs);
+                }
+
+            
+                // Populate the country dropdown initially
+                var countryNames = countries.map(country => country.name);
+                console.log(countryNames);
+                populateDropdown("country", countryNames);
+            
+                // Update organizations when the country dropdown changes
+                updateOrganizations();
+            </script>
+
             {% endif %}
         </div>
-        
     </div>
     <script src="{{ url_for('static', filename='jquery-3.3.1.slim.min.js') }}"></script>
     <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
     <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
-    <script>
-        // Populate the organization dropdown based on the selected country
-        function updateOrganizations() {
-        var countrySelect = document.getElementById("country");
-        var organizationSelect = document.getElementById("organization");
-        var selectedCountry = countrySelect.value;
-
-        // Find the selected country object from the countries array
-        var selectedCountryObject = countries.find(function (country) {
-            return country.name === selectedCountry;
-        });
-
-        // Populate the organization dropdown with the organizations of the selected country
-        organizationSelect.innerHTML = ""; // Clear existing options
-        selectedCountryObject.organizations.forEach(function (organization) {
-            var option = document.createElement("option");
-            option.text = organization;
-            option.value = organization;
-            organizationSelect.add(option);
-        });
-    }
-
-    // Populate the organization dropdown initially
-    var countries = {{ countries | tojson }};
-    updateOrganizations();  // Call the function to initially populate organizations based on the default country
-    </script>
 {% endblock %}
