@@ -50,7 +50,6 @@ def report():
 
 
 
-
 @bp.route("/staff")
 def staff():
     staffname = session.get('username')
@@ -58,18 +57,8 @@ def staff():
     is_logged_in = True if staffname else False
     user_types = ["admin", "householder", "staff"]
     print(is_logged_in)
-    users = db.execute(
-        'SELECT * FROM user WHERE user_type NOT LIKE ? ', ('%a%',)
-    ).fetchall()
-    user_dicts = []
-    for user_row in users:
-        userdict = dict(user_row)
-        if ("h__" in userdict["user_type"]):
-            userdict["user_type"] = "householder"
-        else:
-            userdict["user_type"] = "staff"
-        user_dicts.append(userdict)
-        
+
+    # Fetch all countries and associated organizations from the database
     countries = db.execute(
         "SELECT country.*, COUNT(donation_amount) AS donation_count, SUM(donation_amount) AS donation_sum \
             FROM country LEFT JOIN donation \
@@ -77,6 +66,21 @@ def staff():
             GROUP BY country.country_code \
             ORDER BY country.name ASC;"
     ).fetchall()
+
+    # Fetch all users from the database and prepare the data
+    users = db.execute(
+        'SELECT * FROM user WHERE user_type NOT LIKE ? ', ('%a%',)
+    ).fetchall()
+    user_dicts = []
+    for user_row in users:
+        userdict = dict(user_row)
+        if "h__" in userdict["user_type"]:
+            userdict["user_type"] = "householder"
+        else:
+            userdict["user_type"] = "staff"
+        user_dicts.append(userdict)
+
     return render_template("./staff/staffdashboard.html", countries=countries, staffname=staffname, users=user_dicts, is_logged_in=is_logged_in)
+
 
 

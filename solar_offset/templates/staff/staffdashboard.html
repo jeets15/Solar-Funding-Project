@@ -20,66 +20,49 @@
         <div class="right-section">
             {% if countries %}
             <label for="country">Select Country:</label>
-            <select id="country" onchange="updateOrganizations()"></select>
-
+            <select id="country" onchange="updateOrganizations()">
+                {% for country in countries %}
+                <option value="{{ country.name }}">{{ country.name }}</option>
+                {% endfor %}
+            </select>
+        
             <label for="organization">Select Organization:</label>
             <select id="organization"></select>
-
+        
             <br>
             <button onclick="location.href='/staff/report'" class="btn btn-outline-success px-3">Generate</button>
             <button onclick="location.href='/staff/report'" class="btn btn-outline-success px-3">Export</button>
-           
-
-            <script>
-                var countries = [
-                    {% for country in countries %}
-                    { 
-                        "name": "{{ country.name }}", 
-                        "organizations": [
-                            {% for organization in country.organizations %}
-                            "{{ organization }}",
-                            {% endfor %}
-                        ]
-                    },
-                    {% endfor %}
-                ];
-            
-                function populateDropdown(selectId, options) {
-                    var select = document.getElementById(selectId);
-                    select.innerHTML = ""; // Clear existing options
-            
-                    for (var i = 0; i < options.length; i++) {
-                        var option = document.createElement("option");
-                        option.text = options[i];
-                        option.value = options[i];
-                        select.add(option);
-                    }
-                }
-            
-                function updateOrganizations() {
-                    var countrySelect = document.getElementById("country");
-                    var organizationSelect = document.getElementById("organization");
-                    var selectedCountry = countrySelect.value;
-            
-                    // Find the selected country's organizations
-                    var selectedCountryOrgs = countries.find(country => country.name === selectedCountry).organizations;
-            
-                    // Populate the organization dropdown with the organizations of the selected country
-                    populateDropdown("organization", selectedCountryOrgs);
-                }
-            
-                // Populate the country dropdown initially
-                var countryNames = countries.map(country => country.name);
-                populateDropdown("country", countryNames);
-            
-                // Update organizations when the country dropdown changes
-                updateOrganizations();
-            </script>
-            
             {% endif %}
         </div>
+        
     </div>
     <script src="{{ url_for('static', filename='jquery-3.3.1.slim.min.js') }}"></script>
     <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
     <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+    <script>
+        // Populate the organization dropdown based on the selected country
+        function updateOrganizations() {
+        var countrySelect = document.getElementById("country");
+        var organizationSelect = document.getElementById("organization");
+        var selectedCountry = countrySelect.value;
+
+        // Find the selected country object from the countries array
+        var selectedCountryObject = countries.find(function (country) {
+            return country.name === selectedCountry;
+        });
+
+        // Populate the organization dropdown with the organizations of the selected country
+        organizationSelect.innerHTML = ""; // Clear existing options
+        selectedCountryObject.organizations.forEach(function (organization) {
+            var option = document.createElement("option");
+            option.text = organization;
+            option.value = organization;
+            organizationSelect.add(option);
+        });
+    }
+
+    // Populate the organization dropdown initially
+    var countries = {{ countries | tojson }};
+    updateOrganizations();  // Call the function to initially populate organizations based on the default country
+    </script>
 {% endblock %}
