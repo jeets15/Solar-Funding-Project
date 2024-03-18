@@ -49,7 +49,7 @@ def report():
             JOIN donation d ON u.id = d.householder_id \
             JOIN organization o ON d.country_code = o.country_code AND d.organization_slug = o.name_slug \
             JOIN country c ON d.country_code = c.country_code \
-            GROUP BY u.email_username, c.name, o.name;"
+            GROUP BY c.name, o.name;"
     ).fetchall()
 
     return render_template("./staff/report.html", users=users, is_logged_in=is_logged_in)
