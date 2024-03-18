@@ -9,26 +9,26 @@
 {% block body %}
 
     {% include 'flashmessage.html' %}
-    <div class="text-center">
-        <h3>Welcome to Solar Offset Staff DashBoard: {{ staffname }}</h3>         <!--add this variable to staff.py -->
-    </div>
+    <!-- <div class="text-center">
+        <h3>Welcome to Solar Offset Staff DashBoard: {{ staffname }}</h3>         add this variable to staff.py 
+    </div> -->
     <div class="container">
-        <div class="left-section">
-            <h1>esolaroffset</h1>
+        <div class="left-section mt-3">
+            <h2>Welcome, {{ staffname }}</h2>
         </div>
-
+    
         <div class="right-section">
             {% if countries %}
             <label for="country">Select Country:</label>
-            <select id="country" onchange="updateOrganizations()"></select>
-
-            <label for="organization">Select Organization:</label>
+            <select id="country" onchange="updateOrganizations()" class = "mb-3 mr-2"></select>
+    
+            <label for="organization" class="mt-2">Select Organization:</label>
             <select id="organization"></select>
-
-            <br>
-            <button onclick="location.href='/staff/report'" class="btn btn-outline-success px-4">Generate</button>
-            <button onclick="location.href='/staff/report'" class="btn btn-outline-success px-4">Export</button>
-           
+    
+            <div class="mt-3">
+                <button onclick="location.href='/staff/report'" class="btn btn-outline-success px-4 mr-2">Generate</button>
+                <button onclick="location.href='/staff/report'" class="btn btn-outline-success px-4">Export</button>
+            </div>
 
             <script>
                 var countries = [

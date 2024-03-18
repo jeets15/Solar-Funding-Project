@@ -14,25 +14,13 @@ def staff():
     is_logged_in = True if staffname else False
     user_types = ["admin", "householder", "staff"]
     print(is_logged_in)
-    users = db.execute(
-        'SELECT * FROM user WHERE user_type NOT LIKE ? ', ('%a%',)
-    ).fetchall()
-    user_dicts = []
-    for user_row in users:
-        userdict = dict(user_row)
-        if ("h__" in userdict["user_type"]):
-            userdict["user_type"] = "householder"
-        else:
-            userdict["user_type"] = "staff"
-        user_dicts.append(userdict)
-
     countries = db.execute(
         "SELECT country.name as name, country.country_code as country_code, organization.name as org_name \
             FROM country LEFT JOIN organization \
             ON country.country_code = organization.country_code \
             ORDER BY country.name;"
     ).fetchall()
-    return render_template("./staff/staffdashboard.html", countries=countries, staffname=staffname, users=user_dicts, is_logged_in=is_logged_in)
+    return render_template("./staff/staffdashboard.html", countries=countries, staffname=staffname, is_logged_in=is_logged_in)
 
 
 
