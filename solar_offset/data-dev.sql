@@ -33,3 +33,7 @@ INSERT INTO countryinfo (description,country_code)
 VALUES
     ('Solar power in Spain has grown significantly due to favorable conditions and government support. Abundant sunshine, coupled with investments in solar technology, has led to increased capacity. There''s still potential for further growth, supported by ongoing advancements in technology and favorable policies aimed at increasing renewable energy usage.','ESP');
 */
+
+
+
+
