@@ -1,18 +1,15 @@
-
--- Drop all tables to reset DB
 DROP TABLE IF EXISTS user;
 DROP TABLE IF EXISTS user_status;
 DROP TABLE IF EXISTS country;
 DROP TABLE IF EXISTS organization;
 DROP TABLE IF EXISTS donation;
 
-
 CREATE TABLE user (
     -- id: A unique id for each user; this value should only be used in the back-end or as a session cookie
     -- Users should normally not have access to this id
     -- Entries to the id column will be generated using
     --   uuid.uuid4(), a random 36 character string
-    id CHAR(36) CHECK( LENGTH(id) == 36 ) PRIMARY KEY, 
+    id CHAR(36) CHECK( LENGTH(id) == 36 ) PRIMARY KEY,
     -- email_username: The e-mail address of a registered householder
     -- internal account types like admin and staff will usually have a username instead of an e-mail
     -- this column must be unique as users will use e-mail/username to log in to solar offset
@@ -58,6 +55,8 @@ CREATE TABLE organization (
     description TEXT, -- Optional organization description
     details_paypal TEXT, -- Optional payment details for paypal
     details_stripe TEXT, -- Optional payment details for stripe
+    sites TEXT, -- #TODO what is the purpose of this column?
+    status TEXT, -- #TODO what is the purpose of this column?
     PRIMARY KEY (name_slug, country_code),
     FOREIGN KEY (country_code) REFERENCES country (country_code)
 );

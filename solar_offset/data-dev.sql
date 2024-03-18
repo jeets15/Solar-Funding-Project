@@ -21,33 +21,15 @@ VALUES ("ed8425f7-8313-4382-9d7d-2b061eb890c5", "staff3881@hhrs",
 
 
 
-
-
--- Inserting data for users
-INSERT INTO user (id, email_username, password_hash, display_name, user_type)
-VALUES 
-    ('11111111-2222-3333-4444-555555555555', 'john@example.com', 'hashed_password_1', 'John Doe', '__a'),
-    ('22222222-3333-4444-5555-666666666666', 'alice@example.com', 'hashed_password_2', 'Alice Smith', '_s_'),
-    ('33333333-4444-5555-6666-777777777777', 'bob@example.com', 'hashed_password_3', 'Bob Johnson', 'h__');
-
-
--- Inserting data for countries
-INSERT INTO country (country_code, short_code, name, description, solar_hours, carbon_emissions, solar_panel_price, electricity_mix_percentage, electricty_consumption) 
-VALUES ('USA', 'US', 'United States', 'Description for United States', 2000, 50000, 5000, 10, 2000),
-    ('UK', 'GB', 'United Kingdom', 'Description for United Kingdom', 1800, 30000, 6000, 15, 1500),
-    ('CAN', 'CA', 'Canada', 'Description for Canada', 1900, 40000, 5500, 12, 1800);
-
-
--- Inserting data for organizations
-INSERT INTO organization (name_slug, country_code, name, description, details_paypal, details_stripe) 
-VALUES ('org1', 'USA', 'Organization 1', 'Description for Organization 1', 'paypal_details_1', 'stripe_details_1'),
-    ('org2', 'UK', 'Organization 2', 'Description for Organization 2', 'paypal_details_2', 'stripe_details_2'),
-    ('org3', 'CAN', 'Organization 3', 'Description for Organization 3', 'paypal_details_3', 'stripe_details_3');
+/*INSERT INTO projects (name, description, sites, status, country_code)
+VALUES
+    ('Solaris', 'A project to install a solar power plant in farmlands .', '348', 'Ongoing', 'ESP'),
+    ('Rural Electrification Initiative', 'Electrification of remote villages using solar energy.', '54', 'Completed', 'ESP'),
+    ('Sunflower Global Ltd', 'Solar panel installation to Govt housing colonies  ', '273', 'Completed', 'ESP');
 
 
 
--- Inserting data for donations
-INSERT INTO donation (created, householder_id, country_code, organization_slug, donation_amount) 
-VALUES ('2023-01-01 10:00:00', '11111111-2222-3333-4444-555555555555', 'USA', 'org1', 1000),
-    ('2023-01-02 11:00:00', '2', 'UK', 'org2', 1500),
-    ('2023-01-03 12:00:00', '3', 'CAN', 'org3', 2000);
+INSERT INTO countryinfo (description,country_code)
+VALUES
+    ('Solar power in Spain has grown significantly due to favorable conditions and government support. Abundant sunshine, coupled with investments in solar technology, has led to increased capacity. There''s still potential for further growth, supported by ongoing advancements in technology and favorable policies aimed at increasing renewable energy usage.','ESP');
+*/

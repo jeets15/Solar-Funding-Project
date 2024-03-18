@@ -1,0 +1,44 @@
+.main-banner {
+    background-image: url("../../images/solar-panels-mass-grid-banner.jpeg");
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+    border-radius: 5px;
+}
+
+/* Carousel Style Properties */
+.carousel-image {
+    background-size: contain;
+    background-repeat: no-repeat; /* Do not repeat the image */
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-control-prev-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E") !important;
+}
+
+.carousel-control-next-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E") !important;
+}
+
+/*!* Carbon Emission Calculator *!*/
+#donation-amount-range {
+    -webkit-appearance: none; /* Removes default appearance for some browsers */
+    appearance: none; /* Standard removal of default appearance */
+    width: 70%;
+    height: 10px; /* Adjust height as needed */
+    background: #d3d3d3; /* Sets a base background color */
+    background-image: linear-gradient(to right, darkorange 0%, darkorange 33%, maroon 66%, maroon 100%);
+    border-radius: 5px; /* Adds rounded corners (optional) */
+    cursor: pointer; /* Indicates draggable element */
+}
+
+#donation-amount-range::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Removes default thumb appearance for some browsers */
+    appearance: none; /* Standard removal of default thumb appearance */
+    width: 20px; /* Adjust thumb size as needed */
+    height: 20px; /* Adjust thumb size as needed */
+    background-color: darkslategray; /* Sets thumb color */
+    border-radius: 50%; /* Creates a round thumb */
+}

@@ -2,17 +2,21 @@
 
 {% block title %}Country List{% endblock %}
 
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/projectsstyle.css') }}">
+{% endblock %}
+
 {% block body %}
-<div style="max-width: 50em; mind-width: 20em; margin: 1em auto; padding: 1em;">
+<div class="main-content-centered">
     <h2>Country List</h2>
     {% if countries %}
     <ul class="no-bullet vgap-1">
         {% for country in countries %}
-        <li class="framed">
+        <li class="framed project">
             <div style="display: flex;">
                 <div>
-                    <a style="color:inherit;" clllllass="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
-                        href={{ url_for('householder.country', country_code=country.country_code) | lower }}><h3>
+                    <a style="color:inherit;" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                        href="{{ url_for('householder.country', country_code=country.country_code) | lower }}"><h3>
                         {% if country.short_code %}
                         <!-- Taken from https://flagpedia.net/download/api -->
                         <img src="https://flagcdn.com/h40/{{country.short_code | lower}}.png" 
@@ -56,7 +60,7 @@
                     </ul>
                 </div>
                 <div style="display:flex; margin-left: auto;">
-                    <a style="margin-top: auto;" class="btn btn-outline-primary" href="#" role="button">Donate Now</a>
+                    <a style="margin-top: auto;" class="btn btn-outline-primary" href="{{ url_for('householder.country', country_code=country.country_code) | lower }}" role="button">Donate Now</a>
                 </div>
             </div>
         </li>

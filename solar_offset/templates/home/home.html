@@ -1,0 +1,192 @@
+{% extends 'base.html' %}
+
+<!-- Title Section -->
+{% block title %}Home{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home/home-style.css') }}">
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/home/home.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/solar-offset-calculator/solar-energy-offset-calculator.js') }}"
+            defer></script>
+{% endblock %}
+
+<!-- Body Section -->
+{% block body %}
+
+    {% include 'flashmessage.html' %}
+
+    <!--- Main Marketing Banner with donation button --->
+    <div class="">
+        <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light main-banner">
+            <div class="col-md-8 p-lg-3 mx-auto my-5">
+                <h1 class="display-2 gradient-text"
+                    style="background-image: linear-gradient(90deg, rgb(255, 200, 50) 0%, rgb(240, 100, 0) 100%); font-weight: 400 !important;">
+                    Power a Brighter Future</h1>
+                <p class="gradient-text col-md-9 mx-auto"
+                   style="background-image: linear-gradient(90deg, white 0%, mediumseagreen 100%); font-weight: 300 !important; font-size: xx-large;">
+                    Shine a light on sustainability! Donate <span class="gradient-text"
+                                                                  style="background-image: linear-gradient(90deg, darkorange 0%, orangered 100%);"> £10 </span>
+                    for solar energy and join the
+                    fight
+                    against climate change.
+                    Reduce your carbon footprint by <span class="gradient-text"
+                                                          style="background-image: linear-gradient(90deg, darkorange 0%, orangered 100%);"> 1 Kg </span>
+                    annually.</p>
+                <a class="btn btn-outline-warning px-5" href="{{ url_for('householder.country_list') }}">Reduce Your
+                    Footprint</a>
+            </div>
+        </div>
+    </div>
+
+
+    <!--- Heat Map Carousel Section -->
+    <div id="carouselFade" class="carousel p-3 p-md-5 m-md-3 bg-light rounded" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <div class="row">
+                    <div class="col-md-4">
+                        <br>
+                        <h2 class="display-4">Direct Normal Irradiation Map. <span class="text-muted"
+                                                                                   style="font-size: xx-large"><br>Find your ideal solar location.</span>
+                        </h2>
+                        <br>
+                        <p class="gradient-text"
+                           style="font-size: x-large; background-image: linear-gradient(90deg, rgb(255, 200, 50) 0%, rgb(240, 100, 0) 100%);">
+                            Save time and resources by using DNI maps to pinpoint strong solar power potential
+                            areas.</p>
+                    </div>
+                    <div class="col-md-8 carousel-image">
+                        <img class="carousel-image" src="../../static/images/direct-normal-irradiation-map.png"
+                             alt="Direct Normal Irradiation Map">
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="row">
+                    <div class="col-md-8 carousel-image">
+                        <img class="carousel-image" src="../../static/images/global-horizontal-irradiation-map.png"
+                             alt="Global Horizontal Irradiation Map">
+                    </div>
+                    <div class="col-md-4">
+                        <br>
+                        <h2 class="display-4">Global Horizontal Irradiation Map. <span class="text-muted"
+                                                                                       style="font-size: xx-large"><br>Plan your solar projects with confidence using our comprehensive GHI resource.</span>
+                        </h2>
+                        <br>
+                        <p class="gradient-text"
+                           style="font-size: x-large; background-image: linear-gradient(90deg, lightgreen 0%, darkgreen 100%);">
+                            De-risk your solar investments with our global GHI map - pinpoint high-yield locations.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="row">
+                    <div class="col-md-4">
+                        <br>
+                        <h2 class="display-4">Photovoltaic Power Potential Map. <span class="text-muted"
+                                                                                      style="font-size: xx-large"><br>Gain the intelligence you need to make strategic solar investments.</span>
+                        </h2>
+                        <p class="gradient-text"
+                           style="font-size: x-large; background-image: linear-gradient(90deg, darkblue 0%, deepskyblue 100%);">
+                            Support renewable energy initiatives with strategic planning based on our photovoltaic map.
+                            Identify areas for solar power development and promote sustainability.</p>
+                    </div>
+                    <div class="col-md-8 carousel-image">
+                        <img class="carousel-image" src="../../static/images/photovoltaic-power-potential-map.png"
+                             alt="Photovoltaic Power Potential Map">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#carouselFade" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#carouselFade" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+
+
+    <!--- Statistics + Carbon Emission Calculator -->
+    <div class="row p-3 p-md-5 m-md-3 rounded bg-light">
+
+        <!--- Statistics Section --->
+        <div class="col-md-8">
+            <div class="" id="icon-grid">
+                <h2 class="pb-2 border-bottom" style="color: maroon">A Closer Look at Sustainable Giving</h2>
+
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5">
+                    <div class="col d-flex align-items-start">
+                        <div>
+                            <img width="30%" height="30%" src="../../static/images/cash-coin.svg" alt=""/>
+                            <h4 class="fw-bold mb-0 fs-4 text-body-emphasis" style="color: maroon">Donations</h4>
+                            <p>Join the {{ statistics[2] }} who are powering a brighter future with solar energy.</p>
+                        </div>
+                    </div>
+                    <div class="col d-flex align-items-start">
+                        <div>
+                            <img width="30%" height="30%" src="../../static/images/pin-map-fill.svg" alt=""/>
+                            <h4 class="fw-bold mb-0 fs-4 text-body-emphasis" style="color: maroon">Countries</h4>
+                            <p>Offset Your Footprint in {{ statistics[1] }} Countries</p>
+                        </div>
+                    </div>
+                    <div class="col d-flex align-items-start">
+                        <div>
+                            <img width="30%" height="30%" src="../../static/images/people-fill.svg" alt=""/>
+                            <h4 class="fw-bold mb-0 fs-4 text-body-emphasis" style="color: maroon">Users</h4>
+                            <p>Become part of a movement – join the growing community of {{ statistics[0] }} who choose
+                                sustainability.</p>
+                        </div>
+                    </div>
+                    <div class="col d-flex align-items-start">
+                        <div>
+                            <img width="30%" height="30%" src="../../static/images/currency.svg" alt=""/>
+                            <h4 class="fw-bold mb-0 fs-4 text-body-emphasis" style="color: maroon">Total Amount
+                                Donated</h4>
+                            <p>Your contribution counts! Together we've raised £{{ statistics[3] }} for a cleaner
+                                future.</p>
+                        </div>
+                    </div>
+                    <div class="col d-flex align-items-start">
+                        <div>
+                            <img width="30%" height="30%" src="../../static/images/globe-central-south-asia.svg"
+                                 alt=""/>
+                            <h4 class="fw-bold mb-0 fs-4 text-body-emphasis" style="color: maroon">Reduced Carbon
+                                Emission</h4>
+                            <p>Help us reduce carbon emissions by {{ statistics[4] }} a year.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!--- Carbon Emission Calculator --->
+        <div class="col-md-4 rounded-lg text-center" style="background-color: #ECF0F1;">
+            <br>
+            <h1 class="display-4" style="font-size: xxx-large">Offset your footprint, Power the Planet!</h1>
+            <p class="gradient-text px-3"
+               style="font-size: x-large; background-image: linear-gradient(90deg, darkslategray 0%, green 100%);">
+                Calculate your carbon footprint with our solar donation tool.</p>
+            <input type="range" id="donation-amount-range" min="0" max="1000" value="10">
+            <br><br>
+            <p style="font-size: medium; color: brown">What is your estimated amount for donation?</p>
+            <p class="gradient-text"
+               style="font-size: large; background-image: linear-gradient(90deg, darkslategray 0%, green 100%);">
+                You'll reduce your carbon footprint by <span id="weight" class="gradient-text"
+                                                             style="font-size: large; background-image: linear-gradient(90deg, darkred 0%, brown 100%);"> 1.00 kg CO2 equivalent (0.00 metric tons) </span>
+                by donating <span id="donation-amount" class="gradient-text"
+                                  style="font-size: large; background-image: linear-gradient(90deg, darkred 0%, brown 100%);"> £10 </span>.
+            </p>
+            <br>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='jquery-3.3.1.slim.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+{% endblock %}

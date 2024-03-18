@@ -1,8 +1,12 @@
+<<<<<<< HEAD
 from flask import Blueprint, render_template, request, session
 from solar_offset.db import get_db
 from solar_offset.util import calc_carbon_offset
 
 from math import floor
+=======
+from flask import Blueprint, render_template, request, session, redirect
+>>>>>>> main
 
 bp = Blueprint("staff", __name__)
 
@@ -12,6 +16,7 @@ def staff():
     staffname = session.get('username')
     db = get_db()
     is_logged_in = True if staffname else False
+<<<<<<< HEAD
     user_types = ["admin", "householder", "staff"]
     print(is_logged_in)
     users = db.execute(
@@ -53,3 +58,8 @@ def report():
     ).fetchall()
 
     return render_template("./staff/report.html", users=users, is_logged_in=is_logged_in)
+=======
+    if is_logged_in == False:
+        return redirect("/login")
+    return render_template("./users/staff/staffdashboard.html", staffname=staffname, is_logged_in=is_logged_in)
+>>>>>>> main
