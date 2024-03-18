@@ -1,13 +1,12 @@
 from flask import Blueprint, render_template, request, session
 from solar_offset.db import get_db
 
-
 from math import floor
 
 bp = Blueprint("staff", __name__)
 
 
-@bp.route("/staff", methods = ["GET","POST"])
+@bp.route("/staff", methods=["GET", "POST"])
 def staff():
     staffname = session.get('username')
     db = get_db()
@@ -16,14 +15,11 @@ def staff():
     print(is_logged_in)
     countries = db.execute(
         "SELECT country.name as name, country.country_code as country_code, organization.name as org_name \
-            FROM country LEFT JOIN organization \
-            ON country.country_code = organization.country_code \
-            ORDER BY country.name;"
+            FROM country JOIN organization \
+            ON country.country_code = organization.country_code;"
     ).fetchall()
-    return render_template("./staff/staffdashboard.html", countries=countries, staffname=staffname, is_logged_in=is_logged_in)
-
-
-
+    return render_template("./staff/staffdashboard.html", countries=countries, staffname=staffname,
+                           is_logged_in=is_logged_in)
 
 
 @bp.route("/staff/report")
