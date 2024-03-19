@@ -12,11 +12,12 @@ bp = Blueprint("householder", __name__)
 @bp.route("/householder")
 def dashboard():
     username = session.get('username')
+    stats = calculate_statistics()
     is_logged_in = True if username else False
     if is_logged_in == False:
         return redirect("/login")
     return render_template("./users/householder/householderdashboard.html", username=username,
-                           is_logged_in=is_logged_in)
+                           is_logged_in=is_logged_in,statistics=stats)
 
 
 @bp.route("/about")
