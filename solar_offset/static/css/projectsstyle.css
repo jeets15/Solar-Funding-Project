@@ -1,7 +1,7 @@
 body {
-    background-image: url("/static/images/solar_offset_login_page.jpeg");
+    background-image: url("/static/images/Sun energy-rafiki.svg");
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: inherit;
 }
 
 .project-container {
