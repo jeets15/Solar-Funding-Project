@@ -2,6 +2,7 @@ from flask import Blueprint, g, render_template, flash, request, session, redire
 from werkzeug.security import check_password_hash, generate_password_hash
 from solar_offset.db import get_db
 from solar_offset.utils.carbon_offset_util import calc_carbon_offset
+from solar_offset.utils.statistics_util import calculate_statistics
 
 from math import floor
 from uuid import uuid4
