@@ -1,14 +1,30 @@
+<link rel="stylesheet" href="../static/css/householder.css">
 {% extends 'base.html' %}
-
 {% block title %}Householder DashBoard{% endblock %}
-
-{% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/home/home-style.css') }}">
-{% endblock %}
 
 {% block body %}
     {% include 'flashmessage.html' %}
-    <div class="text-center">
-        <h2>Welcome to Solar Offset Householder Dashboard: {{ username }}</h2>
+    <div class="container">
+        <h1>Welcome {{ username }}!</h1>
     </div>
+    <div class="container">
+        <h1>Deed Done</h1>
+        <div class="stats">
+            <div class="stat">
+                <h2>Carbon Offset</h2>
+                <p>{{ statistics[1] }}</p>
+            </div>
+            <div class="stat">
+                <h2>Donations made</h2>
+                <p>£{{ statistics[3] }}</p>
+            </div>
+            <div class="stat">
+                <h2>Emissions Saved</h2>
+                <p>{{ statistics[4] }}</p>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='jquery-3.3.1.slim.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
 {% endblock %}
