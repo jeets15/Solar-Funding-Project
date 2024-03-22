@@ -20,7 +20,7 @@
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
 
         <!-- Company Logo -->
-        <a onclick="location.href='/'"
+        <a href="{{ url_for('home.home') }}"
            class="d-flex align-items-center col-md-3 text-dark text-decoration-none"
            style="font-size: xx-large">
             <img src="{{ url_for('static', filename='images/logo/logo.png') }}"
@@ -30,17 +30,41 @@
 
         <!-- Navigation Bar -->
         <ul class=" nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a onclick="location.href='/'" class="nav-link px-2 link-secondary"
-                   style="font-size: large">Home</a></li>
-            <li><a href="{{ url_for('householder.country_list') }}" class="nav-link px-2 link-dark"
-                   style="font-size: large">Donate</a>
+            <li>
+                <a href="{{ url_for('home.home') }}" class="nav-link px-2 link-secondary">Home</a>
             </li>
-            <li><a onclick="location.href='/'" class="nav-link px-2 link-dark" style="font-size: large">Contact</a>
+            <li>
+                <a href="{{ url_for('householder.country_list') }}" class="nav-link px-2 link-dark">Donate</a>
             </li>
-            <li><a onclick="location.href='/'" class="nav-link px-2 link-dark" style="font-size: large">FAQs</a>
+            <li>
+                <a href="/" class="nav-link px-2 link-dark">Contact</a>
             </li>
-            <li><a onclick="location.href='/'" class="nav-link px-2 link-dark" style="font-size: large">About</a>
+            <li>
+                <a href="/" class="nav-link px-2 link-dark">FAQs</a>
             </li>
+            <li>
+                <a href="/" class="nav-link px-2 link-dark">About</a>
+            </li>
+            {% if g.user %}
+                <li>
+                    <span class="nav-link px-2 link-dark">•</span>
+                </li>
+                {% if 'h' in g.user.user_type %}
+                <li>
+                    <a href="{{ url_for('householder.dashboard') }}" class="nav-link px-2 link-dark">My Profile</a>
+                </li>
+                {% endif %}
+                {% if 's' in g.user.user_type %}
+                <li>
+                    <a href="{{ url_for('staff.staff') }}" class="nav-link px-2 link-dark">Staff<br>Dashboard</a>
+                </li>
+                {% endif %}
+                {% if 'a' in g.user.user_type %}
+                <li>
+                    <a href="{{ url_for('admin.admin') }}" class="nav-link px-2 link-dark">Admin<br>Dashboard</a>
+                </li>
+                {% endif %}
+            {% endif %}
         </ul>
 
         <!-- Login & Register Section -->

@@ -1,7 +1,13 @@
 
 /* Style Links in Base Template Navbar */
+ul.nav li {
+    margin: auto 0em;
+}
 ul.nav a {
+    line-height: 1em;
+    text-align: center;
     color: inherit;
+    font-size: large;
 }
 
 
