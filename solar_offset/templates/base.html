@@ -46,10 +46,10 @@
         <!-- Login & Register Section -->
         <div class="col-md-3 text-end">
             {% if g.user %}
-                <button onclick="location.href='/login'" class="btn btn-outline-dark me-2 px-4">Logout</button>
+                <a href="{{ url_for('auth.logout') }}" class="btn btn-outline-dark me-2 px-4">Logout</a>
             {% else %}
-                <button onclick="location.href='/login'" class="btn btn-outline-dark me-2 px-4">Login</button>
-                <button onclick="location.href='/register'" class="btn btn-outline-success px-3">Register</button>
+                <a href="{{ url_for('auth.login') }}" class="btn btn-outline-dark me-2 px-4">Login</a>
+                <a href="{{ url_for('auth.register') }}" class="btn btn-outline-success px-3">Register</a>
             {% endif %}
         </div>
     </header>
