@@ -44,7 +44,7 @@ def login_required(allowed_user_types=None):
                 flash("You must log in to view this page", "danger")
                 return redirect(url_for('auth.login'))
             else:
-                set_user_types = set(g.user.user_type.replace("_", ""))
+                set_user_types = set(g.user['user_type'].replace("_", ""))
                 if not set_user_types.intersection(set_allowed_user_types):
                     flash("You don't have permission to view this page", "danger")
                     return redirect(url_for('auth.login'))
