@@ -1,5 +1,5 @@
 var suspendBtns = document.getElementsByClassName('suspend-btn');
-var userIdInput = document.querySelector('#exampleModalLong input[name="user_id"]');
+var userIdInput = document.querySelector('#suspendModalBox input[name="user_id"]');
 
 // Event listener for the suspend button click
 for (var i = 0; i < suspendBtns.length; i++) {
