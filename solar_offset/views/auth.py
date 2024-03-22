@@ -1,4 +1,5 @@
-from flask import Blueprint, abort, g, render_template, flash, request, session, redirect, url_for
+import functools
+from flask import Blueprint, abort, app, g, render_template, flash, request, session, redirect, url_for, current_app
 from werkzeug.security import check_password_hash, generate_password_hash
 from solar_offset.db import get_db
 from solar_offset.utils.carbon_offset_util import calc_carbon_offset
@@ -32,6 +33,27 @@ def load_logged_in_user():
             g.user = user
 
 
+# Decorator that can be used to force user to be logged in for a page
+# Optionally, specify which user types are allowed and which not
+def login_required(allowed_user_types=None):
+    set_allowed_user_types = set(allowed_user_types)
+    def _wrapper(view):
+        @functools.wraps(view)
+        def wrapped_view(**kwargs):
+            if g.user is None:
+                flash("You must log in to view this page", "danger")
+                return redirect(url_for('auth.login'))
+            else:
+                set_user_types = set(g.user.user_type.replace("_", ""))
+                if not set_user_types.intersection(set_allowed_user_types):
+                    flash("You don't have permission to view this page", "danger")
+                    return redirect(url_for('auth.login'))
+            return view(**kwargs)
+
+        return wrapped_view
+    return _wrapper
+
+
 @bp.route("/logout", methods=["GET"])
 def logout():
     # Remove user_id from session object
@@ -59,10 +81,9 @@ def login():
             error = 'Incorrect password!!'
         if error is None:
             session['user_id'] = user['id']
-            return redirect(url_for("auth.login"))
         else:
             flash(error, "danger")
-            return redirect(url_for("auth.login"))
+        return redirect(url_for("auth.login"))
     else:
         if g.user:
             usertype = g.user['user_type']
