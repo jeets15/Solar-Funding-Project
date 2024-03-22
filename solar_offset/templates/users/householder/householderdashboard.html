@@ -1,11 +1,14 @@
-<link rel="stylesheet" href="../static/css/householder.css">
 {% extends 'base.html' %}
 {% block title %}Householder DashBoard{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/householder.css') }}">
+{% endblock %}
 
 {% block body %}
     {% include 'flashmessage.html' %}
     <div class="container">
-        <h1>Welcome {{ username }}!</h1>
+        <h1>Welcome {{ g.user.name }}!</h1>
     </div>
     <div class="container">
         <h1>Deed Done</h1>
@@ -24,7 +27,4 @@
             </div>
         </div>
     </div>
-    <script src="{{ url_for('static', filename='jquery-3.3.1.slim.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
 {% endblock %}
