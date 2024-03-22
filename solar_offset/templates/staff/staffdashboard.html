@@ -11,7 +11,7 @@
     {% include 'flashmessage.html' %}
     <div class="container">
         <div class="left-section mt-3">
-            <h2>Welcome, {{ staffname }}</h2>
+            <h2>Welcome, {{ g.user.name }}</h2>
         </div>
 
         <div class="right-section">
@@ -86,7 +86,4 @@
             {% endif %}
         </div>
     </div>
-    <script src="{{ url_for('static', filename='jquery-3.3.1.slim.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='popper.min.js') }}"></script>
-    <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
 {% endblock %}
