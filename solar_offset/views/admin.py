@@ -13,8 +13,7 @@ def admin():
     users = db.execute(
         'SELECT * FROM user WHERE user_type NOT LIKE ? ', ('%a%',)
     ).fetchall()
-    user_status_list = db.execute('SELECT user_id,flag_suspicious FROM user_status WHERE flag_suspicious=?',
-                                  (1,)).fetchall()
+    user_status_list = db.execute('SELECT * FROM user_status ').fetchall()
 
     user_status_dict = []
     for user_row in user_status_list:
@@ -46,34 +45,24 @@ def delete_user():
     return redirect('/admin')
 
 
-@bp.route('/flag-user', methods=['POST'])
-def flag_user():
+@bp.route('/suspend-user', methods=['POST'])
+def suspend_user():
+    suspend_message = request.form['suspend_message']
     user_id = request.form['user_id']
     db = get_db()
-    users = db.execute(
-        'SELECT * FROM user_status WHERE user_id = ? ', (user_id,)
-    ).fetchone()
-    if users is None:
-        db.execute(
-            "INSERT INTO user_status (user_id, flag_suspicious) VALUES (?,?)",
-            (user_id, 1),
-        )
-    else:
-        db.execute(
-            "UPDATE user_status SET flag_suspicious = ? WHERE user_id = ?",
-            (1, user_id),
-        )
+    db.execute(
+        "INSERT INTO user_status (user_id, suspend) VALUES (?,?)", (user_id, suspend_message,)
+    )
     db.commit()
     return redirect('/admin')
 
 
-@bp.route('/unflag-user', methods=['POST'])
-def unflag_user():
+@bp.route('/unsuspend-user', methods=['POST'])
+def unsuspend_user():
     user_id = request.form['user_id']
     db = get_db()
     db.execute(
-        "UPDATE user_status SET flag_suspicious = ? WHERE user_id = ?",
-        (0, user_id),
-    )
+        "DELETE FROM user_status WHERE user_id = ?", (user_id,)
+    ).fetchone()
     db.commit()
     return redirect('/admin')
