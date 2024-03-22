@@ -36,14 +36,16 @@ def load_logged_in_user():
 # Decorator that can be used to force user to be logged in for a page
 # Optionally, specify which user types are allowed and which not
 def login_required(allowed_user_types=None):
-    set_allowed_user_types = set(allowed_user_types)
+    set_allowed_user_types = None
+    if allowed_user_types:
+        set_allowed_user_types = set(allowed_user_types)
     def _wrapper(view):
         @functools.wraps(view)
         def wrapped_view(**kwargs):
             if g.user is None:
                 flash("You must log in to view this page", "danger")
                 return redirect(url_for('auth.login'))
-            else:
+            elif set_allowed_user_types:
                 set_user_types = set(g.user['user_type'].replace("_", ""))
                 if not set_user_types.intersection(set_allowed_user_types):
                     flash("You don't have permission to view this page", "danger")
