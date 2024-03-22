@@ -1,34 +1,27 @@
-from flask import Blueprint, render_template, request, session, redirect
+from flask import Blueprint, render_template, request
 from solar_offset.db import get_db
-
-from math import floor
+from solar_offset.views.auth import login_required
 
 bp = Blueprint("staff", __name__)
 
 
 @bp.route("/staff", methods=["GET", "POST"])
+@login_required("s")
 def staff():
-    staffname = session.get('username')
     db = get_db()
-    is_logged_in = True if staffname else False
     user_types = ["admin", "householder", "staff"]
-    print(is_logged_in)
     countries = db.execute(
         "SELECT country.name as name, country.country_code as country_code, organization.name as org_name \
             FROM country JOIN organization \
             ON country.country_code = organization.country_code;"
     ).fetchall()
-    return render_template("./staff/staffdashboard.html", countries=countries, staffname=staffname,
-                           is_logged_in=is_logged_in)
+    return render_template("users/staff/staffdashboard.html", countries=countries)
 
 
 @bp.route("/staff/report/", methods=["POST"])
+@login_required("s")
 def report():
-    staff_name = session.get('username')
     db = get_db()
-    is_logged_in = True if staff_name else False
-    if not is_logged_in:
-        return redirect("/login")
 
     country = request.form['country']
     organization = request.form['organization']
@@ -44,4 +37,4 @@ def report():
         """
     users = db.execute(query, (country, organization)).fetchall()
 
-    return render_template("./staff/report.html", users=users, is_logged_in=is_logged_in)
+    return render_template("users/staff/report.html", users=users)

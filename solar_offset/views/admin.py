@@ -1,16 +1,14 @@
 from flask import Blueprint, render_template, request, session, redirect
 from solar_offset.db import get_db
+from solar_offset.views.auth import login_required
 
 bp = Blueprint("admin", __name__)
 
 
 @bp.route("/admin", methods=["GET", "POST"])
+@login_required("a")
 def admin():
-    adminname = session.get('username')
     db = get_db()
-    is_logged_in = True if adminname else False
-    if is_logged_in == False:
-        return redirect("/login")
     user_types = ["admin", "householder", "staff"]
     users = db.execute(
         'SELECT * FROM user WHERE user_type NOT LIKE ? ', ('%a%',)
@@ -33,8 +31,10 @@ def admin():
         user_dicts.append(userdict)
 
         user_statuses = [item['user_id'] for item in user_status_dict]
-    return render_template("./users/admin/admin.html", adminname=adminname, users=user_dicts, is_logged_in=is_logged_in,
-                           user_status_list=user_statuses)
+    return render_template(
+        "./users/admin/admin.html",
+        users=user_dicts,
+        user_status_list=user_statuses)
 
 
 @bp.route('/delete_user', methods=['POST'])
