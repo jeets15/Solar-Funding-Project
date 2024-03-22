@@ -1,9 +1,13 @@
-<link rel="stylesheet" href="../static/css/staff.css">
-<link rel="stylesheet" href="../static/css/homestyle.css">
+
 
 {% extends 'base.html' %}
 <!-- Title Section -->
 {% block title %}Staff DashBoard{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/staffstyle.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home/home-style.css') }}">
+{% endblock %}
 
 <!-- Body Section -->
 {% block body %}
