@@ -1,4 +1,4 @@
-from flask import Blueprint, g, render_template, flash, request, session, redirect, url_for
+from flask import Blueprint, abort, g, render_template, flash, request, session, redirect, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 from solar_offset.db import get_db
 from solar_offset.utils.carbon_offset_util import calc_carbon_offset
@@ -15,12 +15,21 @@ bp = Blueprint("auth", __name__, url_prefix="/auth")
 # g is a variable that can be used in templates
 @bp.before_app_request
 def load_logged_in_user():
-    user_id = session.get('user_id')
+    user_id = session.get('user_id', None)
 
     if user_id is None:
         g.user = None
     else:
-        g.user = get_db().execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
+        user = get_db().execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
+        if user is None:
+            g.user = None
+        else:
+            user = dict(user)
+            if user['display_name']:
+                user['name'] = user['display_name']
+            else:
+                user['name'] = user['email_username']
+            g.user = user
 
 
 @bp.route("/logout", methods=["GET"])
@@ -35,7 +44,6 @@ def logout():
 
 @bp.route("/login", methods=["GET", "POST"])
 def login():
-    session.clear()
     if request.method == 'POST':
         username = request.form["emailusrname"]
         password = request.form['password']
@@ -50,27 +58,25 @@ def login():
         elif check_password_hash(user['password_hash'], password) == False:
             error = 'Incorrect password!!'
         if error is None:
-            session.clear()
             session['user_id'] = user['id']
-            if (user['display_name'] is not None):
-                session['username'] = user['display_name']
-            else:
-                session['username'] = user['email_username']
-
-            usertype = user["user_type"]
-
-            if (usertype == "h__"):
-                flash("User login succesfull!", "success")
+            return redirect(url_for("auth.login"))
+        else:
+            flash(error, "danger")
+            return redirect(url_for("auth.login"))
+    else:
+        if g.user:
+            usertype = g.user['user_type']
+            flash("Login successful!", "success")
+            if 'h' in usertype:
                 return redirect(url_for("householder.dashboard"))
-            elif (usertype == "_s_"):
-                flash("Staff login succesfull!", "success")
+            elif 's' in usertype:
                 return redirect(url_for("staff.staff"))
-            else:
-                flash("Admin login succesfull!", "success")
+            elif 'a' in usertype:
                 return redirect(url_for("admin.admin"))
-
-        flash(error, "danger")
-    return render_template("./auth-engine/login.html")
+            else:
+                abort(400, "Your account has incorrect privileges. Please contact a system administrator.")
+            
+        return render_template("./auth-engine/login.html")
 
 
 @bp.route("/register", methods=["GET", "POST"])
@@ -99,14 +105,9 @@ def register():
         except db.IntegrityError:
             error = f"Email ID: {email} is already registered."
         else:
-            session.clear()
             session["user_id"] = userid
-            if (username != ""):
-                session["username"] = username
-            else:
-                session["username"] = email
-            flash("User registered succesfully!", "success")
-            return redirect(url_for("householder.dashboard"))
+            flash("Registration Successful!", "success")
+            return redirect(url_for("auth.login"))
 
         print("Error", error)
 
