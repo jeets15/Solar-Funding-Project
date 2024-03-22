@@ -24,8 +24,9 @@ def create_app(test_config=None):
     from . import db
     db.init_app(app)
 
-    from .views import householder, admin, staff, api
+    from .views import auth, householder, admin, staff, api
     from .views.home import home
+    app.register_blueprint(auth.bp)
     app.register_blueprint(householder.bp)
     app.register_blueprint(admin.bp)
     app.register_blueprint(staff.bp)
