@@ -15,7 +15,7 @@ def staff():
             FROM country JOIN organization \
             ON country.country_code = organization.country_code;"
     ).fetchall()
-    return render_template("./staff/staffdashboard.html", countries=countries)
+    return render_template("users/staff/staffdashboard.html", countries=countries)
 
 
 @bp.route("/staff/report/", methods=["POST"])
@@ -37,4 +37,4 @@ def report():
         """
     users = db.execute(query, (country, organization)).fetchall()
 
-    return render_template("./staff/report.html", users=users)
+    return render_template("users/staff/report.html", users=users)
