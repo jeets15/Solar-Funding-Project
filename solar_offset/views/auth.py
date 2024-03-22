@@ -23,6 +23,16 @@ def load_logged_in_user():
         g.user = get_db().execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
 
 
+@bp.route("/logout", methods=["GET"])
+def logout():
+    # Remove user_id from session object
+    # This essentially logs the user out
+    session.pop("user_id", None)
+
+    # Redirect to homepage
+    return redirect(url_for("home.home"))
+
+
 @bp.route("/login", methods=["GET", "POST"])
 def login():
     session.clear()
