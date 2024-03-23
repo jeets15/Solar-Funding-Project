@@ -52,3 +52,43 @@ div.gauge div.gauge-needle {
 
     transform: rotate(calc(180deg * var(--value)));
 }
+
+
+
+/* 
+    Traffic Light Indicator
+ */
+/* 
+<div class="signal-wrapper amber">
+    <div class="signal r"></div>
+    <div class="signal a"></div>
+    <div class="signal g"></div>
+</div>
+ */
+div.signal-wrapper {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    background-color: white;
+    border: 0.1em solid gray; /*black*/
+    border-radius: 0.8em;
+    padding: 0.25em 0.5em;
+}
+div.signal-wrapper div.signal+div.signal {
+    margin-left: 0.25em;
+}
+div.signal-wrapper div.signal {
+    width: 0.25em;
+    height: 1em;
+    background-color: rgba(255, 0, 0, 0.5);
+    border: 0.05em solid black;
+    border-radius: 1em;
+    margin: 0em;
+    padding: 0em;
+}
+div.signal-wrapper div.signal.r {background-color: rgba(255,   0,   0, 1.0);}
+div.signal-wrapper div.signal.a {background-color: rgba(255, 187,   0, 1.0);}
+div.signal-wrapper div.signal.g {background-color: rgba(  0, 255,   0, 1.0);}
+div.signal-wrapper.red   div.signal.r {width: 1em;}
+div.signal-wrapper.amber div.signal.a {width: 1em;}
+div.signal-wrapper.green div.signal.g {width: 1em;}
