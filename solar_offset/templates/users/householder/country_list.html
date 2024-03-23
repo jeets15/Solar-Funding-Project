@@ -4,6 +4,7 @@
 
 {% block styles %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/projectsstyle.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/misc/custom-indicators.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -27,11 +28,11 @@
                         {{ country.name }} ➥
                     </h3></a>
                 </div>
-                <div style="margin-left: auto;" class="fit-tight text-center framed">
-                    <div class="gauge" style="--value: 0.3; --color: red; --scale-percent: 200%">
-                        <div class="gauge-bg"></div>
-                        <div class="gauge-center"></div>
-                        <div class="gauge-needle"></div>
+                <div style="margin-left: auto;" class="fit-tight text-center">
+                    <div class="signal-wrapper {{country.signal_color}}" style="margin-left: auto; font-size: 125%;">
+                        <div class="signal r"></div>
+                        <div class="signal a"></div>
+                        <div class="signal g"></div>
                     </div>
                     <div>{{ country.carbon_offset }}g / 1£ Donated</div>
                     <div><b>Potential Carbon Offset</b></div>
