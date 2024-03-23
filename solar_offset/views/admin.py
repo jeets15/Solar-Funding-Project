@@ -61,13 +61,3 @@ def is_suspend_user():
 
     db.commit()
     return redirect('/admin')
-
-# @bp.route('/unsuspend-user', methods=['POST'])
-# def unsuspend_user():
-#     user_id = request.form['user_id']
-#     db = get_db()
-#     db.execute(
-#         "DELETE FROM user_status WHERE user_id = ?", (user_id,)
-#     ).fetchone()
-#     db.commit()
-#     return redirect('/admin')
