@@ -32,7 +32,11 @@ def admin():
             user_types.append("Admin")
 
         userdict['user_type'] = " & ".join(user_types)
-        userdict["is_suspended"] = user_status_dict.get(user_row['id'], "-")
+        userdict["is_suspended"] = user_status_dict.get(user_row['id'], "NULL")
+        if userdict["is_suspended"] == "NULL":
+            userdict["is_suspended"] = "-"
+        else:
+            userdict["is_suspended"] = userdict["is_suspended"]
         user_dicts.append(userdict)
     print(user_dicts)
     return render_template(
@@ -71,7 +75,7 @@ def is_suspend_user():
     else:
         db.execute(
             "UPDATE user_status SET suspend = ? WHERE user_id = ?",
-            ("-", user_id),
+            ("NULL", user_id),
         )
 
     db.commit()
