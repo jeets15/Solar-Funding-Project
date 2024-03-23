@@ -75,10 +75,10 @@ div.signal-wrapper {
     padding: 0.25em 0.5em;
 }
 div.signal-wrapper div.signal+div.signal {
-    margin-left: 0.25em;
+    margin-left: 0.3em;
 }
 div.signal-wrapper div.signal {
-    width: 0.25em;
+    width: 0.35em;
     height: 1em;
     background-color: rgba(255, 0, 0, 0.5);
     border: 0.05em solid black;
