@@ -32,9 +32,8 @@ CREATE TABLE user
 
 CREATE TABLE user_status
 (
-    user_id         CHAR(36) CHECK ( LENGTH(user_id) == 36 ) PRIMARY KEY,  -- Foreign key reference to user table
-    flag_suspicious BOOLEAN DEFAULT 0 CHECK ( flag_suspicious IN (0, 1) ), -- 0 (false) if not suspicious, 1 (true) if suspicious
-    suspend         TEXT    DEFAULT NULL,                                  -- If user is suspended set column to a string containing the "suspension message"
+    user_id CHAR(36) CHECK ( LENGTH(user_id) == 36 ) PRIMARY KEY, -- Foreign key reference to user table
+    suspend TEXT DEFAULT NULL,                                    -- If user is suspended set column to a string containing the "suspension message"
     FOREIGN KEY (user_id) REFERENCES user (id)
 );
 
