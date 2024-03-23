@@ -20,15 +20,21 @@ def admin():
         user_status_dict[user_row['user_id']] = user_row['suspend']
 
     user_dicts = []
-    for user_row in users:
-        userdict = dict(user_row)
-        if ("h__" in userdict["user_type"]):
-            userdict["user_type"] = "householder"
-        else:
-            userdict["user_type"] = "staff"
-        userdict["is_suspended"] = user_status_dict.get(user_row['id'], "Null")
-        user_dicts.append(userdict)
 
+    for user_row in users:
+        user_types = []
+        userdict = dict(user_row)
+        if "h" in userdict["user_type"]:
+            user_types.append("Householder")
+        if "s" in userdict["user_type"]:
+            user_types.append("Staff")
+        if 'a' in userdict['user_type']:
+            user_types.append("Admin")
+
+        userdict['user_type'] = " & ".join(user_types)
+        userdict["is_suspended"] = user_status_dict.get(user_row['id'], "-")
+        user_dicts.append(userdict)
+    print(user_dicts)
     return render_template(
         "./users/admin/admin.html",
         users=user_dicts,

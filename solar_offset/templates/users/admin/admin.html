@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/homestyle.css') }}">
 {% endblock %}
 {% block scripts %}
-    <script src="../../../static/js/users/admin/admin.js" defer></script>
+    <script src="{{ url_for('static',filename='js/users/admin/admin.js') }}" defer></script>
 {% endblock %}
 {% block body %}
 
@@ -75,7 +75,7 @@
                                     <button class="btn btn-success" type="submit">Delete</button>
 
                                 </form>
-                                {% if user['is_suspended']!="Null" %}
+                                {% if user['is_suspended']!="-" %}
                                     <form action="/is-suspend-user" method="post">
                                         <input type="hidden" name="user_id" value="{{ user['id'] }}">
                                         <button class="btn btn-outline-success" type="submit">UnSuspend</button>
