@@ -69,8 +69,8 @@ div.signal-wrapper {
     display: flex;
     width: fit-content;
     height: fit-content;
-    background-color: white;
-    border: 0.1em solid gray; /*black*/
+    background-color: lightgray;
+    border: 0.1em solid black; /*black*/
     border-radius: 0.8em;
     padding: 0.25em 0.5em;
 }
