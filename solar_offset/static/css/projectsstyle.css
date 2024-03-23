@@ -1,7 +1,7 @@
 body {
     background-image: url("/static/images/Sun energy-rafiki.svg");
     background-repeat: no-repeat;
-    background-size: inherit;
+    background-size: cover;
 }
 
 .project-container {
