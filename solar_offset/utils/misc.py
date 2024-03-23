@@ -7,7 +7,11 @@ def calculate_percentile(finite_iter:Iterable[int|float], percentile:float):
     ranked_list = sorted(finite_iter)
     rank_ix = (percentile * (len(ranked_list) + 1)) - 1
 
-    if isclose(rank_ix, int(rank_ix)):
+    if rank_ix >= len(ranked_list)-1:
+        return ranked_list[-1]
+    elif rank_ix <= 0:
+        return ranked_list[0]
+    elif isclose(rank_ix, int(rank_ix)):
         # The rank is a whole number, just return the value
         return ranked_list[rank_ix]
     else:
