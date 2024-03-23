@@ -54,16 +54,25 @@ def delete_user():
 def is_suspend_user():
     user_id = request.form['user_id']
     db = get_db()
+    users = db.execute(
+        'SELECT * FROM user_status WHERE user_id = ? ', (user_id,)
+    ).fetchone()
+    if users is None:
+        db.execute(
+            "INSERT INTO user_status (user_id) VALUES (?)",
+            (user_id,),
+        )
     if 'suspend_message' in request.form:
         suspend_message = request.form['suspend_message']
-
         db.execute(
-            "INSERT INTO user_status (user_id, suspend) VALUES (?,?)", (user_id, suspend_message,)
+            "UPDATE user_status SET suspend = ? WHERE user_id = ?",
+            (suspend_message, user_id),
         )
     else:
         db.execute(
-            "DELETE FROM user_status WHERE user_id = ?", (user_id,)
-        ).fetchone()
+            "UPDATE user_status SET suspend = ? WHERE user_id = ?",
+            ("-", user_id),
+        )
 
     db.commit()
     return redirect('/admin')
