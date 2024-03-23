@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from solar_offset.db import get_db
 from solar_offset.utils.carbon_offset_util import calc_carbon_offset
+from solar_offset.utils.misc import calculate_percentile
 from solar_offset.utils.statistics_util import calculate_statistics
 
 from math import floor
@@ -43,6 +44,19 @@ def country_list():
             cd["donation_sum"] = 0
         cd["carbon_offset"] = floor(calc_carbon_offset(c_row))
         country_dicts.append(cd)
+
+    # Give traffic light indicator according to carbon_offset
+    # Green ~ upper 30%, Red ~ lower 30%, Amber ~ Midfield
+    lst_offset_vals = [ c['carbon_offset'] for c in country_dicts ]
+    upper_bound = calculate_percentile(lst_offset_vals, 0.7)
+    lower_bound = calculate_percentile(lst_offset_vals, 0.3)
+    for country in country_dicts:
+        if country['carbon_offset'] >= upper_bound:
+            country['signal_color'] = "green"
+        elif country['carbon_offset'] <= lower_bound:
+            country['signal_color'] = "red"
+        else:
+            country['signal_color'] = "amber"
 
     if "raw" in request.args:
         for cd in country_dicts:
