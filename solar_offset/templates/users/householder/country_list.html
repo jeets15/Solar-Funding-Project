@@ -16,7 +16,7 @@
         <li class="framed project">
             <div style="display: flex;">
                 <div>
-                    <a style="color:inherit;" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                    <a style="color:inherit; inline-size: min-content;" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
                         href="{{ url_for('householder.country', country_code=country.country_code) | lower }}"><h3>
                         {% if country.short_code %}
                         <!-- Taken from https://flagpedia.net/download/api -->
@@ -25,17 +25,20 @@
                             height="40"
                             alt="{{country.name}} Flag Icon">
                         {% endif %}
-                        {{ country.name }} ➥
+                        {{ country.name }}➥
                     </h3></a>
                 </div>
                 <div style="margin-left: auto;" class="fit-tight text-center">
                     <!-- <div>Potential Carbon Offset</div> -->
                     <div style="display: flex;">
                         <div style="margin: auto 0.5em;">
-                            <!-- {{ country.carbon_offset }}g / 1£ Donated -->
-                            <div><b>{{ country.carbon_offset_per_panel_kg }}kg</b></div>
-                            <div><i>Carbon Offset</i></div>
-                            <div><i>Per Solar Panel</i></div>
+                            <table class="table-carbon-data">
+                                {% if country.solar_panel_percent_footprint %}
+                                <tr class="sep-bottom"> <td>Carbon Footprint Reduction</td> <td><b>{{ country.solar_panel_percent_footprint }}%</b></td> </tr>
+                                {% endif %}
+                                <tr>                    <td>Carbon Offset</td>              <td><b>{{ country.carbon_offset_per_panel_kg }}kg</b></td>   </tr>
+                            </table>
+                            <div style="text-align: right;"><i>Per Solar Panel</i></div>
                         </div>
                         <div class="signal-wrapper {{country.signal_color}}" style="margin-left: auto; font-size: 125%;">
                             <div class="signal r"></div>
