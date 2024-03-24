@@ -1,6 +1,6 @@
 from flask import Blueprint, g, render_template, request, redirect, url_for
 from solar_offset.db import get_db
-from solar_offset.utils.carbon_offset_util import calc_carbon_offset, calc_solar_panel_offset
+from solar_offset.utils.carbon_offset_util import SOLAR_PANEL_POWER_kW, calc_carbon_offset, calc_solar_panel_offset
 from solar_offset.utils.misc import calculate_percentile, round_to_n_sig_figs
 from solar_offset.utils.statistics_util import calculate_statistics
 
@@ -42,14 +42,17 @@ def country_list():
         cd = dict(c_row)
         if not cd["donation_sum"]:
             cd["donation_sum"] = 0
+        cd['avg_solar_hours'] = round(cd['solar_hours'] / 365, 1)
+        cd['solar_panel_price'] = round(cd['solar_power_price'] * SOLAR_PANEL_POWER_kW, 2)
         cd['carbon_offset_per_pound'] = floor(calc_carbon_offset(c_row))
         cd['carbon_offset_per_panel_kg'] = round(calc_solar_panel_offset(c_row) / 1000.0, 1)
         cd['solar_panel_percent_footprint'] = None
-        if g.user.get('householder_carbon_footprint', None):
-            # Calculate Percentage of how much carbon footprint is reduced by donating one solar panel
-            fraction_footprint_reduction = cd['carbon_offset_per_panel_kg'] / (g.user['householder_carbon_footprint'] * 1000)
-            # round to 3 significant figures, convert to percent, then ensure that percentage only has 2 decimal places
-            cd['solar_panel_percent_footprint'] = round(round_to_n_sig_figs(fraction_footprint_reduction, 3) * 100, 2)
+        if g.get("user", None):
+            if g.user.get('householder_carbon_footprint', None):
+                # Calculate Percentage of how much carbon footprint is reduced by donating one solar panel
+                fraction_footprint_reduction = cd['carbon_offset_per_panel_kg'] / (g.user['householder_carbon_footprint'] * 1000)
+                # round to 3 significant figures, convert to percent, then ensure that percentage only has 2 decimal places
+                cd['solar_panel_percent_footprint'] = round(round_to_n_sig_figs(fraction_footprint_reduction, 3) * 100, 2)
         country_dicts.append(cd)
 
     # Give traffic light indicator according to carbon_offset
@@ -64,6 +67,8 @@ def country_list():
             country['signal_color'] = "red"
         else:
             country['signal_color'] = "amber"
+
+    # TODO sorting functionality
 
     if "raw" in request.args:
         for cd in country_dicts:
