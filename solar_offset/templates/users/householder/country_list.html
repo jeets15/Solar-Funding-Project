@@ -29,20 +29,25 @@
                     </h3></a>
                 </div>
                 <div style="margin-left: auto;" class="fit-tight text-center">
-                    <div class="signal-wrapper {{country.signal_color}}" style="margin-left: auto; font-size: 125%;">
-                        <div class="signal r"></div>
-                        <div class="signal a"></div>
-                        <div class="signal g"></div>
+                    <div style="display: flex;">
+                        <div style="margin: auto 0.5em;">
+                            <!-- {{ country.carbon_offset }}g / 1£ Donated -->
+                            <b>150g / Solar Panel</b>
+                        </div>
+                        <div class="signal-wrapper {{country.signal_color}}" style="margin-left: auto; font-size: 125%;">
+                            <div class="signal r"></div>
+                            <div class="signal a"></div>
+                            <div class="signal g"></div>
+                        </div>
                     </div>
-                    <div>{{ country.carbon_offset }}g / 1£ Donated</div>
-                    <div><b>Potential Carbon Offset</b></div>
+                    <div>Potential Carbon Offset</div>
                 </div>
             </div>
             <div>
                 <ul class="list-inline">
                     <li class="icon-badge" title="Hours of Sun Per Year"><i class="bi bi-sun"></i>{{ country.solar_hours if country.solar_hours != None else "-/-" }}h</li>
                     <li class="icon-badge" title="Carbon Emissions per Year (in Mega-tons)"><i class="bi bi-clouds"></i>{{ country.carbon_emissions / 1000000.0 if country.carbon_emissions != None else "-/-"}}Mt</li>
-                    <li class="icon-badge" title="Solar Panel Construction Price (£ / kW)"><i class="bi bi-currency-pound"></i>{{ country.solar_panel_price if country.solar_panel_price != None else "-/-" }} /kW</li>
+                    <li class="icon-badge" title="Solar Panel Construction Price (£ / kW)"><i class="bi bi-currency-pound"></i>{{ country.solar_power_price if country.solar_power_price != None else "-/-" }} /kW</li>
                     <li class="icon-badge" title="Percentage of Solar Energy in Electricity Mix"><i class="bi bi-plug"></i>{{ country.electricity_mix_percentage *100 if country.electricity_mix_percentage != None else "-/-" }}%</li>
                 </ul>
             </div>

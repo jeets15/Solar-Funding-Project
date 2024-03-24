@@ -35,7 +35,7 @@ def calc_carbon_offset(country: sqlite3.Row):
     carbon_offset_per_panel = panel_replaced_emissions_kg - panel_emissions_kg
 
     # How much a single solar panel costs based on the price per kW
-    price_per_panel = SOLAR_PANEL_POWER_kW * country["solar_panel_price"]
+    price_per_panel = SOLAR_PANEL_POWER_kW * country["solar_power_price"]
 
     # kg CO2 eq being offset by donating £1
     return (carbon_offset_per_panel / price_per_panel) * 1000  # Convert kg to g

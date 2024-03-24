@@ -42,18 +42,18 @@ def country_list():
         cd = dict(c_row)
         if not cd["donation_sum"]:
             cd["donation_sum"] = 0
-        cd["carbon_offset"] = floor(calc_carbon_offset(c_row))
+        cd['carbon_offset_per_pound'] = floor(calc_carbon_offset(c_row))
         country_dicts.append(cd)
 
     # Give traffic light indicator according to carbon_offset
     # Green ~ upper 30%, Red ~ lower 30%, Amber ~ Midfield
-    lst_offset_vals = [ c['carbon_offset'] for c in country_dicts ]
+    lst_offset_vals = [ c['carbon_offset_per_pound'] for c in country_dicts ]
     upper_bound = calculate_percentile(lst_offset_vals, 0.7)
     lower_bound = calculate_percentile(lst_offset_vals, 0.3)
     for country in country_dicts:
-        if country['carbon_offset'] >= upper_bound:
+        if country['carbon_offset_per_pound'] >= upper_bound:
             country['signal_color'] = "green"
-        elif country['carbon_offset'] <= lower_bound:
+        elif country['carbon_offset_per_pound'] <= lower_bound:
             country['signal_color'] = "red"
         else:
             country['signal_color'] = "amber"

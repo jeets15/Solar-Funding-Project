@@ -1,6 +1,6 @@
 -- Data to populate database during development for visualisation
 
-INSERT INTO country (country_code, short_code, name, solar_hours, carbon_emissions, solar_panel_price, electricity_mix_percentage, electricty_consumption, description)
+INSERT INTO country (country_code, short_code, name, solar_hours, carbon_emissions, solar_power_price, electricity_mix_percentage, electricty_consumption, description)
 VALUES
     -- Hours of Sunlight average estimated from https://www.currentresults.com/Weather/Spain/annual-days-of-sunshine.php (2445.702 hours)
     -- Carbon Emissions for 2023 taken from https://app.electricitymaps.com/zone/ES (39.2 Megatons)
