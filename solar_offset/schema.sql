@@ -26,7 +26,11 @@ CREATE TABLE user (
     -- h ~ householder, s ~ staff, a ~ admin
     -- if a user is a householder, they can't have any other roles
     -- a user can be admin, staff, or both at the same time
-    user_type CHAR(3) CHECK( user_type IN ('h__', '__a', '_s_', '_sa') )
+    user_type CHAR(3) CHECK( user_type IN ('h__', '__a', '_s_', '_sa') ),
+
+    -- Householder Only
+    --   Carbon footprint of householder in Tons (t)
+    householder_carbon_footprint REAL DEFAULT NULL CHECK ( householder_carbon_footprint > 0 )
 );
 
 CREATE TABLE user_status (
