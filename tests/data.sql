@@ -3,18 +3,20 @@
 -- Use werkzeug.security.generate_password_hash to generate hashes to insert
 -- Don't forget to write down the plain text test passwords or the hashes are useless
 
-INSERT INTO user (user_type, email_username, display_name, id, password_hash)
+INSERT INTO user (user_type, email_username, display_name, householder_carbon_footprint, id, password_hash)
 VALUES
+    -- Password = "h_test"
+    ('h__', 'h_test', 'Test Householder', 14.72, '2c06f907-4ca3-42ab-9a3b-d3ccbf0326d3', 'scrypt:32768:8:1$FQygLjDw2iUhdRvF$194122453ce201239ad3c9d68a08881c2af31806aa7ab01443820f853b00e17306d191bcc785dd50d260a409be36a31214c109f245e731a100f81181dd32791c'),
     -- Password = "john!Smith977"
-    ('h__', 'john.smith977@example.co.uk', 'John Smith','47fa9dc4-cb7a-44c0-ace2-a65d8705495e', 'scrypt:32768:8:1$mrhixSkl8zpgEzjw$1d0eb679f0627b2ad0aff80bae7f9b3b724519715da197de555c136b6f4a275510a31e8099ae5e7ed96c7f08e922fa75c56e4146294b8fcf45891bfa183c025e'),
+    ('h__', 'john.smith977@example.co.uk', 'John Smith', NULL, '47fa9dc4-cb7a-44c0-ace2-a65d8705495e', 'scrypt:32768:8:1$mrhixSkl8zpgEzjw$1d0eb679f0627b2ad0aff80bae7f9b3b724519715da197de555c136b6f4a275510a31e8099ae5e7ed96c7f08e922fa75c56e4146294b8fcf45891bfa183c025e'),
     -- Password = "12Jane!DoeDoe"
-    ('h__', 'jane.doe15@example.com', 'Jane Doe', '3d1886b7-abec-49b9-b849-99ceb616b127', 'scrypt:32768:8:1$NzKNPOundEOjypTn$dd9534ea0c7eae235f329d3c699c99963cb8186cb6fd6ea91b4509d84f6367aac3e45cf01b5381413b2024c76bdba1405d684d53a639b753165bfc0cb09ec3b4'),
+    ('h__', 'jane.doe15@example.com', 'Jane Doe', NULL, '3d1886b7-abec-49b9-b849-99ceb616b127', 'scrypt:32768:8:1$NzKNPOundEOjypTn$dd9534ea0c7eae235f329d3c699c99963cb8186cb6fd6ea91b4509d84f6367aac3e45cf01b5381413b2024c76bdba1405d684d53a639b753165bfc0cb09ec3b4'),
     -- Password = "staff@29r83910"
-    ('_s_', "staff3881@hhrs", NULL, 'ed8425f7-8313-4382-9d7d-2b061eb890c5', 'scrypt:32768:8:1$oXJ7HMTqbUOnRQ51$4f70127d583052d1195fed4d00a1ba879b44d4c203173d2fa890d1f2f217ad5abc398ff31dac9415d51c4beb5035a5ad8034fce57afb3820a0d28c71b0f89b51'),
+    ('_s_', "staff3881@hhrs", NULL, NULL, 'ed8425f7-8313-4382-9d7d-2b061eb890c5', 'scrypt:32768:8:1$oXJ7HMTqbUOnRQ51$4f70127d583052d1195fed4d00a1ba879b44d4c203173d2fa890d1f2f217ad5abc398ff31dac9415d51c4beb5035a5ad8034fce57afb3820a0d28c71b0f89b51'),
     -- Password = "admin$219047"
-    ('__a', 'admin1@12', NULL, '8b1a1136-0024-477f-9e29-cb7266cb46d6', 'scrypt:32768:8:1$FnYQbrFKnN0hzMVS$3bd8242911240ebfc967a338f3cb3e656ad2ff9d8f07ea14280a11aec492508bf191880c19fbcbdd8d3f644638f37415c53a61e7432ccbe6a3af011f18555e54'),
+    ('__a', 'admin1@12', NULL, NULL, '8b1a1136-0024-477f-9e29-cb7266cb46d6', 'scrypt:32768:8:1$FnYQbrFKnN0hzMVS$3bd8242911240ebfc967a338f3cb3e656ad2ff9d8f07ea14280a11aec492508bf191880c19fbcbdd8d3f644638f37415c53a61e7432ccbe6a3af011f18555e54'),
     -- Password = "staffmin12"
-    ('_sa', 'staffmin12', 'Mark', '4912602e-457a-45fb-90f9-d334606ca434', 'scrypt:32768:8:1$qu3NWpxv1Iob8Vjj$fc897b83583c38c42c543b68671be107673c962842b6c3927c92ad9ccc10a5eabfdd3798b0ce1662f074f9cd3dea62c0f9e8b6212aec24e58d6402bf2035e970');
+    ('_sa', 'staffmin12', 'Mark', NULL, '4912602e-457a-45fb-90f9-d334606ca434', 'scrypt:32768:8:1$qu3NWpxv1Iob8Vjj$fc897b83583c38c42c543b68671be107673c962842b6c3927c92ad9ccc10a5eabfdd3798b0ce1662f074f9cd3dea62c0f9e8b6212aec24e58d6402bf2035e970');
 
 
 -- Country Codes taken from https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
