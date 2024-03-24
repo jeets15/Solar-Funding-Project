@@ -36,11 +36,12 @@
                                 {% if country.solar_panel_percent_footprint %}
                                 <tr class="sep-bottom"> <td>Carbon Footprint Reduction</td> <td><b>{{ country.solar_panel_percent_footprint }}%</b></td> </tr>
                                 {% endif %}
-                                <tr>                    <td>Carbon Offset</td>              <td><b>{{ country.carbon_offset_per_panel_kg }}kg</b></td>   </tr>
+                                <tr> <td>Carbon Offset</td> <td><b>{{ country.carbon_offset_per_panel_kg }}kg</b></td>   </tr>
                             </table>
                             <div style="text-align: right;"><i>Per Solar Panel</i></div>
                         </div>
-                        <div class="signal-wrapper {{country.signal_color}}" style="margin-left: auto; font-size: 125%;">
+                        <div class="signal-wrapper {{country.signal_color}}" style="margin-left: auto; font-size: 125%;"
+                            title="Relative ranking of country's Carbon Offset&#10;Compared to other countries&#10;Green -> Top 30% highest offset&#10;Amber -> Midfield&#10;Red -> Bottom 30% offset">
                             <div class="signal r"></div>
                             <div class="signal a"></div>
                             <div class="signal g"></div>
