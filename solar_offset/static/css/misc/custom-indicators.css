@@ -69,26 +69,26 @@ div.signal-wrapper {
     display: flex;
     width: fit-content;
     height: fit-content;
-    background-color: lightgray;
+    background-color: rgb(235, 235, 235);
     border: 0.1em solid black; /*black*/
     border-radius: 0.8em;
-    padding: 0.25em 0.5em;
+    padding: 0.25em 0.25em;
 }
 div.signal-wrapper div.signal+div.signal {
-    margin-left: 0.3em;
+    margin-left: 0.4em;
 }
 div.signal-wrapper div.signal {
     width: 0.35em;
-    height: 1em;
+    height: 0.35em;
     background-color: rgba(255, 0, 0, 0.5);
     border: 0.05em solid black;
     border-radius: 1em;
-    margin: 0em;
+    margin: auto 0em;
     padding: 0em;
 }
 div.signal-wrapper div.signal.r {background-color: rgba(255,   0,   0, 1.0);}
 div.signal-wrapper div.signal.a {background-color: rgba(255, 187,   0, 1.0);}
 div.signal-wrapper div.signal.g {background-color: rgba(  0, 255,   0, 1.0);}
-div.signal-wrapper.red   div.signal.r {width: 1em;}
-div.signal-wrapper.amber div.signal.a {width: 1em;}
-div.signal-wrapper.green div.signal.g {width: 1em;}
+div.signal-wrapper.red   div.signal.r {width: 1em; height: 1em;}
+div.signal-wrapper.amber div.signal.a {width: 1em; height: 1em;}
+div.signal-wrapper.green div.signal.g {width: 1em; height: 1em;}
