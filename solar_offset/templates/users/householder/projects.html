@@ -46,9 +46,9 @@
                             Donate Now
                         </button>
                         {% else %}
-                        <a class="btn btn-secondary" href="{{ url_for('home.home') }}">
+                        <button class="btn btn-secondary" disabled>
                             Only householder accounts can donate!
-                        </a>
+                        </button>
                         {% endif %}
                     {% else %}
                     <span class="framed-rounded">You must <a href="{{ url_for('householder.login') }}">Log In</a> to donate</span>
