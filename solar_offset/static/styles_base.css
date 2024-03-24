@@ -27,7 +27,7 @@ ul.nav a {
 /* Display main content is a fix-width, centered container */
 .main-content-centered {
     max-width: 50em;
-    min-width: 20em;
+    min-width: 25em;
     margin: 1em auto;
     padding: 1em;
 }
