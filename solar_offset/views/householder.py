@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from solar_offset.db import get_db
-from solar_offset.utils.carbon_offset_util import calc_carbon_offset
+from solar_offset.utils.carbon_offset_util import calc_carbon_offset, calc_solar_panel_offset
 from solar_offset.utils.misc import calculate_percentile
 from solar_offset.utils.statistics_util import calculate_statistics
 
@@ -43,6 +43,7 @@ def country_list():
         if not cd["donation_sum"]:
             cd["donation_sum"] = 0
         cd['carbon_offset_per_pound'] = floor(calc_carbon_offset(c_row))
+        cd['carbon_offset_per_panel_kg'] = round(calc_solar_panel_offset(c_row) / 1000.0, 1)
         country_dicts.append(cd)
 
     # Give traffic light indicator according to carbon_offset

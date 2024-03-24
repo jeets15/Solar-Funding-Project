@@ -29,10 +29,13 @@
                     </h3></a>
                 </div>
                 <div style="margin-left: auto;" class="fit-tight text-center">
+                    <!-- <div>Potential Carbon Offset</div> -->
                     <div style="display: flex;">
                         <div style="margin: auto 0.5em;">
                             <!-- {{ country.carbon_offset }}g / 1£ Donated -->
-                            <b>150g / Solar Panel</b>
+                            <div><b>{{ country.carbon_offset_per_panel_kg }}kg</b></div>
+                            <div><i>Carbon Offset</i></div>
+                            <div><i>Per Solar Panel</i></div>
                         </div>
                         <div class="signal-wrapper {{country.signal_color}}" style="margin-left: auto; font-size: 125%;">
                             <div class="signal r"></div>
@@ -40,7 +43,6 @@
                             <div class="signal g"></div>
                         </div>
                     </div>
-                    <div>Potential Carbon Offset</div>
                 </div>
             </div>
             <div>
