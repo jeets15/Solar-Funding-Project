@@ -39,3 +39,16 @@ body {
     bottom: 10px;
     right: 10px;
 }
+
+table.table-carbon-data td {
+    border: 0;
+}
+table.table-carbon-data td+td {
+    padding-left: 0.5em;
+}
+table.table-carbon-data tr td:nth-child(1) {
+    text-align: right;
+}
+table.table-carbon-data tr.sep-bottom td {
+    border-bottom: 0.1em solid lightgray;
+}
