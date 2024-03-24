@@ -3,26 +3,61 @@
 {% block title %}Admin DashBoard{% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/homestyle.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/homestyle.css') }}">
 {% endblock %}
-
+{% block scripts %}
+    <script src="{{ url_for('static',filename='js/users/admin/admin.js') }}" defer></script>
+{% endblock %}
 {% block body %}
 
     {% include 'flashmessage.html' %}
     <div class="text-center">
         <h2>Welcome to Solar Offset Admin DashBoard: {{ g.user.name }}</h2>
     </div>
+
+    <!-- Suspend Modal Box-->
+    <div class="modal fade" id="suspendModalBox" tabindex="-1" role="dialog" aria-labelledby="suspendModalBoxTitle"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="suspendModalBoxTitle">Suspend User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/is-suspend-user" method="post">
+                        <div class="form-group">
+                            <input type="hidden" name="user_id">
+                            <label>Enter reason for the suspension: </label>
+                            <br>
+                            <textarea name="suspend_message" rows="8" cols="50" required></textarea>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-success">Submit</button>
+                            <button type="button" class="btn btn-outline-success" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
     <div class="position-relative overflow-hidden m-md-3 text-center">
         <div class="col-md-6  mx-auto mt-5">
 
             <table class="table table-striped table-hover table-bordered table-responsive"
-                   style="min-height: 20vh; max-width: 90%">
+                   style="min-height: 20vh; min-width: 120%">
                 <thead>
                 <tr>
                     <th scope="col">User Type</th>
                     <th scope="col">User ID</th>
                     <th scope="col">Email</th>
                     <th scope="col">Action</th>
+                    <th scope="col">Suspend Message</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -40,18 +75,23 @@
                                     <button class="btn btn-success" type="submit">Delete</button>
 
                                 </form>
-                                {% if user["id"] in user_status_list %}
-                                    <form action="/unflag-user" method="post">
+                                {% if user['is_suspended'] !="-" %}
+                                    <form action="/is-suspend-user" method="post">
                                         <input type="hidden" name="user_id" value="{{ user['id'] }}">
-                                        <button class="btn btn-outline-success" type="submit">Unflag</button>
+                                        <button class="btn btn-outline-success" type="submit">UnSuspend</button>
                                     </form>
                                 {% else %}
-                                    <form action="/flag-user" method="post">
-                                        <input type="hidden" name="user_id" value="{{ user['id'] }}">
-                                        <button class="btn btn-outline-success" type="submit">Flag</button>
-                                    </form>
+
+                                    <button class="btn btn-outline-success suspend-btn" data-toggle="modal"
+                                            data-target="#suspendModalBox" data-userid="{{ user['id'] }}"
+                                            type="button">Suspend
+                                    </button>
+
                                 {% endif %}
                             </div>
+                        </td>
+                        <td>
+                            {{ user['is_suspended'] }}
                         </td>
                     </tr>
                 {% endfor %}
