@@ -5,6 +5,7 @@
 {% block styles %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/projectsstyle.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/misc/custom-indicators.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/misc/custom-badges.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -16,7 +17,7 @@
         <li class="framed project">
             <div style="display: flex;">
                 <div>
-                    <a style="color:inherit; inline-size: min-content;" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
+                    <a style="color:inherit;" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
                         href="{{ url_for('householder.country', country_code=country.country_code) | lower }}"><h3>
                         {% if country.short_code %}
                         <!-- Taken from https://flagpedia.net/download/api -->
@@ -25,7 +26,7 @@
                             height="40"
                             alt="{{country.name}} Flag Icon">
                         {% endif %}
-                        {{ country.name }}➥
+                        {{ country.name }}
                     </h3></a>
                 </div>
                 <div style="margin-left: auto;" class="fit-tight text-center">
@@ -49,28 +50,48 @@
                     </div>
                 </div>
             </div>
-            <div>
-                <ul class="list-inline">
-                    <li class="icon-badge" title="Hours of Sun Per Year"><i class="bi bi-sun"></i>{{ country.solar_hours if country.solar_hours != None else "-/-" }}h</li>
-                    <li class="icon-badge" title="Carbon Emissions per Year (in Mega-tons)"><i class="bi bi-clouds"></i>{{ country.carbon_emissions / 1000000.0 if country.carbon_emissions != None else "-/-"}}Mt</li>
-                    <li class="icon-badge" title="Solar Panel Construction Price (£ / kW)"><i class="bi bi-currency-pound"></i>{{ country.solar_power_price if country.solar_power_price != None else "-/-" }} /kW</li>
-                    <li class="icon-badge" title="Percentage of Solar Energy in Electricity Mix"><i class="bi bi-plug"></i>{{ country.electricity_mix_percentage *100 if country.electricity_mix_percentage != None else "-/-" }}%</li>
-                </ul>
+            <div style="display: flex; flex-wrap: wrap;">
+                <span class="badge-icon-text">
+                    <span>
+                        <span>average daily sunlight</span>
+                        <span><i class="bi bi-sun"></i></span>
+                    </span>
+                    <span>{{ country.avg_solar_hours if country.solar_hours != None else "-/-" }}h</span>
+                </span>
+                <span class="badge-icon-text">
+                    <span>
+                        <span>yearly carbon emissions</span>
+                        <span><i class="bi bi-clouds"></i></span>
+                    </span>
+                    <span>{{ country.carbon_emissions / 1000000.0 if country.carbon_emissions != None else "-/-"}}Mt</span>
+                </span>
+                <span class="badge-icon-text">
+                    <span>
+                        <span>solar panel price</span>
+                        <span><i class="bi bi-cash-coin"></i></span>
+                    </span>
+                    <span>£{{ country.solar_panel_price if country.solar_panel_price != None else "-/-" }}</span>
+                </span>
+                <span class="badge-icon-text">
+                    <span>
+                        <span>solar energy in electricity mix</span>
+                        <span><i class="bi bi-plug"></i></span>
+                    </span>
+                    <span>{{ country.electricity_mix_percentage *100 if country.electricity_mix_percentage != None else "-/-" }}%</span>
+                </span>
             </div>
             <div style="display: flex">
                 <div>
                     <ul class="list-inline">
                         <li>
-                            <div class="fit-tight text-center framed-rounded">
-                                <div>{{ country.donation_count if country.donation_count != None else 0 }}</div>
-                                <hr class="tight">
-                                <div>Donations Made</div>
+                            <div class="badge-vertical">
+                                <div class="badge-vertical-val">{{ country.donation_count if country.donation_count != None else 0 }}</div>
+                                <div style="padding: 0 1em;">Donations Made</div>
                             </div>
                         </li>
                         <li>
-                            <div class="fit-tight text-center framed-rounded">
-                                <div>£{{ country.donation_sum if country.donation_sum != None else 0 }}</div>
-                                <hr class="tight">
+                            <div class="badge-vertical">
+                                <div class="badge-vertical-val">£{{ country.donation_sum if country.donation_sum != None else 0 }}</div>
                                 <div>Solar Funds Raised</div>
                             </div>
                         </li>
