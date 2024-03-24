@@ -1,0 +1,49 @@
+
+span.badge-icon-text {
+    display: flex;
+    overflow-x: visible;
+    white-space: nowrap;
+    width: fit-content;
+    padding: 0.5em;
+}
+span.badge-icon-text > span {
+    display: inline-block;
+    padding: 0.2em 0.4em;
+}
+span.badge-icon-text > span:nth-child(1) {
+    background-color: #e9ecef;
+    border: 0.1em solid gray;
+    border-top-left-radius: 1em;
+    border-bottom-left-radius: 1em;
+}
+span.badge-icon-text > span:nth-child(2) {
+    background-color: white;
+    border: 0.1em solid gray;
+    border-left: 0;
+    border-top-right-radius: 1em;
+    border-bottom-right-radius: 1em;
+}
+span.badge-icon-text > span:nth-child(1) > span:nth-child(2) {
+    margin-left: 0.5em;
+}
+
+
+div.badge-vertical {
+    border: 0.1em solid gray;
+    border-radius: 0.2em;
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+    
+    background-color: #e9ecef;
+    text-align: center;
+}
+div.badge-vertical > div {
+    padding: 0 1em;
+}
+div.badge-vertical > div.badge-vertical-val {
+    border-top-left-radius: 0.5em;
+    border-top-right-radius: 0.5em;
+    border-bottom: 0.1em solid gray;
+
+    background-color: white;
+}
