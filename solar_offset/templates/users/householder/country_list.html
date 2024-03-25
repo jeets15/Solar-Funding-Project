@@ -30,7 +30,6 @@
                     </h3></a>
                 </div>
                 <div style="margin-left: auto;" class="fit-tight text-center">
-                    <!-- <div>Potential Carbon Offset</div> -->
                     <div style="display: flex;">
                         <div style="margin: auto 0.5em;">
                             <table class="table-carbon-data">
@@ -56,28 +55,28 @@
                         <span>average daily sunlight</span>
                         <span><i class="bi bi-sun"></i></span>
                     </span>
-                    <span>{{ country.avg_solar_hours if country.solar_hours != None else "-/-" }}h</span>
+                    <span>{{ country.avg_solar_hours if country.solar_hours != None else "-/-" }} h</span>
                 </span>
                 <span class="badge-icon-text">
                     <span>
                         <span>yearly carbon emissions</span>
                         <span><i class="bi bi-clouds"></i></span>
                     </span>
-                    <span>{{ country.carbon_emissions / 1000000.0 if country.carbon_emissions != None else "-/-"}}Mt</span>
+                    <span>{{ country.carbon_emissions / 1000000.0 if country.carbon_emissions != None else "-/-"}} Mt</span>
                 </span>
                 <span class="badge-icon-text">
                     <span>
                         <span>solar panel price</span>
                         <span><i class="bi bi-cash-coin"></i></span>
                     </span>
-                    <span>£{{ country.solar_panel_price if country.solar_panel_price != None else "-/-" }}</span>
+                    <span>£ {{ country.solar_panel_price if country.solar_panel_price != None else "-/-" }}</span>
                 </span>
                 <span class="badge-icon-text">
                     <span>
                         <span>solar energy in electricity mix</span>
                         <span><i class="bi bi-plug"></i></span>
                     </span>
-                    <span>{{ country.electricity_mix_percentage *100 if country.electricity_mix_percentage != None else "-/-" }}%</span>
+                    <span>{{ country.electricity_mix_percentage *100 if country.electricity_mix_percentage != None else "-/-" }} %</span>
                 </span>
             </div>
             <div style="display: flex">

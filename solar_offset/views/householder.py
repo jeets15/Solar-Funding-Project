@@ -4,7 +4,7 @@ from solar_offset.utils.carbon_offset_util import SOLAR_PANEL_POWER_kW, calc_car
 from solar_offset.utils.misc import calculate_percentile, round_to_n_sig_figs
 from solar_offset.utils.statistics_util import calculate_statistics
 
-from math import floor
+from math import floor, isclose
 
 from solar_offset.views.auth import login_required
 
@@ -44,6 +44,8 @@ def country_list():
             cd["donation_sum"] = 0
         cd['avg_solar_hours'] = round(cd['solar_hours'] / 365, 1)
         cd['solar_panel_price'] = round(cd['solar_power_price'] * SOLAR_PANEL_POWER_kW, 2)
+        if isclose(cd['solar_panel_price'] % 1, 0):
+            cd['solar_panel_price'] = int(cd['solar_panel_price'])
         cd['carbon_offset_per_pound'] = floor(calc_carbon_offset(c_row))
         cd['carbon_offset_per_panel_kg'] = round(calc_solar_panel_offset(c_row) / 1000.0, 1)
         cd['solar_panel_percent_footprint'] = None
