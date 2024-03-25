@@ -8,15 +8,42 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='css/misc/custom-badges.css') }}">
 {% endblock %}
 
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/sorting.js') }}" defer></script>
+{% endblock %}
+
 {% block body %}
 <div class="main-content-centered">
-    <h2>Country List</h2>
+    <div style="display: flex;">
+        <h2>Country List</h2>
+        <div sorting-hidden="flex" style="margin-left: auto; display: none;">
+            <div class="dropdown">
+                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    sort by: <span sorting-current="country-list"></span>
+                </button>
+                
+                <ul class="dropdown-menu">
+                    <li><button class="dropdown-item" sorting-option="country-list" sorting-key="carbon-offset">carbon offset</button></li>
+                    <li><button class="dropdown-item" sorting-option="country-list" sorting-key="daily-sun">avg daily sunlight</button></li>
+                    <li><button class="dropdown-item" sorting-option="country-list" sorting-key="carbon-emiss">country carbon emissions</button></li>
+                    <li><button class="dropdown-item" sorting-option="country-list" sorting-key="panel-price">solar panel price</button></li>
+                    <li><button class="dropdown-item" sorting-option="country-list" sorting-key="solar-mix">solar in electricty mix</button></li>
+                    <li><button class="dropdown-item" sorting-option="country-list" sorting-key="population">country population</button></li>
+                    <li><button class="dropdown-item" sorting-option="country-list" sorting-key="name">country name</button></li>
+                </ul>
+            </div>
+            <button class="btn btn-outline-secondary" style="height: 2.375em; margin-left: 0.5em;" sorting-direction="country-list" sorting-direction-default="desc">
+                <span sorting-asc><i class="bi bi-sort-up"></i> asc</span><span sorting-desc><i class="bi bi-sort-down"></i> desc</span>
+            </button>
+        </div>
+    </div>
     {% if countries %}
-    <ul class="no-bullet vgap-1">
+    <ul class="no-bullet vgap-1" sorting-target="country-list">
         {% for country in countries %}
         <li class="framed project">
             <div style="display: flex;">
                 <div>
+                    <span sorting-key="name" style="display: none;">{{ country.name }}</span>
                     <a style="color:inherit;" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
                         href="{{ url_for('householder.country', country_code=country.country_code) | lower }}"><h3>
                         {% if country.short_code %}
@@ -36,7 +63,7 @@
                                 {% if country.solar_panel_percent_footprint %}
                                 <tr class="sep-bottom"> <td>Carbon Footprint Reduction</td> <td><b>{{ country.solar_panel_percent_footprint }}%</b></td> </tr>
                                 {% endif %}
-                                <tr> <td>Carbon Offset</td> <td><b>{{ country.carbon_offset_per_panel_kg }}kg</b></td>   </tr>
+                                <tr> <td>Carbon Offset</td> <td><b sorting-key="carbon-offset">{{ country.carbon_offset_per_panel_kg }}</b> <b>kg</b></td>   </tr>
                             </table>
                             <div style="text-align: right;"><i>Per Solar Panel</i></div>
                         </div>
@@ -55,28 +82,36 @@
                         <span>average daily sunlight</span>
                         <span><i class="bi bi-sun"></i></span>
                     </span>
-                    <span>{{ country.avg_solar_hours if country.solar_hours != None else "-/-" }} h</span>
+                    <span><span sorting-key="daily-sun">{{ country.avg_solar_hours if country.solar_hours != None else "" }}</span> h</span>
                 </span>
                 <span class="badge-icon-text">
                     <span>
                         <span>yearly carbon emissions</span>
                         <span><i class="bi bi-clouds"></i></span>
                     </span>
-                    <span>{{ country.carbon_emissions / 1000000.0 if country.carbon_emissions != None else "-/-"}} Mt</span>
+                    <span><span sorting-key="carbon-emiss">{{ country.carbon_emissions / 1000000.0 if country.carbon_emissions != None else ""}}</span> Mt</span>
                 </span>
                 <span class="badge-icon-text">
                     <span>
                         <span>solar panel price</span>
                         <span><i class="bi bi-cash-coin"></i></span>
                     </span>
-                    <span>£ {{ country.solar_panel_price if country.solar_panel_price != None else "-/-" }}</span>
+                    <span>£ <span sorting-key="panel-price">{{ country.solar_panel_price if country.solar_panel_price != None else "" }}</span></span>
                 </span>
                 <span class="badge-icon-text">
                     <span>
                         <span>solar energy in electricity mix</span>
                         <span><i class="bi bi-plug"></i></span>
                     </span>
-                    <span>{{ country.electricity_mix_percentage *100 if country.electricity_mix_percentage != None else "-/-" }} %</span>
+                    <span><span sorting-key="solar-mix">{{ country.electricity_mix_percentage *100 if country.electricity_mix_percentage != None else "" }}</span> %</span>
+                </span>
+                <span class="badge-icon-text">
+                    <span>
+                        <span>population size</span>
+                        <span><i class="bi bi-person-fill"></i></span>
+                    </span>
+                    <span><span>{{ country.population_size.val_format }}</span> <span>{{ country.population_size.unit }}</span></span>
+                    <span sorting-key="population" style="display: none;">{{ country.population_size.val }}</span>
                 </span>
             </div>
             <div style="display: flex">
