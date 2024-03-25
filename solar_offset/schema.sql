@@ -49,7 +49,8 @@ CREATE TABLE country (
     carbon_emissions INTEGER, -- Yearly carbon emissions (from electricity production ideally) in Tons of CO2
     solar_power_price INTEGER, -- Price for constructing a solar panel in (£ / kW)
     electricity_mix_percentage DOUBLE, -- What percentage of the electricity mix is generated from solar energy
-    electricty_consumption INTEGER -- Electric Energy being used in the Country (TWh)
+    electricty_consumption INTEGER, -- Electric Energy being used in the Country (TWh)
+    population_size INTEGER NOT NULL DEFAULT 0 CHECK( population_size >= 0 ) -- Population size of the given country
 );
 
 CREATE TABLE organization (
