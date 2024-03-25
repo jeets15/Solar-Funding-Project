@@ -22,7 +22,7 @@ VALUES
 -- Country Codes taken from https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
 -- country_code: ISO 3166-1 A-3 (3 Characters)
 -- short_code:   ISO 3166-1 A-2 (2 Characters)
-INSERT INTO country (country_code, short_code, name, solar_hours, carbon_emissions, solar_power_price, electricity_mix_percentage, electricty_consumption, description)
+INSERT INTO country (country_code, short_code, name, solar_hours, carbon_emissions, solar_power_price, electricity_mix_percentage, electricty_consumption, population_size, description)
 VALUES
     -- This is a dummy entry that does not reflect real-world data
     -- Hours of Sunshine simply set to 6 months (4380 hours)
@@ -30,12 +30,14 @@ VALUES
     -- Set solar panel price to be relatively high due to shipping costs etc.
     -- Assume 50% renewable energies in research facilities
     -- Guess electricty consumption to be around 2TWh per year
-    ('ATA', 'AQ', 'Antarctica', 4380, 100000, 8000, 0.5, 2,
+    -- Antarctica's population size is between 1300 and 5100
+    ('ATA', 'AQ', 'Antarctica', 4380, 100000, 8000, 0.5, 2, 3200,
         'This data does not reflect the reality. Antarctica is the continent surrounding the South-Pole. While Antarctica is not officially a country, it is often treated as one due to the fact that most inhabitants are members of research groups.'),
     -- Hours of Sunlight average estimated from https://www.currentresults.com/Weather/Spain/annual-days-of-sunshine.php (2445.702 hours)
     -- Carbon Emissions for 2023 taken from https://app.electricitymaps.com/zone/ES (39.2 Megatons)
     -- Price for Solar Panel taken from https://murciatoday.com/how-much-does-it-cost-to-install-solar-panels-in-spain_1672684-a.html (2000€/kW ~= £1800/kW)
-    ('ESP', 'ES', 'Spain', 2445, 39200000, 1800, 0.1617, 259,
+    -- Spain Population https://en.wikipedia.org/wiki/Spain#cite_note-10
+    ('ESP', 'ES', 'Spain', 2445, 39200000, 1800, 0.1617, 259, 48592909,
         'Spain (España), or the Kingdom of Spain (Reino de España), is a country located in Southwestern Europe, with parts of its territory in the Atlantic Ocean, the Mediterranean Sea and Africa. It is the largest country in Southern Europe and the fourth-most populous European Union member state. [https://en.wikipedia.org/wiki/Spain]
         \nSolar power in Spain has grown significantly due to favorable conditions and government support. Abundant sunshine, coupled with investments in solar technology, has led to increased capacity. There''s still potential for further growth, supported by ongoing advancements in technology and favorable policies aimed at increasing renewable energy usage.');
 
