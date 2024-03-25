@@ -49,6 +49,16 @@ def country_list():
         cd['carbon_offset_per_pound'] = floor(calc_carbon_offset(c_row))
         cd['carbon_offset_per_panel_kg'] = round(calc_solar_panel_offset(c_row) / 1000.0, 1)
         cd['solar_panel_percent_footprint'] = None
+
+        if cd['population_size'] >= 1000000000:
+            cd['population_size'] = {'val': cd['population_size'], 'val_format': round(cd['population_size'] / 1000000000., 2), 'unit': "billion"}
+        elif cd['population_size'] >= 1000000:
+            cd['population_size'] = {'val': cd['population_size'], 'val_format': round(cd['population_size'] / 1000000., 2), 'unit': "million"}
+        elif cd['population_size'] >= 10000:
+            cd['population_size'] = {'val': cd['population_size'], 'val_format': round(cd['population_size'] / 1000., 2), 'unit': "thousand"}
+        else:
+            cd['population_size'] = {'val': cd['population_size'], 'val_format': cd['population_size'], 'unit': ""}
+
         if g.get("user", None):
             if g.user.get('householder_carbon_footprint', None):
                 # Calculate Percentage of how much carbon footprint is reduced by donating one solar panel
@@ -70,8 +80,6 @@ def country_list():
         else:
             country['signal_color'] = "amber"
 
-    # TODO sorting functionality
-
     if "raw" in request.args:
         for cd in country_dicts:
             cd.pop("description")
@@ -79,7 +87,10 @@ def country_list():
             cd.pop("short_code")
         return country_dicts
     else:
-        return render_template("./users/householder/country_list.html", countries=country_dicts)
+        return render_template(
+            "./users/householder/country_list.html",
+            countries=sorted(country_dicts, key=lambda c: c['carbon_offset_per_panel_kg'], reverse=True)
+        )
 
 
 @bp.route("/countries/<country_code>")
