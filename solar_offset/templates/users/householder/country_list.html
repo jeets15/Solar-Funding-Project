@@ -37,19 +37,6 @@
         {%- else -%}
         <div class="badge-vertical-val">{{ v_badge_value | default('-/-') }} {{ v_badge_unit }}</div>
         {%- endif %}
-        <div style="padding: 0 1em;">v_badge_text</div>
-    </div>
-{%- endmacro %}
-
-{% macro badge_vertical(v_badge_text, v_badge_value, v_badge_unit=None, prepend_unit=False) -%}
-    <div class="badge-vertical">
-        {%- if not v_badge_unit %}
-        <div class="badge-vertical-val">{{ v_badge_value | default('-/-') }}</div>
-        {%- elif prepend_unit -%}
-        <div class="badge-vertical-val">{{ v_badge_unit }} {{ v_badge_value | default('-/-') }}</div>
-        {%- else -%}
-        <div class="badge-vertical-val">{{ v_badge_value | default('-/-') }} {{ v_badge_unit }}</div>
-        {%- endif %}
         <div style="padding: 0 1em;">{{ v_badge_text }}</div>
     </div>
 {%- endmacro %}
