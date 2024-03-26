@@ -44,3 +44,19 @@ h2 {
     margin: 10px 0;
     color: #333;
 }
+
+table.carbon-data td {
+    border: 0;
+}
+table.carbon-data td+td {
+    padding-left: 0.5em;
+}
+table.carbon-data tr td:nth-child(2) {
+    font-weight: bold;
+}
+table.carbon-data tr.sep-bottom td {
+    border-bottom: 0.1em solid gray;
+}
+table.carbon-data tr.large td {
+    font-size: 1.4em;
+}

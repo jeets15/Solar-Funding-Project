@@ -11,16 +11,32 @@
         <div class="container">
             <h1>Welcome {{ g.user.name }}!</h1>
         </div>
-        <div class="container" style="width: 40%; margin-left: auto; margin-right: 4em;">
+        <div class="container" style="width: 45%; margin-left: auto; margin-right: 4em;">
             {% if g.user.householder_carbon_footprint %}
-            <h2>Your Carbon Footprint</h2>
+            <table class="carbon-data">
+                <tr> <td>Your yearly Carbon Footprint</td> <td>{{ g.user.householder_carbon_footprint }} tons</td> </tr>
+                <tr> <td>Your Carbon Offset by Donating</td> <td>{{ carbon_offset_data.donation_offset }} kg</td> </tr>
+                <tr class="sep-bottom"> <td>Reduction of</td> <td>{{ carbon_offset_data.reduction_percent }} %</td> </tr>
+                <tr class="large"> <td>Your offset Carbon Footprint</td> <td>{{ carbon_offset_data.reduced_footprint }} tons</td> </tr>
+            </table>
             {% else %}
             <h2>Add your Carbon Footprint</h2>
             {% endif %}
-            <form action="{{ url_for('householder.update_carbon_footprint') }}" method="post">
-                <input type="number" name="footprint" placeholder="Update your Carbon Footprint">
-                <input type="submit" value="Update">
+            <form action="{{ url_for('householder.update_carbon_footprint') }}" method="post" style="margin-top: 1em;">
+                <div class="input-group mb-3">
+                    <input type="number" name="footprint" style="width: 16em;"
+                        min="0.01" step="0.01"
+                        aria-label="carbon footprint per year in tons"
+                        pattern="^\d*(\.\d{0,2})?$"
+                        oninput="if (typeof this.reportValidity === 'function') {this.reportValidity();}"
+                        placeholder="Update your Carbon Footprint">
+                    <span class="input-group-text" id="basic-addon2">tons</span>
+                    <input class="btn btn-outline-primary" type="submit" value="Update">
+                </div>
             </form>
+            <div>Calculate your Carbon Footprint using the
+                <a href="https://footprint.wwf.org.uk/questionnaire" target="_blank" rel="noopener noreferrer" style="white-space: nowrap;">WWF-UK Questionnaire</a></div>
+            <div style="font-size: 0.6em;"><i style="line-height: 1em;">(By using this link, you leave our site and access a third party's services. We are not responsible for their content or privacy practices.)</i></div>
         </div>
         <div class="container">
             <h2>Deed Done</h1>
