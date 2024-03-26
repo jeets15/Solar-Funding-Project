@@ -27,7 +27,11 @@ CREATE TABLE user
     -- h ~ householder, s ~ staff, a ~ admin
     -- if a user is a householder, they can't have any other roles
     -- a user can be admin, staff, or both at the same time
-    user_type      CHAR(3) CHECK ( user_type IN ('h__', '__a', '_s_', '_sa') )
+    user_type      CHAR(3) CHECK ( user_type IN ('h__', '__a', '_s_', '_sa') ),
+
+    -- Householder Only
+    --   Carbon footprint of householder in Tons (t)
+    householder_carbon_footprint REAL DEFAULT NULL CHECK ( householder_carbon_footprint > 0 )
 );
 
 CREATE TABLE user_status
@@ -45,9 +49,10 @@ CREATE TABLE country
     description                TEXT,                -- long-ish description about country in relation to solar offset
     solar_hours                INTEGER,             -- hours of sunlight per year (estimate)
     carbon_emissions           INTEGER,             -- Yearly carbon emissions (from electricity production ideally) in Tons of CO2
-    solar_panel_price          INTEGER,             -- Price for constructing a solar panel in (£ / kW)
+    solar_panel_price_per_kw          INTEGER,             -- Price for constructing a solar panel in (£ / kW)
     electricity_mix_percentage DOUBLE,              -- What percentage of the electricity mix is generated from solar energy
-    electricty_consumption     INTEGER              -- Electric Energy being used in the Country (TWh)
+    electricty_consumption     INTEGER,             -- Electric Energy being used in the Country (TWh)
+    population_size            INTEGER NOT NULL DEFAULT 0 CHECK( population_size >= 0 ) -- Population size of the given country
 );
 
 CREATE TABLE organization
