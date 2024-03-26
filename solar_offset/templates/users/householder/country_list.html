@@ -41,9 +41,15 @@
     <ul class="no-bullet vgap-1" sorting-target="country-list">
         {% for country in countries %}
         <li class="framed project">
+            <span hidden sorting-key="carbon-offset">{{ country.carbon_offset_per_panel_kg | default('0') }}</span>
+            <span hidden sorting-key="daily-sun"    >{{ country.avg_solar_hours            | default('0') }}</span>
+            <span hidden sorting-key="carbon-emiss" >{{ country.carbon_emissions           | default('0') }}</span>
+            <span hidden sorting-key="panel-price"  >{{ country.solar_panel_price          | default('0') }}</span>
+            <span hidden sorting-key="solar-mix"    >{{ country.electricity_mix_percentage | default('0') }}</span>
+            <span hidden sorting-key="population"   >{{ country.population_size.val        | default('0') }}</span>
+            <span hidden sorting-key="name"         >{{ country.name                       | default('0') }}</span>
             <div style="display: flex;">
                 <div>
-                    <span sorting-key="name" style="display: none;">{{ country.name }}</span>
                     <a style="color:inherit;" class="link-body-emphasis link-offset-2 link-underline-opacity-25 link-underline-opacity-75-hover"
                         href="{{ url_for('householder.country', country_code=country.country_code) | lower }}"><h3>
                         {% if country.short_code %}
@@ -61,9 +67,9 @@
                         <div style="margin: auto 0.5em;">
                             <table class="table-carbon-data">
                                 {% if country.solar_panel_percent_footprint %}
-                                <tr class="sep-bottom"> <td>Carbon Footprint Reduction</td> <td><b>{{ country.solar_panel_percent_footprint }}%</b></td> </tr>
+                                <tr class="sep-bottom"> <td>Carbon Footprint Reduction</td> <td><b>{{ country.solar_panel_percent_footprint }} %</b></td> </tr>
                                 {% endif %}
-                                <tr> <td>Carbon Offset</td> <td><b sorting-key="carbon-offset">{{ country.carbon_offset_per_panel_kg }}</b> <b>kg</b></td>   </tr>
+                                <tr> <td>Carbon Offset</td> <td><b>{{ country.carbon_offset_per_panel_kg }} kg</b></td>   </tr>
                             </table>
                             <div style="text-align: right;"><i>Per Solar Panel</i></div>
                         </div>
@@ -82,28 +88,28 @@
                         <span>average daily sunlight</span>
                         <span><i class="bi bi-sun"></i></span>
                     </span>
-                    <span><span sorting-key="daily-sun">{{ country.avg_solar_hours if country.solar_hours != None else "" }}</span> h</span>
+                    <span>{{ country.avg_solar_hours | default('-/-') }} h</span>
                 </span>
                 <span class="badge-icon-text">
                     <span>
                         <span>yearly carbon emissions</span>
                         <span><i class="bi bi-clouds"></i></span>
                     </span>
-                    <span><span sorting-key="carbon-emiss">{{ country.carbon_emissions / 1000000.0 if country.carbon_emissions != None else ""}}</span> Mt</span>
+                    <span>{{ country.carbon_emissions / 1000000.0 | default('-/-') }} Mt</span>
                 </span>
                 <span class="badge-icon-text">
                     <span>
                         <span>solar panel price</span>
                         <span><i class="bi bi-cash-coin"></i></span>
                     </span>
-                    <span>£ <span sorting-key="panel-price">{{ country.solar_panel_price if country.solar_panel_price != None else "" }}</span></span>
+                    <span>£ {{ country.solar_panel_price | default('-/-') }}</span>
                 </span>
                 <span class="badge-icon-text">
                     <span>
                         <span>solar energy in electricity mix</span>
                         <span><i class="bi bi-plug"></i></span>
                     </span>
-                    <span><span sorting-key="solar-mix">{{ country.electricity_mix_percentage *100 if country.electricity_mix_percentage != None else "" }}</span> %</span>
+                    <span>{{ country.electricity_mix_percentage *100 | default('-/-') }} %</span>
                 </span>
                 <span class="badge-icon-text">
                     <span>
@@ -111,7 +117,6 @@
                         <span><i class="bi bi-person-fill"></i></span>
                     </span>
                     <span><span>{{ country.population_size.val_format }}</span> <span>{{ country.population_size.unit }}</span></span>
-                    <span sorting-key="population" style="display: none;">{{ country.population_size.val }}</span>
                 </span>
             </div>
             <div style="display: flex">
