@@ -14,7 +14,7 @@
         <div class="container" style="width: 45%; margin-left: auto; margin-right: 4em;">
             {% if g.user.householder_carbon_footprint %}
             <table class="carbon-data">
-                <tr> <td>Your yearly Carbon Footprint</td> <td>{{ g.user.householder_carbon_footprint }} tons</td> </tr>
+                <tr class="large"> <td>Your yearly Carbon Footprint</td> <td>{{ g.user.householder_carbon_footprint }} tons</td> </tr>
                 <tr> <td>Your Carbon Offset by Donating</td> <td>{{ carbon_offset_data.donation_offset }} kg</td> </tr>
                 <tr class="sep-bottom"> <td>Reduction of</td> <td>{{ carbon_offset_data.reduction_percent }} %</td> </tr>
                 <tr class="large"> <td>Your offset Carbon Footprint</td> <td>{{ carbon_offset_data.reduced_footprint }} tons</td> </tr>

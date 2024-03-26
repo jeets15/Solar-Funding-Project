@@ -16,20 +16,23 @@ bp = Blueprint("householder", __name__)
 def dashboard():
     stats = calculate_statistics()
 
+
     user_footprint = g.user['householder_carbon_footprint']
-    user_donations_countries = get_db().execute(
-        "SELECT electricity_mix_percentage, solar_hours, electricty_consumption, \
-            carbon_emissions, solar_panel_price_per_kw, donation.* \
-            FROM country JOIN donation \
-            ON (country.country_code == donation.country_code) \
-            WHERE householder_id == ?;"
-        , [g.user['id']]).fetchall()
-    calc_offset = sum([ calc_carbon_offset(cd) * cd['donation_amount'] / 1000000 for cd in user_donations_countries ])
-    carbon_offset_data = {
-        'donation_offset': round(calc_offset * 1000, 2), # Convert from tons to kg
-        'reduction_percent': round(calc_offset / user_footprint * 100, 2),
-        'reduced_footprint': round(user_footprint - calc_offset, 2)
-    }
+    carbon_offset_data = dict()
+    if user_footprint:
+        user_donations_countries = get_db().execute(
+            "SELECT electricity_mix_percentage, solar_hours, electricty_consumption, \
+                carbon_emissions, solar_panel_price_per_kw, donation.* \
+                FROM country JOIN donation \
+                ON (country.country_code == donation.country_code) \
+                WHERE householder_id == ?;"
+            , [g.user['id']]).fetchall()
+        calc_offset = sum([ calc_carbon_offset(cd) * cd['donation_amount'] / 1000000 for cd in user_donations_countries ])
+        carbon_offset_data = {
+            'donation_offset': round(calc_offset * 1000, 2), # Convert from tons to kg
+            'reduction_percent': round(calc_offset / user_footprint * 100, 2),
+            'reduced_footprint': round(user_footprint - calc_offset, 2)
+        }
 
     return render_template(
         "/users/householder/householderdashboard.html",
