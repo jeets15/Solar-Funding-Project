@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, session, redirect
+from flask import Blueprint, render_template, request, redirect, g
 from solar_offset.db import get_db
 from solar_offset.views.auth import login_required
 
@@ -9,32 +9,40 @@ bp = Blueprint("admin", __name__)
 @login_required("a")
 def admin():
     db = get_db()
-    user_types = ["admin", "householder", "staff"]
+    current_admin = g.user['id']
     users = db.execute(
-        'SELECT * FROM user WHERE user_type NOT LIKE ? ', ('%a%',)
+        'SELECT * FROM user WHERE id!= ? ', (current_admin,)
     ).fetchall()
-    user_status_list = db.execute('SELECT user_id,flag_suspicious FROM user_status WHERE flag_suspicious=?',
-                                  (1,)).fetchall()
+    user_status_list = db.execute('SELECT * FROM user_status ').fetchall()
 
-    user_status_dict = []
+    user_status_dict = {}
     for user_row in user_status_list:
-        userstatusdict = dict(user_row)
-        user_status_dict.append(userstatusdict)
+        user_status_dict[user_row['user_id']] = user_row['suspend']
 
     user_dicts = []
-    for user_row in users:
-        userdict = dict(user_row)
-        if ("h__" in userdict["user_type"]):
-            userdict["user_type"] = "householder"
-        else:
-            userdict["user_type"] = "staff"
-        user_dicts.append(userdict)
 
-        user_statuses = [item['user_id'] for item in user_status_dict]
+    for user_row in users:
+        user_types = []
+        userdict = dict(user_row)
+        if "h" in userdict["user_type"]:
+            user_types.append("Householder")
+        if "s" in userdict["user_type"]:
+            user_types.append("Staff")
+        if 'a' in userdict['user_type']:
+            user_types.append("Admin")
+
+        userdict['user_type'] = " & ".join(user_types)
+        userdict["is_suspended"] = user_status_dict.get(user_row['id'], None)
+        if userdict["is_suspended"] is None:
+            userdict["is_suspended"] = "-"
+        else:
+            userdict["is_suspended"] = userdict["is_suspended"]
+        user_dicts.append(userdict)
+    print(user_dicts)
     return render_template(
         "./users/admin/admin.html",
         users=user_dicts,
-        user_status_list=user_statuses)
+    )
 
 
 @bp.route('/delete_user', methods=['POST'])
@@ -46,8 +54,8 @@ def delete_user():
     return redirect('/admin')
 
 
-@bp.route('/flag-user', methods=['POST'])
-def flag_user():
+@bp.route('/is-suspend-user', methods=['POST'])
+def is_suspend_user():
     user_id = request.form['user_id']
     db = get_db()
     users = db.execute(
@@ -55,25 +63,20 @@ def flag_user():
     ).fetchone()
     if users is None:
         db.execute(
-            "INSERT INTO user_status (user_id, flag_suspicious) VALUES (?,?)",
-            (user_id, 1),
+            "INSERT INTO user_status (user_id) VALUES (?)",
+            (user_id,),
+        )
+    if 'suspend_message' in request.form:
+        suspend_message = request.form['suspend_message']
+        db.execute(
+            "UPDATE user_status SET suspend = ? WHERE user_id = ?",
+            (suspend_message, user_id),
         )
     else:
         db.execute(
-            "UPDATE user_status SET flag_suspicious = ? WHERE user_id = ?",
-            (1, user_id),
+            "UPDATE user_status SET suspend = ? WHERE user_id = ?",
+            (None, user_id),
         )
-    db.commit()
-    return redirect('/admin')
 
-
-@bp.route('/unflag-user', methods=['POST'])
-def unflag_user():
-    user_id = request.form['user_id']
-    db = get_db()
-    db.execute(
-        "UPDATE user_status SET flag_suspicious = ? WHERE user_id = ?",
-        (0, user_id),
-    )
     db.commit()
     return redirect('/admin')
