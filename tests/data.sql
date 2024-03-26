@@ -22,7 +22,7 @@ VALUES
 -- Country Codes taken from https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
 -- country_code: ISO 3166-1 A-3 (3 Characters)
 -- short_code:   ISO 3166-1 A-2 (2 Characters)
-INSERT INTO country (country_code, short_code, name, solar_hours, carbon_emissions, solar_power_price, electricity_mix_percentage, electricty_consumption, population_size, description)
+INSERT INTO country (country_code, short_code, name, solar_hours, carbon_emissions, solar_panel_price_per_kw, electricity_mix_percentage, electricty_consumption, population_size, description)
 VALUES
     -- This is a dummy entry that does not reflect real-world data
     -- Hours of Sunshine simply set to 6 months (4380 hours)
