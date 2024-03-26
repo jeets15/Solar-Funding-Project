@@ -20,13 +20,13 @@
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
 
         <!-- Company Logo -->
-        <a href="{{ url_for('home.home') }}"
-           class="d-flex align-items-center col-md-3 text-dark text-decoration-none"
-           style="font-size: xx-large">
-            <img src="{{ url_for('static', filename='images/logo/logo.png') }}"
-                 alt="Login image" class="" width="60" height="60"/>
-            <span class="gradient-text page-title-gradient"> Solar Save </span>
-        </a>
+        <div class="d-flex align-items-center col-md-3 text-dark text-decoration-none">
+            <a href="{{ url_for('home.home') }}" style="font-size: xx-large;">
+                <img src="{{ url_for('static', filename='images/logo/logo.png') }}"
+                    alt="Login image" class="" width="60" height="60"/>
+                <span class="gradient-text page-title-gradient"> Solar Save </span>
+            </a>
+        </div>
 
         <!-- Navigation Bar -->
         <ul class=" nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
