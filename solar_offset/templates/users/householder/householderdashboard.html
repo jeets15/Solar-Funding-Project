@@ -7,23 +7,36 @@
 
 {% block body %}
     {% include 'flashmessage.html' %}
-    <div class="container">
-        <h1>Welcome {{ g.user.name }}!</h1>
-    </div>
-    <div class="container">
-        <h1>Deed Done</h1>
-        <div class="stats">
-            <div class="stat">
-                <h2>Carbon Offset</h2>
-                <p>{{ statistics[1] }}0% </p>
-            </div>
-            <div class="stat">
-                <h2>Donations made</h2>
-                <p>£{{ statistics[3] }}</p>
-            </div>
-            <div class="stat">
-                <h2>Emissions Saved</h2>
-                <p>{{ statistics[4] }}</p>
+    <div class="main-content-centered" style="max-width: 80em;">
+        <div class="container">
+            <h1>Welcome {{ g.user.name }}!</h1>
+        </div>
+        <div class="container" style="width: 40%; margin-left: auto; margin-right: 4em;">
+            {% if g.user.householder_carbon_footprint %}
+            <h2>Your Carbon Footprint</h2>
+            {% else %}
+            <h2>Add your Carbon Footprint</h2>
+            {% endif %}
+            <form action="{{ url_for('householder.update_carbon_footprint') }}" method="post">
+                <input type="number" name="footprint" placeholder="Update your Carbon Footprint">
+                <input type="submit" value="Update">
+            </form>
+        </div>
+        <div class="container">
+            <h2>Deed Done</h1>
+            <div class="stats">
+                <div class="stat">
+                    <h3>Carbon Offset</h2>
+                    <p>{{ statistics[1] }}0% </p>
+                </div>
+                <div class="stat">
+                    <h3>Donations made</h2>
+                    <p>£{{ statistics[3] }}</p>
+                </div>
+                <div class="stat">
+                    <h3>Emissions Saved</h2>
+                    <p>{{ statistics[4] }}</p>
+                </div>
             </div>
         </div>
     </div>

@@ -20,6 +20,16 @@ def dashboard():
         statistics=stats
     )
 
+@bp.route("/householder/update_footprint", methods=['POST'])
+@login_required("h")
+def update_carbon_footprint():
+    user_id = g.user['id']
+    updated_footprint = request.form.get('footprint')
+
+    # Try and convert to float
+    print(updated_footprint)
+    return redirect(url_for('householder.dashboard'))
+
 
 @bp.route("/about")
 def about():
