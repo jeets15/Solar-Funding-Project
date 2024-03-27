@@ -4,25 +4,7 @@ body {
     padding: 0;
 }
 
-.container-flex {
-    margin: 1em auto;
-    padding: 1em;
-}
 
-.container-flex .c-shadow {
-    padding: 1em;
-    border: 0.1em solid #ccc;
-    border-radius: 0.5em;
-    background-color: #f9f9f9;
-}
-
-.container-shadow {
-    margin: 3em auto;
-    padding: 1em;
-    border: 0.1em solid #ccc;
-    border-radius: 0.5em;
-    background-color: #f9f9f9;
-}
 
 h1 {
     text-align: center;
@@ -31,44 +13,83 @@ h2 {
     text-align: center;
 }
 
-.stats {
+
+
+.container-flex-columns {
     display: flex;
-    justify-content: space-between;
-    margin-top: 30px;
+    flex-direction: row;
+}
+@media (max-width: 64em) {
+    .container-flex-columns {
+        flex-direction: column;
+    }
+}
+.container-flex-columns .flex-column {
+    margin: 0 auto;
+    padding: 1em;
 }
 
-.stat {
-    width: 30%;
-    /* flex-basis: 30%; */
+
+
+.shadow-box {
+    margin-top: 1em;
+    padding: 1em;
+    border: 0.1em solid #ccc;
+    border-radius: 0.5em;
+    background-color: #f9f9f9;
+}
+.shadow-box h2 {
+    margin-bottom: 1em;
+}
+.shadow-box .stats-summary {
     background-color: #fff;
     padding: 1em;
     border-radius: 0.5em;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+
+
+.stats-summary h3 {
+    font-size: 125%;
+    text-decoration: underline;
+}
+.stats-summary b {
+    white-space: nowrap;
+}
+.stats-summary hr {
+    width: 100%;
+    border: 0.1em solid lightgray;
+    margin: 0.5em 0;
+}
+.stats-summary + .stats-summary {
+    margin-top: 1em;
+}
+
+
+
+.footprint-summary {
+    display: flex;
+    flex-direction: column;
+}
+.footprint-summary {
+    display: flex;
+    flex-direction: column;
+}
+.footprint-summary .flex-row {
+    display: flex;
+    flex-direction: row;
+}
+.footprint-summary .flex-row > div+div {
+    margin-left: 1em;
+}
+.footprint-summary div.centering {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
     text-align: center;
 }
-
-.stat h3 {
-    margin-top: 0;
-}
-
-.stat p {
-    font-size: 24px;
-    margin: 10px 0;
-    color: #333;
-}
-
-/* table.carbon-data td {
-    border: 0;
-} */
-/* table.carbon-data td+td {
-    padding-left: 0.5em;
-} */
-table.carbon-data tr td:nth-child(2) {
-    font-weight: bold;
-}
-table.carbon-data tr.topline-thick td {
-    border-top: 0.08em solid;
-}
-table.carbon-data tr.large td {
-    font-size: 1.4em;
+.footprint-summary .large {
+    font-size: 1.2em;
 }

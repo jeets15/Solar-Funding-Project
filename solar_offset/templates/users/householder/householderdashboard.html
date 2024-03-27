@@ -7,7 +7,7 @@
 
 {% macro country_flag_icon(short_code, height=20) -%}
 {% if short_code %}
-<!-- Taken from https://flagpedia.net/download/api -->
+{# Taken from https://flagpedia.net/download/api #}
 <img src="https://flagcdn.com/h{{ height }}/{{short_code | lower}}.png" 
     srcset="https://flagcdn.com/h{{ height*2 }}/{{short_code | lower}}.png 2x"
     height="{{ height }}"
@@ -19,76 +19,108 @@
 {% block body %}
     {% include 'flashmessage.html' %}
     <div class="main-content-centered" style="max-width: 80em;">
-        <div class="container-shadow">
+        <div class="shadow-box">
             <h1>Welcome {{ g.user.name }}!</h1>
         </div>
-        <div style="display: flex;">
-            <div class="container-flex">
-            <div class="c-shadow">
-                <h2>Donations</h2>
-                {% if donations %}
-                <div style="margin: 0.5em auto; padding: 0.5em;">
-                    <table class="table table-responsive" style="height: 16em;">
-                        <tr> <th>Date</th> <th></th> <th>Country</th> <th>Organization</th> <th>Solar Panels</th> </tr>
-                        {% for donation in donations %}
-                        <tr> <td style="min-width: 6em;">{{ donation.created_date }}</td> <td>{{ country_flag_icon(donation.country_short_code, 20) }}</td> <td style="min-width: 8em;">{{ donation.country_name }}</td> <td style="min-width: 10em;">{{ donation.orga_name }}</td> <td>{{ donation.donation_panels }} <span style="font-size: 0.7em;">(£{{ donation.donation_amount }})</span></td> </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-                {% else %}
-                <div>You have not made any donations yet</div>
-                <div><a class="btn btn-link" href="{{ url_for('householder.country_list') }}">choose a country to donate to</a></div>
-                {% endif %}
-            </div>
-            </div>
-            <div class="container-flex">
-            <div class="c-shadow">
-                {% if g.user.householder_carbon_footprint %}
-                <table class="table carbon-data">
-                    <tr class="large"> <td>Your yearly Carbon Footprint</td> <td>{{ g.user.householder_carbon_footprint }} tons</td> </tr>
-                    {% if carbon_offset_data.donation_offset > 0 %}
-                    <tr> <td>Your Carbon Offset by Donating</td> <td>{{ carbon_offset_data.donation_offset }} kg</td> </tr>
-                    <tr> <td>Reduction of</td> <td>{{ carbon_offset_data.reduction_percent }} %</td> </tr>
-                    <tr class="large topline-thick"> <td>Your offset Carbon Footprint</td> <td>{{ carbon_offset_data.reduced_footprint }} tons</td> </tr>
-                    {% else %}
-                    <tr> <td>You have not made any donations yet</td> <td></td> </tr>
-                    {% endif %}
-                </table>
-                {% else %}
-                <h2>Add your Carbon Footprint</h2>
-                {% endif %}
-                <form action="{{ url_for('householder.update_carbon_footprint') }}" method="post" style="margin-top: 1em;">
-                    <div class="input-group mb-3">
-                        <input type="number" name="footprint" style="width: 16em;"
-                            min="0.01" step="0.01"
-                            aria-label="carbon footprint per year in tons"
-                            pattern="^\d*(\.\d{0,2})?$"
-                            oninput="if (typeof this.reportValidity === 'function') {this.reportValidity();}"
-                            placeholder="Update your Carbon Footprint">
-                        <span class="input-group-text" id="basic-addon2">tons</span>
-                        <input class="btn btn-outline-primary" style="margin-left: 1em;" type="submit" value="Update">
+        <div class="container-flex-columns">
+            <div class="flex-column">
+                <div class="shadow-box">
+                    <h2>Thank you for using SolarSave</h2>
+                    <div class="stats-summary">
+                        <h3>Donations Made</h3>
+                        {% if donations %}
+                        <p>
+                            You have made <b>{{ donations | length }}</b> donations to <b>{{ stats.count_countries }}</b>
+                            {{ "country" if stats.count_countries == 1 else "countries" }}.
+                            <br>Most of your donations have gone to <b>{{ stats.dominant_country }}</b>.
+                        </p>
+                        <p>
+                            In total, you have donated <b>{{ stats.donated_panels }}</b> solar {{ "panel" if stats.donated_panels == 1 else "panels" }}
+                            by donating <b>£ {{ stats.donated_sum }}</b>.
+                        </p>
+                        {% else %}
+                        <p>You have not made any donations yet</p>
+                        {% endif %}
                     </div>
-                </form>
-                <div>Calculate your Carbon Footprint using the
-                    <a href="https://footprint.wwf.org.uk/questionnaire" target="_blank" rel="noopener noreferrer" style="white-space: nowrap;">WWF-UK Questionnaire</a></div>
-                <div style="font-size: 0.6em;"><i style="line-height: 1em;">(By using this link, you leave our site and access a third party's services. We are not responsible for their content or privacy practices.)</i></div>
-            </div>
-            </div>
-        </div>
-        <div class="container-shadow">
-            <h2>Deed Done</h1>
-            <div class="stats">
-                <div class="stat">
-                    <h3>Carbon Offset</h2>
-                    <p>{{ statistics[1] }}0% </p>
+                    <div class="stats-summary">
+                        <h3>Refer Friends</h3>
+                        <p>Invite your friends to join SolarSave to help them reduce their own carbon footprints.</p>
+                        <p>Your Referal Link: <b>somelink.com</b></p>
+                        <p>Hooray! You have helped <b>_blank</b> people to join SolarSave!</p>
+                    </div>
                 </div>
-                <div class="stat">
-                    <h3>Donations made</h2>
-                    <p>£{{ statistics[3] }}</p>
+            </div>
+            <div class="flex-column">
+                <div class="shadow-box">
+                    <h2>Carbon Footprint Summary</h2>
+                    {% if g.user.householder_carbon_footprint %}
+                    <div class="stats-summary footprint-summary">
+                        <div class="centering">
+                            <div>Your Original Carbon Footprint</div>
+                            <div><b class="large">{{ g.user.householder_carbon_footprint }} tons</b></div>
+                        </div>
+                        <hr>
+                        <div>
+                            <div class="centering" style="margin-bottom: 0.5em;">The Impact of your Donations</div>
+                            <div class="centering flex-row">
+                                <div class="framed-rounded">
+                                    <div><b>{{ carbon_offset_data.reduction_percent }} %</b></div>
+                                    <div>Reduction of your</div>
+                                    <div>Carbon Footprint</div>
+                                </div>
+                                <div class="framed-rounded">
+                                    <div><b>{{ carbon_offset_data.donation_offset }} kg</b></div>
+                                    <div>Carbon Offset by</div>
+                                    <div>Donating</div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="centering">
+                            <div>Your Reduced Carbon Footprint</div>
+                            <div><b class="large">{{ carbon_offset_data.reduced_footprint }} tons</b></div>
+                        </div>
+                    </div>
+                    {% else %}
+                    <h3>Add your Carbon Footprint</h3>
+                    {% endif %}
+                    <form action="{{ url_for('householder.update_carbon_footprint') }}" method="post" style="width: fit-content; margin: 1em auto; min-width: 26em;">
+                        <div class="input-group mb-3">
+                            <input type="number" name="footprint" style="width: 16em;"
+                                min="0.01" step="0.01"
+                                aria-label="carbon footprint per year in tons"
+                                pattern="^\d*(\.\d{0,2})?$"
+                                oninput="if (typeof this.reportValidity === 'function') {this.reportValidity();}"
+                                placeholder="Update your Carbon Footprint">
+                            <span class="input-group-text" id="basic-addon2">tons</span>
+                            <input class="btn btn-outline-primary" style="margin-left: 1em;" type="submit" value="Update">
+                        </div>
+                    </form>
+                    <div>Calculate your Carbon Footprint using the
+                        <a href="https://footprint.wwf.org.uk/questionnaire" target="_blank" rel="noopener noreferrer" style="white-space: nowrap;">WWF-UK Questionnaire</a></div>
+                    <div style="font-size: 0.6em;"><i style="line-height: 1em;">(By using this link, you leave our site and access a third party's services. We are not responsible for their content or privacy practices.)</i></div>
                 </div>
-                <div class="stat">
-                    <h3>Emissions Saved</h2>
-                    <p>{{ statistics[4] }}</p>
+                <div class="shadow-box">
+                    <h2>Donations</h2>
+                    {% if donations %}
+                    <div style="margin: 0.5em auto; padding: 0.5em;">
+                        <table class="table table-responsive" style="overflow-x: visible; overflow-y: scroll; max-height: 20em; border: 0.1em solid lightgray; border-radius: 0.5em;">
+                            <tr> <th>Date</th> <th></th> <th>Country</th> <th>Organization</th> <th>Solar Panels</th> </tr>
+                            {% for donation in donations %}
+                            <tr>
+                                <td style="min-width: 6em;">{{ donation.created_date }}</td>
+                                <td style="min-width: 3em;">{{ country_flag_icon(donation.country_short_code, 20) }}</td>
+                                <td style="min-width: 8em;"><a class="btn-link" href="{{ url_for('householder.country', country_code=donation.country_code)}}">{{ donation.country_name }}</a></td>
+                                <td style="min-width: 10em;"><a class="btn-link" href="{{ url_for('householder.country', country_code=donation.country_code, _anchor=donation.orga_name)}}">{{ donation.orga_name }}</a></td>
+                                <td style="min-width: 4em; white-space: nowrap;">{{ donation.donation_panels }} <span style="font-size: 0.7em;">(£{{ donation.donation_amount }})</span></td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    {% else %}
+                    <div>You have not made any donations yet</div>
+                    <div><a class="btn btn-link" href="{{ url_for('householder.country_list') }}">choose a country to donate to</a></div>
+                    {% endif %}
                 </div>
             </div>
         </div>
