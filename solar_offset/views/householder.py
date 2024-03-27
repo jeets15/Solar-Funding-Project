@@ -9,7 +9,7 @@ from math import floor, isclose
 from solar_offset.views.auth import login_required
 
 import hashlib
-import qrcode
+
 
 
 
@@ -161,17 +161,6 @@ def generate_code_from_email(email):
     return referral_code
 
 
-def generate_qr_code(referral_code):
-    qr = qrcode.QRCode(
-        version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
-        border=4,
-    )
-    qr.add_data(referral_code)
-    qr.make(fit=True)
-    qr_img = qr.make_image(fill_color="black", back_color="white")
-    return qr_img
 
 
 
