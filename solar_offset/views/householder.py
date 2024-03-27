@@ -135,7 +135,11 @@ def country(country_code):
 
 
 
-
+# Dummy database to simulate referral codes
+referral_codes = {
+    'REFCODE_47fa9dc4': 'jeetsinghvi@hotmail.com',
+    'REFCODE_1234567890': 'jane.doe@example.com'
+}
 
 
 @bp.route('/generate_referral_code', methods=['GET'])
@@ -161,7 +165,25 @@ def generate_code_from_email(email):
     return referral_code
 
 
+@bp.route('/verify_referral_code', methods=['POST'])
+def verify_referral_code():
+    user_referral_code = request.form.get('referral_code')
+    user_email = request.form.get('user_email')
 
+    if user_referral_code:
+        # Here, you would typically check the user's input against a database of valid referral codes
+        if user_referral_code in referral_codes:
+            referred_email = referral_codes[user_referral_code]
+            # Apply discount to both users
+            apply_discount_to_user(user_email, 0.1)  # 10% discount
+            apply_discount_to_user(referred_email, 0.1)  # 10% discount
+            return f"Discount applied for {user_email} and {referred_email}"
+        else:
+            return "Invalid referral code"
+    else:
+        return "Referral code not provided"
 
-
+def apply_discount_to_user(email, discount):
+    # Code to apply discount to the user with the given email
+    pass  # Placeholder for actual implementation
 
