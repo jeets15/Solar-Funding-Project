@@ -1,0 +1,15 @@
+#admin-table.tabulator-table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+
+}
+
+#admin-table .tabulator-header {
+    background-color: #f8f9fa !important;
+    color: #212529 !important;
+}
+
+#admin-table .tabulator-cell {
+    border-top: 1px solid #dee2e6 !important;
+    padding: 0.5rem !important;
+}
