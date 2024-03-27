@@ -8,6 +8,11 @@ from math import floor, isclose
 
 from solar_offset.views.auth import login_required
 
+import hashlib
+
+
+
+
 bp = Blueprint("householder", __name__)
 
 
@@ -115,3 +120,40 @@ def country(country_code):
         "./users/householder/projects.html",
         country=country,
         organizations=lst_orga)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@bp.route('/generate_referral_code', methods=['GET'])
+def generate_referral_code():
+    email = ('jeetsinghvi@hotmail.com')
+    if email:  # Check if email parameter is provided
+        email = email.strip()  # Remove leading and trailing whitespaces
+        referral_code = generate_code_from_email(email)
+        return f"Referral code for {email}: {referral_code}"
+    else:
+        return "Email parameter is missing"
+
+
+def generate_code_from_email(email):
+    # Use SHA-256 hashing to generate a unique hash for the email
+    hashed_email = hashlib.sha256(email.encode()).hexdigest()
+    # Take the first 12 characters of the hashed email as the referral code
+    referral_code = hashed_email[:12]
+    return referral_code
+
+
+
