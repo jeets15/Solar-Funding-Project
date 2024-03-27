@@ -9,6 +9,7 @@ from math import floor, isclose
 from solar_offset.views.auth import login_required
 
 import hashlib
+import qrcode
 
 
 
@@ -139,9 +140,9 @@ def country(country_code):
 
 @bp.route('/generate_referral_code', methods=['GET'])
 def generate_referral_code():
-    email = ('jeetsinghvi@hotmail.com')
-    if email:  # Check if email parameter is provided
-        email = email.strip()  # Remove leading and trailing whitespaces
+    email = ('jeetsinghvi@hotmail.com')      # Replace with email from database
+    if email:
+        email = email.strip()
         referral_code = generate_code_from_email(email)
         return f"Referral code for {email}: {referral_code}"
     else:
@@ -149,11 +150,29 @@ def generate_referral_code():
 
 
 def generate_code_from_email(email):
-    # Use SHA-256 hashing to generate a unique hash for the email
-    hashed_email = hashlib.sha256(email.encode()).hexdigest()
+    # Add a unique identifier (e.g., user ID) to the email before hashing
+    unique_identifier = '8b1a1136-0024-477f-9e29-cb7266cb46d6'
+    email_with_id = email + unique_identifier
+
+    # Use SHA-256 hashing to generate a unique hash for the email with ID
+    hashed_email = hashlib.sha256(email_with_id.encode()).hexdigest()
     # Take the first 12 characters of the hashed email as the referral code
     referral_code = hashed_email[:12]
     return referral_code
+
+
+def generate_qr_code(referral_code):
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(referral_code)
+    qr.make(fit=True)
+    qr_img = qr.make_image(fill_color="black", back_color="white")
+    return qr_img
+
 
 
 
