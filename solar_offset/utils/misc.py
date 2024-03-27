@@ -1,5 +1,5 @@
 
-from collections.abc import Iterable
+from collections.abc import Hashable, Iterable
 from math import floor, isclose, log10
 
 # Find the nth percentile by interpolating between the given data points
@@ -28,3 +28,18 @@ def calculate_percentile(finite_iter:Iterable[int|float], percentile:float):
 def round_to_n_sig_figs(num:int|float, significant_figures):
     round_ix = - int( floor(log10(num)) ) + (significant_figures - 1)
     return round(num, round_ix)
+
+def count_occurences(finite_iter: Iterable[Hashable]) -> dict[Hashable, int]:
+    d = dict()
+    if finite_iter:
+        for el in finite_iter:
+            if el not in d:
+                d[el] = 0
+            d[el] += 1
+    return d
+
+def get_max_occurence(occurence_map: dict[Hashable, int]) -> Hashable | None:
+    dominant = None
+    if occurence_map:
+        return sorted(occurence_map.items(), reverse=True, key=lambda x: x[1])[0][0]
+    return dominant
