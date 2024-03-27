@@ -1,8 +1,7 @@
-from datetime import datetime
 from flask import Blueprint, flash, g, render_template, request, redirect, url_for
 from solar_offset.db import get_db
 from solar_offset.utils.carbon_offset_util import SOLAR_PANEL_POWER_kW, calc_carbon_offset, calc_solar_panel_offset
-from solar_offset.utils.misc import calculate_percentile, round_to_n_sig_figs
+from solar_offset.utils.misc import calculate_percentile, count_occurences, get_max_occurence, round_to_n_sig_figs
 from solar_offset.utils.statistics_util import calculate_statistics
 
 from math import floor, isclose
@@ -16,8 +15,6 @@ bp = Blueprint("householder", __name__)
 @login_required("h")
 def dashboard():
     db = get_db()
-    stats = calculate_statistics()
-
 
     user_footprint = g.user['householder_carbon_footprint']
     carbon_offset_data = dict()
@@ -49,9 +46,19 @@ def dashboard():
         d['created_date'] = d['created'].date()
         d['donation_panels'] = round(d['donation_amount'] / (SOLAR_PANEL_POWER_kW * d['kw_panel_price']))
 
+    stats = calculate_statistics()
+
+    stats_dict = dict()
+    stats_dict['count_countries'] = len(set([ d['country_code'] for d in donations ]))
+    if donations:
+        stats_dict['dominant_country'] = get_max_occurence(count_occurences([d['country_name'] for d in donations]))
+        stats_dict['donated_panels'] = sum([ d['donation_panels'] for d in donations ])
+        stats_dict['donated_sum'] = sum([ d['donation_amount'] for d in donations ])
+
     return render_template(
         "/users/householder/householderdashboard.html",
         statistics=stats,
+        stats = stats_dict,
         carbon_offset_data=carbon_offset_data,
         donations=donations
     )
