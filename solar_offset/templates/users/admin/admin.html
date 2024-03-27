@@ -1,12 +1,92 @@
 {% extends 'base.html' %}
 
 {% block title %}Admin DashBoard{% endblock %}
-
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/homestyle.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/adminstyle.css') }}">
 {% endblock %}
 {% block scripts %}
     <script src="{{ url_for('static',filename='js/users/admin/admin.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/he@1.2.0/he.min.js"></script>
+    <script>
+        var tableData = [];
+        var table = document.getElementById("admin-table");
+        var rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+
+        for (var i = 0; i < rows.length; i++) {
+            var row = rows[i];
+            var rowData = {};
+            var cells = row.getElementsByTagName("td");
+            rowData.user_type = cells[0].textContent.trim();
+            rowData.id = cells[1].textContent.trim();
+            rowData.email_username = cells[2].textContent.trim();
+            rowData.action = cells[3].innerHTML.trim();
+            rowData.is_suspended = cells[4].textContent.trim();
+            tableData.push(rowData);
+        }
+
+
+        var table = new Tabulator("#admin-table", {
+            layout: "fitColumns",
+            pagination: "local",
+            paginationSize: 10,
+            columns: [
+                {
+                    title: "User Type",
+                    field: "user_type",
+                    headerFilter: true,
+                    headerFilterPlaceholder: "Search...",
+                    headerFilterPlaceholderParsed: true,
+                    formatter: actionFormatter
+                },
+                {title: "User ID", field: "id", headerFilter: true, headerFilterPlaceholder: "Search...",},
+                {title: "Email", field: "email_username", headerFilter: true, headerFilterPlaceholder: "Search...",},
+                {title: "Action", field: "action", headerFilter: false, formatter: actionFormatter, width: 200},
+                {
+                    title: "Suspend Message",
+                    field: "is_suspended",
+                    headerFilter: true,
+                    headerFilterPlaceholder: "Search...",
+                }
+            ]
+        });
+
+        function actionFormatter(cell) {
+            return cell.getValue();
+        }
+
+        table.setData(tableData);
+        document.getElementById("apply-filter").addEventListener("click", function () {
+            var column = document.getElementById("filter-column").value;
+            var type = document.getElementById("filter-type").value;
+            var value = document.getElementById("filter-value").value;
+
+            if (column && type && value) {
+                if (column === "user_type") {
+                    if (type === "=") {
+                        table.setFilter(function (data) {
+                            var userType = he.decode(data.user_type.trim());
+                            return userType === value;
+                        });
+                    } else if (type === "!=") {
+                        table.setFilter(function (data) {
+                            var userType = he.decode(data.user_type.trim());
+                            return userType !== value;
+                        });
+                    }
+                } else {
+                    table.setFilter(column, type, value);
+                }
+            }
+        });
+
+        document.getElementById("clear-filter").addEventListener("click", function () {
+            table.clearFilter();
+            document.getElementById("filter-column").value = "Select Column";
+            document.getElementById("filter-type").value = "=";
+            document.getElementById("filter-value").value = "";
+        });
+    </script>
+
 {% endblock %}
 {% block body %}
 
@@ -45,11 +125,30 @@
         </div>
     </div>
 
+    <div id="table-controls" class="position-relative overflow-hidden m-md-3 text-center">
+        <label for="filter-column">Column:</label>
+        <select id="filter-column">
+            <option value="">Select Column</option>
+            <option value="user_type">User Type</option>
+            <option value="id">User ID</option>
+            <option value="email_username">Email</option>
+        </select>
+        <label for="filter-type">Type:</label>
+        <select id="filter-type">
+            <option value="=">=</option>
+            <option value="!=">!=</option>
+        </select>
+        <label for="filter-value">Value:</label>
+        <input type="text" id="filter-value">
+
+        <button id="apply-filter" class="btn btn-success">Apply Filter</button>
+        <button id="clear-filter" class="btn btn-outline-success">Clear Filter</button>
+    </div>
 
     <div class="position-relative overflow-hidden m-md-3 text-center">
         <div class="col-md-6  mx-auto mt-5">
 
-            <table class="table table-striped table-hover table-bordered table-responsive"
+            <table class="!table !table-striped !table-hover !table-bordered !table-responsive" id="admin-table"
                    style="min-height: 20vh; min-width: 120%">
                 <thead>
                 <tr>
