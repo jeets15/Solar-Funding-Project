@@ -40,7 +40,14 @@
                 },
                 {title: "User ID", field: "id", headerFilter: true, headerFilterPlaceholder: "Search...",},
                 {title: "Email", field: "email_username", headerFilter: true, headerFilterPlaceholder: "Search...",},
-                {title: "Action", field: "action", headerFilter: false, formatter: actionFormatter, width: 200},
+                {
+                    title: "Action",
+                    field: "action",
+                    headerFilter: false,
+                    headerSort: false,
+                    formatter: actionFormatter,
+                    width: 200
+                },
                 {
                     title: "Suspend Message",
                     field: "is_suspended",
