@@ -1,7 +1,7 @@
-from flask import Blueprint, g, render_template, request, redirect, url_for
+from flask import Blueprint, flash, g, render_template, request, redirect, url_for
 from solar_offset.db import get_db
 from solar_offset.utils.carbon_offset_util import SOLAR_PANEL_POWER_kW, calc_carbon_offset, calc_solar_panel_offset
-from solar_offset.utils.misc import calculate_percentile, round_to_n_sig_figs
+from solar_offset.utils.misc import calculate_percentile, count_occurences, get_max_occurence, round_to_n_sig_figs
 from solar_offset.utils.statistics_util import calculate_statistics
 
 from math import floor, isclose
@@ -14,11 +14,84 @@ bp = Blueprint("householder", __name__)
 @bp.route("/householder")
 @login_required("h")
 def dashboard():
+    db = get_db()
+
+    user_footprint = g.user['householder_carbon_footprint']
+    carbon_offset_data = dict()
+    if user_footprint:
+        user_donations_countries = db.execute(
+            "SELECT electricity_mix_percentage, solar_hours, electricty_consumption, \
+                carbon_emissions, solar_panel_price_per_kw, donation.* \
+                FROM country JOIN donation \
+                ON (country.country_code == donation.country_code) \
+                WHERE householder_id == ?;"
+            , [g.user['id']]).fetchall()
+        calc_offset = sum([ calc_carbon_offset(cd) * cd['donation_amount'] / 1000000 for cd in user_donations_countries ])
+        carbon_offset_data = {
+            'donation_offset': round(calc_offset * 1000, 2), # Convert from tons to kg
+            'reduction_percent': round(calc_offset / user_footprint * 100, 2),
+            'reduced_footprint': round(user_footprint - calc_offset, 2)
+        }
+
+    donations = db.execute(
+        "SELECT donation.*, \
+            country.name AS country_name, country.short_code AS country_short_code, \
+            country.solar_panel_price_per_kw AS kw_panel_price, organization.name AS orga_name \
+            FROM donation JOIN country JOIN organization \
+            ON (country.country_code == donation.country_code AND organization.name_slug == donation.organization_slug) \
+            WHERE donation.householder_id == ? \
+            ORDER BY donation.created DESC", [g.user['id']]).fetchall()
+    donations = [ dict(d) for d in donations ]
+    for d in donations:
+        d['created_date'] = d['created'].date()
+        d['donation_panels'] = round(d['donation_amount'] / (SOLAR_PANEL_POWER_kW * d['kw_panel_price']))
+
     stats = calculate_statistics()
+
+    stats_dict = dict()
+    stats_dict['count_countries'] = len(set([ d['country_code'] for d in donations ]))
+    if donations:
+        stats_dict['dominant_country'] = get_max_occurence(count_occurences([d['country_name'] for d in donations]))
+        stats_dict['donated_panels'] = sum([ d['donation_panels'] for d in donations ])
+        stats_dict['donated_sum'] = sum([ d['donation_amount'] for d in donations ])
+
     return render_template(
         "/users/householder/householderdashboard.html",
-        statistics=stats
+        statistics=stats,
+        stats = stats_dict,
+        carbon_offset_data=carbon_offset_data,
+        donations=donations
     )
+
+@bp.route("/householder/update_footprint", methods=['POST'])
+@login_required("h")
+def update_carbon_footprint():
+    user_id = g.user['id']
+    updated_footprint = request.form.get('footprint')
+
+    if not updated_footprint:
+        flash("carbon footprint not updated - you did not enter a value", "warning")
+        return redirect(url_for('householder.dashboard'))
+
+    try:
+        updated_footprint = float(updated_footprint)
+    except (ValueError, OverflowError):
+        flash("Could not update your carbon footprint - the value you gave was ill-formatted", "danger")
+        return redirect(url_for('householder.dashboard'))
+    
+    if updated_footprint < 0:
+        flash("Could not update your carbon footprint - you must give a positive value", "danger")
+        return redirect(url_for('householder.dashboard'))
+    elif isclose(updated_footprint, 0):
+        flash("carbon footprint not updated - you entered a value of 0", "warning")
+        return redirect(url_for('householder.dashboard'))
+
+    db = get_db()
+    db.execute("UPDATE user SET householder_carbon_footprint = ? WHERE id == ?", [updated_footprint, user_id])
+    db.commit()
+
+    flash("Your Carbon Footprint has been Updated!", "success")
+    return redirect(url_for('householder.dashboard'))
 
 
 @bp.route("/about")
