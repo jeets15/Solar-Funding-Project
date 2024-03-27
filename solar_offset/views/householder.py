@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import Blueprint, flash, g, render_template, request, redirect, url_for
 from solar_offset.db import get_db
 from solar_offset.utils.carbon_offset_util import SOLAR_PANEL_POWER_kW, calc_carbon_offset, calc_solar_panel_offset
@@ -14,13 +15,14 @@ bp = Blueprint("householder", __name__)
 @bp.route("/householder")
 @login_required("h")
 def dashboard():
+    db = get_db()
     stats = calculate_statistics()
 
 
     user_footprint = g.user['householder_carbon_footprint']
     carbon_offset_data = dict()
     if user_footprint:
-        user_donations_countries = get_db().execute(
+        user_donations_countries = db.execute(
             "SELECT electricity_mix_percentage, solar_hours, electricty_consumption, \
                 carbon_emissions, solar_panel_price_per_kw, donation.* \
                 FROM country JOIN donation \
@@ -34,10 +36,24 @@ def dashboard():
             'reduced_footprint': round(user_footprint - calc_offset, 2)
         }
 
+    donations = db.execute(
+        "SELECT donation.*, \
+            country.name AS country_name, country.short_code AS country_short_code, \
+            country.solar_panel_price_per_kw AS kw_panel_price, organization.name AS orga_name \
+            FROM donation JOIN country JOIN organization \
+            ON (country.country_code == donation.country_code AND organization.name_slug == donation.organization_slug) \
+            WHERE donation.householder_id == ? \
+            ORDER BY donation.created DESC", [g.user['id']]).fetchall()
+    donations = [ dict(d) for d in donations ]
+    for d in donations:
+        d['created_date'] = d['created'].date()
+        d['donation_panels'] = round(d['donation_amount'] / (SOLAR_PANEL_POWER_kW * d['kw_panel_price']))
+
     return render_template(
         "/users/householder/householderdashboard.html",
         statistics=stats,
-        carbon_offset_data=carbon_offset_data
+        carbon_offset_data=carbon_offset_data,
+        donations=donations
     )
 
 @bp.route("/householder/update_footprint", methods=['POST'])
