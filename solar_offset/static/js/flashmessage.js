@@ -3,7 +3,7 @@ setTimeout(function () {
     for (let el of document.getElementsByClassName("flashed-message")) {
         setTimeout(() => {
             el.style.display = "none";
-        }, ix * 1000);
+        }, ix * 500);
         ix += 1;
     }
 }, 5000);
