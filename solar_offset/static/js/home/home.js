@@ -9,49 +9,85 @@ setTimeout(function () {
 
 // Map Section
 
-// Fetching all the canvas
-const canvas1 = document.getElementById("canvas-1");
+// Call the drawMap function to display the map
+drawMap(document.getElementById("canvas-1"));
+drawMap(document.getElementById("canvas-2"));
+drawMap(document.getElementById("canvas-3"));
 
-const canvas2 = document.getElementById("canvas-2");
+// Helper Methods
 
-const canvas3 = document.getElementById("canvas-3");
-
-
-// Draw the map
+// Function to draw map on canvas
 function drawMap(canvas) {
 
+    // Customize the dimensions of canvas
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     const ctx = canvas.getContext("2d");
 
-    // Load the map image
+    // Create instance & load image
     const img = new Image();
     img.src = canvas.getAttribute("src");
 
+    // Event Handler on image load
     img.onload = function () {
+
         // Draw the image on the canvas
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        // Add interactivity (e.g., highlight regions on click)
-        canvas.addEventListener("click", function (e) {
-            var rect = canvas.getBoundingClientRect();
-            var x = e.clientX - rect.left;
-            var y = e.clientY - rect.top;
+        // South Africa
+        const south_africa = createButton("../../static/images/countries/south-africa.png", 520, 290, "https://www.google.com/");
+        canvas.parentNode.appendChild(south_africa);
 
-            // Check if the click is within a specific region
-            if (x >= 100 && x <= 200 && y >= 100 && y <= 200) {
-                // Highlight the region
-                ctx.beginPath();
-                ctx.rect(100, 100, 100, 100);
-                ctx.strokeStyle = "red";
-                ctx.stroke();
-            }
-        });
+        // Argentina
+        const argentina = createButton("../../static/images/countries/argentina.png", 300, 300, "https://www.google.com/");
+        canvas.parentNode.appendChild(argentina);
+
+        // Australia
+        const australia = createButton("../../static/images/countries/australia.png", 775, 280, "https://www.google.com/");
+        canvas.parentNode.appendChild(australia);
+
+        // Brazil
+        const brazil = createButton("../../static/images/countries/brazil.png", 330, 250, "https://www.google.com/");
+        canvas.parentNode.appendChild(brazil);
+
+        // Canada
+        const canada = createButton("../../static/images/countries/canada.png", 200, 85, "https://www.google.com/");
+        canvas.parentNode.appendChild(canada);
+
+        // Iran
+        const iran = createButton("../../static/images/countries/iran.png", 590, 150, "https://www.google.com/");
+        canvas.parentNode.appendChild(iran);
+
+        // Saudi Arabia
+        const saudi_arabia = createButton("../../static/images/countries/saudi-arabia.png", 570, 170, "https://www.google.com/");
+        canvas.parentNode.appendChild(saudi_arabia);
+
+        // USA
+        const usa = createButton("../../static/images/countries/united-states-of-america.png", 200, 130, "https://www.google.com/");
+        canvas.parentNode.appendChild(usa);
+
     };
 }
 
-// Call the drawMap function to display the map
-drawMap(canvas1);
-drawMap(canvas2);
-drawMap(canvas3);
+// Function to create button on the map
+function createButton(imageUrl, x, y, url) {
+    const button = document.createElement("button");
+    button.style.position = "absolute";
+    button.style.top = y + "px";
+    button.style.left = x + "px";
+    button.style.width = "25px";
+    button.style.height = "25px";
+    button.style.border = "none";
+    button.style.borderRadius = "50%";
+    button.style.cursor = "pointer";
+    button.style.backgroundImage = "url(" + imageUrl + ")";
+    button.style.backgroundSize = "cover";
+    button.addEventListener("click", function () {
+        window.location.href = url;
+    });
+    return button;
+}
+
+
+
 
