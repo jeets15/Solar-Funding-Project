@@ -2,10 +2,16 @@ import functools
 from flask import Blueprint, abort, g, render_template, flash, request, session, redirect, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 from solar_offset.db import get_db
-
+from google.oauth2 import id_token
+from google.auth.transport import requests as google_requests
+from dotenv import load_dotenv
 from uuid import uuid4
+import os
 
+load_dotenv()
+GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 bp = Blueprint("auth", __name__, url_prefix="/auth")
+
 
 # This function is called before every request is processed by a view
 # Assigns the record of the currently logged in user to g.user
@@ -36,6 +42,7 @@ def login_required(allowed_user_types=None):
     set_allowed_user_types = None
     if allowed_user_types:
         set_allowed_user_types = set(allowed_user_types)
+
     def _wrapper(view):
         @functools.wraps(view)
         def wrapped_view(**kwargs):
@@ -50,39 +57,68 @@ def login_required(allowed_user_types=None):
             return view(**kwargs)
 
         return wrapped_view
+
     return _wrapper
 
 
 @bp.route("/logout", methods=["GET"])
 def logout():
-    # Remove user_id from session object
-    # This essentially logs the user out
-    session.pop("user_id", None)
+    token = request.form.get("credential")
+    if token:
+        try:
+            id_token.verify_oauth2_token(token, google_requests.Request(),
+                                         GOOGLE_CLIENT_ID)
+            session.clear()
+            return redirect(url_for("home.home"))
+        except ValueError:
+            # Invalid token
+            pass
 
-    # Redirect to homepage
+    session.pop("user_id", None)
     return redirect(url_for("home.home"))
 
 
 @bp.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == 'POST':
-        username = request.form["emailusrname"]
-        password = request.form['password']
-        db = get_db()
-        error = None
-
-        user = db.execute(
-            'SELECT * FROM user WHERE email_username = ?', (username,)
-        ).fetchone()
-        if user is None:
-            error = 'Incorrect username!!'
-        elif check_password_hash(user['password_hash'], password) == False:
-            error = 'Incorrect password!!'
-        if error is None:
-            session['user_id'] = user['id']
+        if (request.form.get("credential") != None):
+            token = request.form.get("credential")
+            try:
+                user_info = id_token.verify_oauth2_token(token, google_requests.Request(),
+                                                         GOOGLE_CLIENT_ID)
+                email = user_info.get("email")
+                db = get_db()
+                error = None
+                user = db.execute(
+                    'SELECT * FROM user WHERE email_username = ?', (email,)
+                ).fetchone()
+                if user is None:
+                    error = 'Need to register first.!'
+                if error is None:
+                    session['user_id'] = user['id']
+                else:
+                    flash(error, "danger")
+                return redirect(url_for("auth.login"))
+            except ValueError:
+                pass
         else:
-            flash(error, "danger")
-        return redirect(url_for("auth.login"))
+            username = request.form["emailusrname"]
+            password = request.form['password']
+            db = get_db()
+            error = None
+
+            user = db.execute(
+                'SELECT * FROM user WHERE email_username = ?', (username,)
+            ).fetchone()
+            if user is None:
+                error = 'Incorrect username!!'
+            elif check_password_hash(user['password_hash'], password) == False:
+                error = 'Incorrect password!!'
+            if error is None:
+                session['user_id'] = user['id']
+            else:
+                flash(error, "danger")
+            return redirect(url_for("auth.login"))
     else:
         if g.user:
             usertype = g.user['user_type']
@@ -95,7 +131,7 @@ def login():
                 return redirect(url_for("admin.admin"))
             else:
                 abort(400, "Your account has incorrect privileges. Please contact a system administrator.")
-            
+
         return render_template("./auth-engine/login.html")
 
 
