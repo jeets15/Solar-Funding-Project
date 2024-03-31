@@ -18,6 +18,10 @@ bp = Blueprint("auth", __name__, url_prefix="/auth")
 # Otherwise g.user is None
 @bp.before_app_request
 def load_logged_in_user():
+    # Ignore static requests
+    if request.endpoint == 'static':
+        return None
+
     user_id = session.get('user_id', None)
     db = get_db()
 
@@ -35,8 +39,12 @@ def load_logged_in_user():
                 user['name'] = user['email_username']
             g.user = user
 
-    if g.user and (g.user['status_suspend'] is not None):
-        return "You are suspended"
+    # Handle when a user is suspended
+    # All requests are automatically redirected to the 'suspended' page
+    if g.user \
+        and (g.user['status_suspend'] is not None) \
+        and request.endpoint != 'auth.account_suspended':
+        return redirect(url_for('auth.account_suspended'))
 
 
 # Decorator that can be used to force user to be logged in for a page
@@ -62,6 +70,10 @@ def login_required(allowed_user_types=None):
         return wrapped_view
 
     return _wrapper
+
+@bp.route("/account-suspended", methods=["GET"])
+def account_suspended():
+    return render_template("auth-engine/suspended.html")
 
 
 @bp.route("/logout", methods=["GET"])
