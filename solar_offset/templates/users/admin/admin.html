@@ -3,10 +3,12 @@
 {% block title %}Admin DashBoard{% endblock %}
 {% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/adminstyle.css') }}">
+    <link href="https://unpkg.com/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
 {% endblock %}
 {% block scripts %}
     <script src="{{ url_for('static',filename='js/users/admin/admin.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/he@1.2.0/he.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
 {% endblock %}
 {% block body %}
     <div class="text-center">
