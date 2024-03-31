@@ -2,11 +2,12 @@
 {% block title %}Login{% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/auth-engine/login-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth-engine/login-style.css') }}">
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/auth-engine/login.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/auth-engine/login.js') }}" defer></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 {% endblock %}
 
 {% block body %}
@@ -21,6 +22,24 @@
                             <h3 class="mb-3 pb-2 gradient-text"
                                 style="font-size: xxx-large; background-image: linear-gradient(90deg, rgb(0, 100, 0) 0%, rgb(100, 200, 100) 100%); font-weight: bold !important;">
                                 Log in to Power the Future</h3>
+                            <div id="g_id_onload"
+                                 data-client_id={{ GOOGLE_CLIENT_ID }}
+                                         data-context="signin"
+                                 data-ux_mode="popup"
+                                 data-login_uri="{{ url_for('auth.login', _external=True) }}"
+                                 data-auto_prompt="false">
+                            </div>
+
+                            <div class="g_id_signin"
+                                 data-type="standard"
+                                 data-shape="rectangular"
+                                 data-theme="outline"
+                                 data-text="signin_with"
+                                 data-size="large"
+                                 data-width="370"
+                                 data-logo_alignment="left">
+                            </div>
+                            <p class="text-center">OR</p>
                             <div class="form-outline mb-4">
                                 <label class="form-label" for="emailusrname">Email/UserName: </label>
                                 <input type="text" id="emailusrname" name="emailusrname" autofocus

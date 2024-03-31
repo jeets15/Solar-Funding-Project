@@ -5,6 +5,8 @@ description = "A Flask-based web application that allows household owners in the
 readme = "README.md"
 dependencies = [
     "flask",
+    'python-dotenv',
+    'google-api-python-client'
 ]
 
 [build-system]
