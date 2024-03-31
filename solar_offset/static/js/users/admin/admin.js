@@ -6,11 +6,8 @@ function afterTableBuilt() {
     // Event listener for the suspend button click
     for (let i = 0; i < suspendBtns.length; i++) {
         suspendBtns[i].addEventListener('click', function (event) {
-            console.log(event);
-            console.log(document.getElementsByClassName('suspend-btn'));
             // Get the user id value
             let userId = this.getAttribute('data-userid');
-            console.log(userId);
             // Set the user id value to the hidden input tag in the modal form
             userIdInput.value = userId;
         });

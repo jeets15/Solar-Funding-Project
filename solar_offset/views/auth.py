@@ -171,6 +171,4 @@ def register():
             flash("Registration Successful!", "success")
             return redirect(url_for("auth.login"))
 
-        print("Error", error)
-
     return render_template('./auth-engine/register.html')

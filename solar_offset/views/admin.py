@@ -48,9 +48,6 @@ def is_suspend_user():
     user_id = request.form['user_id']
     db = get_db()
 
-    print(user_id)
-    print(request.form.get('suspend_message'))
-
     if 'suspend_message' in request.form:
         suspend_message = request.form['suspend_message']
         db.execute(

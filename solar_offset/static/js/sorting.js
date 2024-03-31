@@ -33,7 +33,6 @@ function sortingUrlEncode(obj) {
         let order = obj[id]['order'];
         sortings.push(`${id}*${key}*${order}`);
     }
-    console.log(sortings.join("|"));
     return encodeURIComponent(sortings.join("|"));
 }
 
@@ -62,7 +61,6 @@ function isNumeric(str) {
 
 function triggerSort(targetId, sortKey, writeToUrlParams) {
     let order = $(`[sorting-direction=${targetId}]`).first().attr("sorting-direction-val");
-    console.log("Trigger Sort", targetId, sortKey, order);
 
     // Update elements with sorting-current attributes
     let sortKeyText = $(`[sorting-option=${targetId}][sorting-key=${sortKey}]`).first().html();
@@ -72,7 +70,6 @@ function triggerSort(targetId, sortKey, writeToUrlParams) {
     if (writeToUrlParams) {
         let url = new URL(window.location);
         let sortObj = sortingUrlDecode(url.searchParams.get('sort'));
-        console.log(sortObj);
         sortObj[targetId] = {'key': sortKey, 'order': order};
         url.searchParams.set('sort', sortingUrlEncode(sortObj));
         window.history.pushState(null, '', url);
@@ -95,8 +92,6 @@ function triggerSort(targetId, sortKey, writeToUrlParams) {
             numCompare = false;
         }
     });
-    console.log(numCompare)
-    console.log(sortList)
 
     // Do actual sorting
     let mult = (order === "desc") ? -1 : 1;
@@ -107,7 +102,6 @@ function triggerSort(targetId, sortKey, writeToUrlParams) {
             aVal = +aVal;
             bVal = +bVal;
         }
-        console.log([aVal], [bVal]);
         if (aVal < bVal) {
             return -1 * mult;
         } else if (aVal > bVal) {
