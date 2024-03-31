@@ -68,7 +68,7 @@ def logout():
         try:
             id_token.verify_oauth2_token(token, google_requests.Request(),
                                          GOOGLE_CLIENT_ID)
-            session.clear()
+            session.pop("user_id", None)
             return redirect(url_for("home.home"))
         except ValueError:
             # Invalid token
@@ -87,17 +87,20 @@ def login():
                 user_info = id_token.verify_oauth2_token(token, google_requests.Request(),
                                                          GOOGLE_CLIENT_ID)
                 email = user_info.get("email")
+                username = user_info.get("given_name")
                 db = get_db()
-                error = None
                 user = db.execute(
                     'SELECT * FROM user WHERE email_username = ?', (email,)
                 ).fetchone()
                 if user is None:
-                    error = 'Need to register first.!'
-                if error is None:
-                    session['user_id'] = user['id']
+                    userid = str(uuid4())
+                    db.execute(
+                        "INSERT INTO user (id, email_username, password_hash, user_type,display_name) VALUES (?,?,?,?,?)",
+                        (userid, email, "", "h__", username), )
+                    db.commit()
+                    session["user_id"] = userid
                 else:
-                    flash(error, "danger")
+                    session['user_id'] = user['id']
                 return redirect(url_for("auth.login"))
             except ValueError:
                 pass
