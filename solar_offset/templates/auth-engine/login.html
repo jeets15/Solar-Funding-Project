@@ -23,10 +23,10 @@
                                 style="font-size: xxx-large; background-image: linear-gradient(90deg, rgb(0, 100, 0) 0%, rgb(100, 200, 100) 100%); font-weight: bold !important;">
                                 Log in to Power the Future</h3>
                             <div id="g_id_onload"
-                                 data-client_id="26720489663-ivpt5laq14e58giend3kqqea1hra67ri.apps.googleusercontent.com"
-                                 data-context="signin"
+                                 data-client_id={{ GOOGLE_CLIENT_ID }}
+                                         data-context="signin"
                                  data-ux_mode="popup"
-                                 data-login_uri="http://localhost:8000/auth/login"
+                                 data-login_uri="{{ url_for('auth.login', _external=True) }}"
                                  data-auto_prompt="false">
                             </div>
 

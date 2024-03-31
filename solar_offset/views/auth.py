@@ -135,7 +135,7 @@ def login():
             else:
                 abort(400, "Your account has incorrect privileges. Please contact a system administrator.")
 
-        return render_template("./auth-engine/login.html")
+        return render_template("./auth-engine/login.html", GOOGLE_CLIENT_ID=GOOGLE_CLIENT_ID)
 
 
 @bp.route("/register", methods=["GET", "POST"])
