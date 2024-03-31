@@ -1,4 +1,7 @@
 <!DOCTYPE html>
+{% if not _show_navbar is defined %}
+{% set _show_navbar = True %}
+{% endif %}
 <html>
 <head>
     <title>SolarSave - {% block title %}{% endblock %}</title>
@@ -30,6 +33,7 @@
         </div>
 
         <!-- Navigation Bar -->
+        {% if _show_navbar %}
         <ul class=" nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li>
                 <a href="{{ url_for('home.home') }}" class="nav-link px-2 link-dark">Home</a>
@@ -68,6 +72,7 @@
                 {% endif %}
             {% endif %}
         </ul>
+        {% endif %}
 
         <!-- Login & Register Section -->
         <div class="col-md-3 text-end">
