@@ -16,15 +16,15 @@ bp = Blueprint("auth", __name__, url_prefix="/auth")
 # This function is called before every request is processed by a view
 # Assigns the record of the currently logged in user to g.user
 # Otherwise g.user is None
-# g is a variable that can be used in templates
 @bp.before_app_request
 def load_logged_in_user():
     user_id = session.get('user_id', None)
+    db = get_db()
 
     if user_id is None:
         g.user = None
     else:
-        user = get_db().execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
+        user = db.execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
         if user is None:
             g.user = None
         else:
@@ -34,6 +34,9 @@ def load_logged_in_user():
             else:
                 user['name'] = user['email_username']
             g.user = user
+
+    if g.user and (g.user['status_suspend'] is not None):
+        return "You are suspended"
 
 
 # Decorator that can be used to force user to be logged in for a page

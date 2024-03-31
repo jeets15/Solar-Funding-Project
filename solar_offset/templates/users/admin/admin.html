@@ -7,93 +7,6 @@
 {% block scripts %}
     <script src="{{ url_for('static',filename='js/users/admin/admin.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/he@1.2.0/he.min.js"></script>
-    <script>
-        var tableData = [];
-        var table = document.getElementById("admin-table");
-        var rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
-
-        for (var i = 0; i < rows.length; i++) {
-            var row = rows[i];
-            var rowData = {};
-            var cells = row.getElementsByTagName("td");
-            rowData.user_type = cells[0].textContent.trim();
-            rowData.id = cells[1].textContent.trim();
-            rowData.email_username = cells[2].textContent.trim();
-            rowData.action = cells[3].innerHTML.trim();
-            rowData.is_suspended = cells[4].textContent.trim();
-            tableData.push(rowData);
-        }
-
-
-        var table = new Tabulator("#admin-table", {
-            layout: "fitColumns",
-            pagination: "local",
-            paginationSize: 10,
-            columns: [
-                {
-                    title: "User Type",
-                    field: "user_type",
-                    headerFilter: true,
-                    headerFilterPlaceholder: "Search...",
-                    headerFilterPlaceholderParsed: true,
-                    formatter: actionFormatter
-                },
-                {title: "User ID", field: "id", headerFilter: true, headerFilterPlaceholder: "Search...",},
-                {title: "Email", field: "email_username", headerFilter: true, headerFilterPlaceholder: "Search...",},
-                {
-                    title: "Action",
-                    field: "action",
-                    headerFilter: false,
-                    headerSort: false,
-                    formatter: actionFormatter,
-                    width: 200
-                },
-                {
-                    title: "Suspend Message",
-                    field: "is_suspended",
-                    headerFilter: true,
-                    headerFilterPlaceholder: "Search...",
-                }
-            ]
-        });
-
-        function actionFormatter(cell) {
-            return cell.getValue();
-        }
-
-        table.setData(tableData);
-        document.getElementById("apply-filter").addEventListener("click", function () {
-            var column = document.getElementById("filter-column").value;
-            var type = document.getElementById("filter-type").value;
-            var value = document.getElementById("filter-value").value;
-
-            if (column && type && value) {
-                if (column === "user_type") {
-                    if (type === "=") {
-                        table.setFilter(function (data) {
-                            var userType = he.decode(data.user_type.trim());
-                            return userType === value;
-                        });
-                    } else if (type === "!=") {
-                        table.setFilter(function (data) {
-                            var userType = he.decode(data.user_type.trim());
-                            return userType !== value;
-                        });
-                    }
-                } else {
-                    table.setFilter(column, type, value);
-                }
-            }
-        });
-
-        document.getElementById("clear-filter").addEventListener("click", function () {
-            table.clearFilter();
-            document.getElementById("filter-column").value = "Select Column";
-            document.getElementById("filter-type").value = "=";
-            document.getElementById("filter-value").value = "";
-        });
-    </script>
-
 {% endblock %}
 {% block body %}
     <div class="text-center">
@@ -179,7 +92,7 @@
                                     <button class="btn btn-success" type="submit">Delete</button>
 
                                 </form>
-                                {% if user['is_suspended'] !="-" %}
+                                {% if user['is_suspended'] %}
                                     <form action="/is-suspend-user" method="post">
                                         <input type="hidden" name="user_id" value="{{ user['id'] }}">
                                         <button class="btn btn-outline-success" type="submit">UnSuspend</button>
@@ -195,7 +108,7 @@
                             </div>
                         </td>
                         <td>
-                            {{ user['is_suspended'] }}
+                            {{ user['suspend_message'] }}
                         </td>
                     </tr>
                 {% endfor %}
