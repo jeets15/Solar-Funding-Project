@@ -26,7 +26,7 @@
                                  data-client_id={{ GOOGLE_CLIENT_ID }}
                                          data-context="signin"
                                  data-ux_mode="popup"
-                                 data-login_uri="{{ url_for('auth.login', _external=True) }}"
+                                 data-login_uri="http://localhost:8000/auth/login"
                                  data-auto_prompt="false">
                             </div>
 
@@ -59,7 +59,8 @@
                             </div>
 
 
-                            <p>Don't have an account? <a href="/register" class="link-info">Register here</a></p>
+                            <p>Don't have an account? <a href="{{ url_for('auth.register') }}" class="link-info">Register
+                                here</a></p>
 
                         </form>
 
