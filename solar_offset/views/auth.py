@@ -252,9 +252,10 @@ def register_staff():
             return render_template("auth-engine/register-staff.html"), 400
 
         staff_suspend_message = " ".join([
-            "Staff Application: Your account has been created.",
+            "Staff Application: Your account has been created successfully.",
             "New staff accounts require review and approval from the administrative team.",
-            "Please be patient while your new account is being reviewed. This may take some time."
+            "Please be patient while your new account is being reviewed as part of the registration process.",
+            "This may take some time."
         ])
 
         db.execute(
