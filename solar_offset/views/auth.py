@@ -73,7 +73,10 @@ def login_required(allowed_user_types=None):
 
 @bp.route("/account-suspended", methods=["GET"])
 def account_suspended():
-    return render_template("auth-engine/suspended.html")
+    if g.user['status_suspend'] is None:
+        return redirect(url_for('home.home'))
+    else:
+        return render_template("auth-engine/suspended.html")
 
 
 @bp.route("/logout", methods=["GET"])
