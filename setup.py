@@ -6,6 +6,7 @@ setup(
     install_requires=[
         'flask',
         'python-dotenv',
-        'google-api-python-client'
+        'google-api-python-client',
+        'email-validator'
     ]
 )
