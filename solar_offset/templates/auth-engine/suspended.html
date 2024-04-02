@@ -1,0 +1,37 @@
+{% set _show_navbar = False %}
+
+{% extends 'base.html' %}
+
+{% block title %}Your Account is Suspended{% endblock %}
+
+{% block styles %}
+<style>
+    .suspend-message-wrapper {
+        width: fit-content;
+        max-width: 30em;
+        margin: 0.5em auto;
+        padding: 1em;
+        border: 0.25em solid gray;
+        border-radius: 0.5em;
+        background-color: rgb(243, 243, 243);
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="main-content-centered" style="text-align: center;">
+    <h2>Your Account is Currently Suspended</h2>
+    <hr>
+    <p>Your account is suspended for the following reason:</p>
+    <div>
+        <blockquote class="suspend-message-wrapper">
+            <p>{{ g.user.status_suspend }}</p>
+        </blockquote>
+    </div>
+    <hr>
+    <div>
+        <div>If you believe that this is a mistake, please contact our support team at</div>
+        <div><b>support@helpyouout.tld</b></div>
+    </div>
+</div>
+{% endblock %}
