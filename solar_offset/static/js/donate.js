@@ -1,4 +1,3 @@
-
 /* TEMPLATE REQUIREMENTS
 
 -- Use the donate.css style sheet

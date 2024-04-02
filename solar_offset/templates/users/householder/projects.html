@@ -8,7 +8,10 @@
 {% endblock %}
 
 {% block scripts %}
+    <script type="text/javascript"
+            src="https://www.paypal.com/sdk/js?client-id=AapxkZkqchUvb-_oL2EVTEAFI_RELri7WO5ybnU56afNSobkdOtfj_tDCH0juuFYwTfLJYwJ3D3hFKgV"></script>
     <script src="{{ url_for('static', filename='js/donate.js') }}" defer></script>
+
 {% endblock %}
 
 {% block body %}
@@ -45,6 +48,7 @@
                                             ajaxref="{{ url_for('api.donate', country=country.country_code, orga=orga.name_slug) }}">
                                         Donate Now
                                     </button>
+
                                 {% else %}
                                     <button class="btn btn-secondary" disabled>
                                         Only householder accounts can donate!
