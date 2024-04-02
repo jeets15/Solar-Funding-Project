@@ -1,15 +1,17 @@
 <!DOCTYPE html>
+{% if not _show_navbar is defined %}
+{% set _show_navbar = True %}
+{% endif %}
 <html>
 <head>
     <title>SolarSave - {% block title %}{% endblock %}</title>
-    <link rel="icon" type="image/x-icon" href="../static/images/logo/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/logo/favicon.ico') }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles_base.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
-    <link href="https://unpkg.com/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
 
     {% block styles %}
     {% endblock %}
@@ -22,8 +24,8 @@
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
 
         <!-- Company Logo -->
-        <div class="d-flex align-items-center col-md-3 text-dark text-decoration-none">
-            <a href="{{ url_for('home.home') }}" style="font-size: xx-large;">
+        <div class="d-flex align-items-center col-md-3 text-dark">
+            <a href="{{ url_for('home.home') }}" class="text-decoration-none" style="font-size: xx-large;">
                 <img src="{{ url_for('static', filename='images/logo/logo.png') }}"
                      alt="Login image" class="" width="60" height="60"/>
                 <span class="gradient-text page-title-gradient"> Solar Save </span>
@@ -31,6 +33,7 @@
         </div>
 
         <!-- Navigation Bar -->
+        {% if _show_navbar %}
         <ul class=" nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li>
                 <a href="{{ url_for('home.home') }}" class="nav-link px-2 link-dark">Home</a>
@@ -69,6 +72,7 @@
                 {% endif %}
             {% endif %}
         </ul>
+        {% endif %}
 
         <!-- Login & Register Section -->
         <div class="col-md-3 text-end">
@@ -120,7 +124,6 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
-<script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
 <script src="{{ url_for('static', filename='js/flashmessage.js') }}" defer></script>
 
 

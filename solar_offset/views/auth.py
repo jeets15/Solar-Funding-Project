@@ -1,4 +1,6 @@
+from collections import namedtuple
 import functools
+from email_validator import EmailNotValidError, validate_email
 from flask import Blueprint, abort, g, render_template, flash, request, session, redirect, url_for
 from werkzeug.security import check_password_hash, generate_password_hash
 from solar_offset.db import get_db
@@ -12,19 +14,32 @@ load_dotenv()
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 bp = Blueprint("auth", __name__, url_prefix="/auth")
 
+def email_is_valid(email):
+    ReturnObj = namedtuple("EmailInfo", ['is_valid', 'email', 'error'])
+    # Validate email
+    try:
+        emailinfo = validate_email(email, check_deliverability=False)
+    except EmailNotValidError as e:
+        return ReturnObj(False, email, e)
+    else:
+        return ReturnObj(True, emailinfo.normalized, None)
 
 # This function is called before every request is processed by a view
 # Assigns the record of the currently logged in user to g.user
 # Otherwise g.user is None
-# g is a variable that can be used in templates
 @bp.before_app_request
 def load_logged_in_user():
+    # Ignore static requests
+    if request.endpoint == 'static':
+        return None
+
     user_id = session.get('user_id', None)
+    db = get_db()
 
     if user_id is None:
         g.user = None
     else:
-        user = get_db().execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
+        user = db.execute("SELECT * FROM user WHERE id = ?", (user_id,)).fetchone()
         if user is None:
             g.user = None
         else:
@@ -34,6 +49,14 @@ def load_logged_in_user():
             else:
                 user['name'] = user['email_username']
             g.user = user
+
+    # Handle when a user is suspended
+    # All requests are automatically redirected to the 'suspended' page
+    if g.user \
+        and (g.user['status_suspend'] is not None) \
+        and request.endpoint != 'auth.logout' \
+        and request.endpoint != 'auth.account_suspended':
+        return redirect(url_for('auth.account_suspended'))
 
 
 # Decorator that can be used to force user to be logged in for a page
@@ -59,6 +82,13 @@ def login_required(allowed_user_types=None):
         return wrapped_view
 
     return _wrapper
+
+@bp.route("/account-suspended", methods=["GET"])
+def account_suspended():
+    if g.user['status_suspend'] is None:
+        return redirect(url_for('home.home'))
+    else:
+        return render_template("auth-engine/suspended.html")
 
 
 @bp.route("/logout", methods=["GET"])
@@ -105,7 +135,7 @@ def login():
             except ValueError:
                 pass
         else:
-            username = request.form["emailusrname"]
+            username = email_is_valid(request.form.get('emailusrname')).email
             password = request.form['password']
             db = get_db()
             error = None
@@ -143,9 +173,24 @@ def register():
     if request.method == 'POST':
         if (request.form['username'] != ""):
             username = request.form['username']
-        email = request.form['emailaddress']
+        
+        email = None
+        # Validate email
+        email_info = email_is_valid(request.form.get('emailaddress'))
+        if email_info.is_valid:
+            email = email_info.email
+        else:
+            flash(f"Invalid Email: {email_info.error}", 'danger')
+            return render_template("auth-engine/register.html"), 400
+        
         password = request.form['password']
+        
         db = get_db()
+
+        if db.execute("SELECT * FROM user WHERE email_username == ?", [email, ]).fetchone():
+            flash("Another user is already using this e-mail address", 'danger')
+            return render_template("auth-engine/register.html"), 400
+
         error = None
         userid = str(uuid4())
         try:
@@ -168,6 +213,59 @@ def register():
             flash("Registration Successful!", "success")
             return redirect(url_for("auth.login"))
 
-        print("Error", error)
-
     return render_template('./auth-engine/register.html')
+
+
+@bp.route("/register-staff", methods=["GET", "POST"])
+def register_staff():
+    # from email_validator import validate_email, EmailNotValidError
+    if request.method == 'POST':
+        if not request.form.get('emailaddress') \
+            or not request.form.get('password'):
+            flash("You must provide a valid email and password", 'danger')
+            return render_template("auth-engine/register-staff.html"), 400
+        
+        pwd = request.form.get('password')
+        email = None
+
+        # Validate email
+        email_info = email_is_valid(request.form.get('emailaddress'))
+        if email_info.is_valid:
+            email = email_info.email
+        else:
+            flash(f"Invalid Email: {email_info.error}", 'danger')
+            return render_template("auth-engine/register-staff.html"), 400
+
+        # Validate password matching
+        if pwd != request.form.get('confirmpassword'):
+            flash("Password and Confirm password don't match", 'danger')
+            return render_template("auth-engine/register-staff.html"), 400
+
+        display_name = None
+        if request.form.get('username'):
+            display_name = request.form.get('username')
+
+        db = get_db()
+
+        if db.execute("SELECT * FROM user WHERE email_username == ?", [email, ]).fetchone():
+            flash("Another user is already using this e-mail address", 'danger')
+            return render_template("auth-engine/register-staff.html"), 400
+
+        staff_suspend_message = " ".join([
+            "Staff Application: Your account has been created successfully.",
+            "New staff accounts require review and approval from the administrative team.",
+            "Please be patient while your new account is being reviewed as part of the registration process.",
+            "This may take some time."
+        ])
+
+        db.execute(
+            "INSERT INTO user (id, email_username, display_name, password_hash, user_type, status_suspend) \
+            VALUES (?, ?, ?, ?, '_s_', ?);",
+            (str(uuid4()), email, display_name, generate_password_hash(pwd), staff_suspend_message)
+        )
+        db.commit()
+
+        return render_template("auth-engine/register-staff.html")
+
+    else:
+        return render_template("auth-engine/register-staff.html")
