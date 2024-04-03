@@ -2,7 +2,6 @@ from datetime import datetime
 from flask import Blueprint, render_template, request, session
 from solar_offset.db import get_db
 
-
 bp = Blueprint("api", __name__, url_prefix="/api")
 
 
@@ -13,7 +12,7 @@ def donate():
         sess_user_id = session.get("user_id", None)
         if sess_user_id is None:
             return "You must be logged in to donate", 401
-        
+
         # Fetch user record from database
         db = get_db()
         user_entry = db.execute("SELECT * FROM user WHERE user.id == ?", [sess_user_id]).fetchone()
@@ -21,36 +20,38 @@ def donate():
         # Check that the user id exists in the database (could be forged)
         if user_entry is None:
             return "Invalid User Credentials", 400
-        
+
         # Ensure that the only user role that this user has is 'h' (householder)
         if len(user_entry["user_type"].replace("h", "").replace("_", "")) > 0:
             return "Only Householder accounts are allowed to donate", 403
-        
+
         # Validate the Form Entries
-        country_code = request.form.get("country_code", None)
+        data = request.get_json()
+        country_code = data.get("country_code")
+        # country_code = request.form.get("country_code", None)
         if country_code is None:
             return "You must supply a 'country_code' entry", 400
         country_code = country_code.upper()
-        organization_slug = request.form.get("organization_slug", None)
+        organization_slug = data.get("organization_slug", None)
         if organization_slug is None:
             return "You must supply a 'organization_slug' entry", 400
         organization_slug = organization_slug.lower()
-        donation_amount = request.form.get("donation_amount", None)
+        donation_amount = data.get("donation_amount", None)
         if donation_amount is None:
             return "You must supply a 'donation_amount' entry", 400
         donation_amount = str(donation_amount)
-
         if db.execute(
-            "SELECT country_code FROM country WHERE country.country_code == ?", [country_code]
-            ).fetchone() is None:
+                "SELECT country_code FROM country WHERE country.country_code == ?", [country_code]
+        ).fetchone() is None:
             return "Specified Country does not Exist", 400
         if db.execute(
-            "SELECT name_slug, country_code FROM organization WHERE name_slug == ? AND country_code == ?", [organization_slug, country_code]
-            ).fetchone() is None:
+                "SELECT name_slug, country_code FROM organization WHERE name_slug == ? AND country_code == ?",
+                [organization_slug, country_code]
+        ).fetchone() is None:
             return "Specified Organization does not Exist", 400
         if not donation_amount.isdigit() \
-            or int(donation_amount) < 1 \
-            or str(int(donation_amount)) != donation_amount:
+                or int(donation_amount) < 1 \
+                or str(int(donation_amount)) != donation_amount:
             return "Donation Amount must be a positive integer", 400
         else:
             donation_amount = int(donation_amount)
@@ -64,7 +65,7 @@ def donate():
         )
         db.commit()
         return {"success": True}, 200
-    
+
     else:
         organization_slug = request.args.get('orga', None)
         country_code = request.args.get('country', None)
@@ -72,15 +73,15 @@ def donate():
             return "No Organization given", 400
         elif country_code is None:
             return "No Country code given", 400
-        
+
         organization_slug = organization_slug.lower()
         country_code = country_code.upper()
-        
+
         db = get_db()
         country = db.execute("SELECT * FROM country WHERE country_code == ?", [country_code]).fetchone()
         organization = db.execute(
             "SELECT * FROM organization WHERE name_slug == ? AND country_code == ?", [organization_slug, country_code]
-            ).fetchone()
+        ).fetchone()
         if country is None:
             return "Country Code does not exist", 400
         elif organization is None:

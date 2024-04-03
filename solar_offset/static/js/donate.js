@@ -22,47 +22,80 @@
 */
 
 
-function prepareDonation(donateForm) {
-    donateForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-        if (document.getElementById("flash-banner")) {
-            document.getElementById("flash-banner").innerHTML = "";
-        }
-        let submitButton = document.getElementById("form-donate-submit");
-        if (submitButton) {
-            submitButton.type = "hidden"
-        }
-        let donationInput = document.getElementById("form-donation-amount");
-        if (donationInput) {
-            donationInput.readOnly = true;
-            // donationInput.setAttribute('readonly', true);
-        }
-        let xhr = new XMLHttpRequest();
-        xhr.open("POST", donateForm.action, true);
-        xhr.onload = () => {
-            let banner = "";
-            if (xhr.status === 200) {
-                banner = `<div class="alert alert-success" role="alert">
-                            Thank you for your Donating!</div>`;
-            } else {
-                banner = `<div class="alert alert-danger" role="alert" style="text-align: center;">
-                            Oh no! We couldn't Process your Donation!<br>Reason: ${xhr.responseText}</div>`;
+function prepareDonation(donateForm, userData) {
+    var buttonContainers = document.getElementsByClassName('paypal-button-container');
+    // Iterate over each container and render PayPal button
+    let donationInput = document.getElementById("form-donation-amount");
+    let banner = "";
+    for (var i = 0; i < buttonContainers.length; i++) {
+        var orgaSlug = buttonContainers[i].getAttribute('data-orga-slug');
+        var countryCode = buttonContainers[i].getAttribute('data-country-code');
+        let sessionData = sessionStorage.getItem('user_id');
+        paypal.Buttons({
+            createOrder: function (data, actions) {
+                var donationAmount = donationInput.value;
+                return actions.order.create({
+                    intent: 'CAPTURE',
+                    payer: {
+                        name: {
+                            given_name: userData["name"],
+                            surname: ""
+                        },
+                        email_address: userData["email_username"],
+                    },
+                    purchase_units: [{
+                        amount: {
+                            value: donationAmount,
+                            currency_code: "GBP"
+                        }
+                    }]
+                });
+            },
+            // On successful capture, display a success message
+            onApprove: function (data, actions) {
+                let donationAmount = donationInput.value;
+                // Make an AJAX POST request to your /donate endpoint
+                let xhr = new XMLHttpRequest();
+                xhr.open("POST", "/api/donate", true);
+                xhr.setRequestHeader("Content-Type", "application/json");
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            console.log("Donation successful");
+                        } else {
+                            console.error("Donation failed:", xhr.responseText);
+                        }
+                    }
+                };
+
+                let requestData = JSON.stringify({
+                    organization_slug: orgaSlug,
+                    country_code: countryCode,
+                    donation_amount: donationAmount
+                });
+                // Send the request
+                xhr.send(requestData);
+
+                // Display a success message to the user
+                let bannerWrapper = document.createElement("div");
+                bannerWrapper.classList.add("alert", "alert-success");
+                bannerWrapper.role = "alert";
+                bannerWrapper.innerText = "Thank you for your donation!";
+                document.getElementById("popup-wrapper").firstElementChild.prepend(bannerWrapper);
+                setTimeout(() => {
+                    document.getElementById("popup-wrapper").innerHTML = "";
+                }, 5000);
             }
-            let bannerWrapper = document.createElement("div");
-            bannerWrapper.id = "flash-banner";
-            bannerWrapper.innerHTML = banner;
-            document.getElementById("popup-wrapper").firstElementChild.prepend(bannerWrapper);
-            setTimeout(() => {
-                document.getElementById("popup-wrapper").innerHTML = "";
-            }, 5000);
-        };
-        xhr.send(new FormData(donateForm));
-    });
+        }).render(buttonContainers[i]);
+
+    }
 }
 
 function donateButtonClicked(event) {
     let button = event.target;
-
+    var userData = button.getAttribute("data-user");
+    // Now you can access user data like userData.id, userData.user_type, etc.
+    console.log(userData);
     let hrefDonateGet = button.getAttribute("ajaxref");
     if (hrefDonateGet) {
         let getRequest = new XMLHttpRequest();
@@ -70,7 +103,7 @@ function donateButtonClicked(event) {
         getRequest.onload = (xhr) => {
             document.getElementById("popup-wrapper").innerHTML = xhr.target.responseText;
             let donateForm = document.getElementById("form-donate");
-            prepareDonation(donateForm);
+            prepareDonation(donateForm, userData);
         }
         getRequest.send();
     }
@@ -81,14 +114,18 @@ function donateMain() {
     for (let button of document.getElementsByClassName("btn-orga-donate")) {
         button.addEventListener("click", donateButtonClicked);
     }
-
-    // Define click event to make popup wrapper disappear
+    //
+    // // Define click event to make popup wrapper disappear
     document.getElementById("popup-wrapper").addEventListener("click", (event) => {
         if (event.target == document.getElementById("popup-wrapper")) {
             document.getElementById("popup-wrapper").innerHTML = "";
         }
     });
+
+
 }
 
 // Call main method when script is loaded
-donateMain();
+document.addEventListener("DOMContentLoaded", function () {
+    donateMain();
+});

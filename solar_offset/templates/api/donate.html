@@ -4,7 +4,6 @@
         <br>({{ country.name }})
     </h3>
     <form id="form-donate" action="{{ url_for('api.donate') }}" method="post" style="max-width: 20em; margin: 0 auto;">
-
         <input type="hidden" id="form-organization-slug" name="organization_slug" value="{{ organization.name_slug }}">
         <input type="hidden" id="form-country-code" name="country_code" value="{{ organization.country_code }}">
         <div>
@@ -24,8 +23,7 @@
                 </div>
             </div>
         </div>
-        <input id="form-donate-submit" type="submit" value="Donate" class="btn btn-primary" style="width: 100%;">
+        <div class="paypal-button-container" data-orga-slug="{{ organization.name_slug }}"
+             data-country-code="{{ country.country_code }}"></div>
     </form>
-
-
 </div>

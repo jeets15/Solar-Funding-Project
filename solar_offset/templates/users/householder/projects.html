@@ -9,7 +9,7 @@
 
 {% block scripts %}
     <script type="text/javascript"
-            src="https://www.paypal.com/sdk/js?client-id=AapxkZkqchUvb-_oL2EVTEAFI_RELri7WO5ybnU56afNSobkdOtfj_tDCH0juuFYwTfLJYwJ3D3hFKgV"></script>
+            src="https://www.paypal.com/sdk/js?client-id=AapxkZkqchUvb-_oL2EVTEAFI_RELri7WO5ybnU56afNSobkdOtfj_tDCH0juuFYwTfLJYwJ3D3hFKgV&currency=GBP"></script>
     <script src="{{ url_for('static', filename='js/donate.js') }}" defer></script>
 
 {% endblock %}
@@ -45,7 +45,9 @@
                                 {% if 'h' in g.user.user_type %}
                                     <button
                                             class="btn-orga-donate btn btn-outline-primary"
-                                            ajaxref="{{ url_for('api.donate', country=country.country_code, orga=orga.name_slug) }}">
+                                            ajaxref="{{ url_for('api.donate', country=country.country_code, orga=orga.name_slug) }}"
+                                            data-user="{{ g.user }}"
+                                    >
                                         Donate Now
                                     </button>
 
