@@ -44,35 +44,35 @@ function drawMap(canvas) {
 // Function to add buttons on the map
 function addButtons(canvas) {
     // South Africa
-    const south_africa = createButton("../../static/images/countries/south-africa.png", 55, 57, "https://www.google.com/");
+    const south_africa = createButton("../../static/images/countries/south-africa.png", 55, 57, "{{ url_for('householder.country', country_code='za')}}");
     canvas.parentNode.appendChild(south_africa);
 
     // Argentina
-    const argentina = createButton("../../static/images/countries/argentina.png", 32, 60, "https://www.google.com/");
+    const argentina = createButton("../../static/images/countries/argentina.png", 32, 60, "{{ url_for('householder.country', country_code='ar')}}");
     canvas.parentNode.appendChild(argentina);
 
     // Australia
-    const australia = createButton("../../static/images/countries/australia.png", 84, 55, "https://www.google.com/");
+    const australia = createButton("../../static/images/countries/australia.png", 84, 55, "{{ url_for('householder.country', country_code='au')}}");
     canvas.parentNode.appendChild(australia);
 
     // Brazil
-    const brazil = createButton("../../static/images/countries/brazil.png", 35, 50, "https://www.google.com/");
+    const brazil = createButton("../../static/images/countries/brazil.png", 35, 50, "{{ url_for('householder.country', country_code='br')}}");
     canvas.parentNode.appendChild(brazil);
 
     // Canada
-    const canada = createButton("../../static/images/countries/canada.png", 20, 17, "https://www.google.com/");
+    const canada = createButton("../../static/images/countries/canada.png", 20, 17, "{{ url_for('householder.country', country_code='ca')}}");
     canvas.parentNode.appendChild(canada);
 
     // Iran
-    const iran = createButton("../../static/images/countries/iran.png",63 , 29, "https://www.google.com/");
+    const iran = createButton("../../static/images/countries/iran.png",63 , 29, "{{ url_for('householder.country', country_code='ir')}}");
     canvas.parentNode.appendChild(iran);
 
     // Saudi Arabia
-    const saudi_arabia = createButton("../../static/images/countries/saudi-arabia.png", 60, 33, "https://www.google.com/");
+    const saudi_arabia = createButton("../../static/images/countries/saudi-arabia.png", 60, 33, "{{ url_for('householder.country', country_code='sa')}}");
     canvas.parentNode.appendChild(saudi_arabia);
 
     // USA
-    const usa = createButton("../../static/images/countries/united-states-of-america.png", 20, 25, "https://www.google.com/");
+    const usa = createButton("../../static/images/countries/united-states-of-america.png", 20, 25, "{{ url_for('householder.country', country_code='us')}}");
     canvas.parentNode.appendChild(usa);
 }
 
