@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+<!-- Title Section -->
+{% block title %}Admin DashBoard{% endblock %}
+
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home/home-style.css') }}">
+{% endblock %}
+
+<!-- Body Section -->
+{% block body %}
+    <div class="position-relative overflow-hidden m-md-3 text-center">
+        <div class="col-md-6  mx-auto mt-5">
+
+            <table class="table table-striped table-hover table-bordered table-responsive"
+                   style="min-height: 20vh; max-width: 90%">
+                <thead>
+                <tr>
+                    <th scope="col">User name</th>
+                    <th scope="col">country_name</th>
+                    <th scope="col">organization_name</th>
+                    <th scope="col">total_donation_amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>
+                            {{ user["name"] }}
+                        </td>
+                        <td>{{ user["country_name"] }}</td>
+                        <td>{{ user["organization_name"] }}</td>
+                        <td>{{user["total_donation_amount"]}}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,93 @@
+/*
+Semi-circle Gauge similar to speedometer
+
+<div class="gauge" style="--value: 0.3; --color: red; --scale-percent: 200%">
+    <div class="gauge-bg"></div>
+    <div class="gauge-center"></div>
+    <div class="gauge-needle"></div>
+</div>
+ */
+ div.gauge {
+    --color: white;
+    --value: 0;
+    --scale-percent: 100%;
+    font-size: var(--scale-percent);
+    width: 2em;
+    height: 1em; /* Half the width */
+}
+div.gauge div.gauge-bg {
+    display: block;
+    width: 2em;
+    height: 1em; /* Half the width */
+    background-color: var(--color);
+    border-top-left-radius: 1.2em; /* Width + Border Thickness */
+    border-top-right-radius: 1.2em; /* Width + Border Thickness */
+    border: 0.2em solid black;
+    border-bottom: 0em; /* Get rid of bottom border since we don't want it have the same thickness */
+}
+div.gauge div.gauge-center {
+    display: block;
+    position: relative;
+    top: -0.2em;
+    left: 0.9em;
+    z-index: 2;
+    width: 0.2em;
+    height: 0.2em;
+
+    background-color: black;
+    border-radius: 50%;
+}
+div.gauge div.gauge-needle {
+    display: block;
+    position: relative;
+    top: -0.375em;
+    left: 0.125em;
+    z-index: 1;
+    width: 1.75em;
+    height: 0.15em;
+
+    /* background-color: gray; */
+    background: linear-gradient(90deg, gray 0.9em, rgba(0, 0, 0, 0) 0.9em, rgba(0, 0, 0, 0));
+    border-radius: 0.2em;
+
+    transform: rotate(calc(180deg * var(--value)));
+}
+
+
+
+/* 
+    Traffic Light Indicator
+ */
+/* 
+<div class="signal-wrapper amber">
+    <div class="signal r"></div>
+    <div class="signal a"></div>
+    <div class="signal g"></div>
+</div>
+ */
+div.signal-wrapper {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    background-color: #e9ecef;
+    border: 0.1em solid gray; /*black*/
+    border-radius: 0.8em;
+    padding: 0.25em 0.25em;
+}
+div.signal-wrapper div.signal+div.signal {
+    margin-left: 0.4em;
+}
+div.signal-wrapper div.signal {
+    width: 0.35em;
+    height: 0.35em;
+    border: 0.05em solid gray;
+    border-radius: 1em;
+    margin: auto 0em;
+    padding: 0em;
+}
+div.signal-wrapper div.signal.r {background-color: rgba(255,   0,   0, 1.0);}
+div.signal-wrapper div.signal.a {background-color: rgba(255, 187,   0, 1.0);}
+div.signal-wrapper div.signal.g {background-color: rgba(  0, 255,   0, 1.0);}
+div.signal-wrapper.red   div.signal.r {width: 1em; height: 1em;}
+div.signal-wrapper.amber div.signal.a {width: 1em; height: 1em;}
+div.signal-wrapper.green div.signal.g {width: 1em; height: 1em;}

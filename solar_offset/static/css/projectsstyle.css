@@ -1,5 +1,5 @@
 body {
-    background-image: url("/static/images/solar_offset_login_page.jpeg");
+    background-image: url("/static/images/Sun energy-rafiki.svg");
     background-repeat: no-repeat;
     background-size: cover;
 }
@@ -11,11 +11,12 @@ body {
 }
 
 .project {
+    min-width: 33em;
     border: 1px solid #ccc;
     border-radius: 0.5em;
     margin: 0.25em;
     padding: 1em;
-    background-color: rgba(255, 255, 255, 0.95);
+    background-color: rgba(255, 255, 255, 0.985);
     /* max-width: 23em; */
     display: flex;
     flex-direction: column;
@@ -38,4 +39,17 @@ body {
     position: absolute;
     bottom: 10px;
     right: 10px;
+}
+
+table.table-carbon-data td {
+    border: 0;
+}
+table.table-carbon-data td+td {
+    padding-left: 0.5em;
+}
+table.table-carbon-data tr td:nth-child(1) {
+    text-align: right;
+}
+table.table-carbon-data tr.sep-bottom td {
+    border-bottom: 0.1em solid lightgray;
 }

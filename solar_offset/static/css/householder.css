@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+
+h1 {
+    text-align: center;
+}
+h2 {
+    text-align: center;
+}
+
+
+
+.container-flex-columns {
+    display: flex;
+    flex-direction: row;
+}
+@media (max-width: 64em) {
+    .container-flex-columns {
+        flex-direction: column;
+    }
+}
+.container-flex-columns .flex-column {
+    margin: 0 auto;
+    padding: 1em;
+}
+
+
+
+.shadow-box {
+    margin-top: 1em;
+    padding: 1em;
+    border: 0.1em solid #ccc;
+    border-radius: 0.5em;
+    background-color: #f9f9f9;
+}
+.shadow-box h2 {
+    margin-bottom: 1em;
+}
+.shadow-box .stats-summary {
+    background-color: #fff;
+    padding: 1em;
+    border-radius: 0.5em;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+}
+
+
+
+.stats-summary h3 {
+    font-size: 125%;
+    text-decoration: underline;
+}
+.stats-summary b {
+    white-space: nowrap;
+}
+.stats-summary hr {
+    width: 100%;
+    border: 0.1em solid lightgray;
+    margin: 0.5em 0;
+}
+.stats-summary + .stats-summary {
+    margin-top: 1em;
+}
+
+
+
+.footprint-summary {
+    display: flex;
+    flex-direction: column;
+}
+.footprint-summary {
+    display: flex;
+    flex-direction: column;
+}
+.footprint-summary .flex-row {
+    display: flex;
+    flex-direction: row;
+}
+.footprint-summary .flex-row > div+div {
+    margin-left: 1em;
+}
+.footprint-summary div.centering {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+.footprint-summary .large {
+    font-size: 1.2em;
+}

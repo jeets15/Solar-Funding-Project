@@ -1,6 +1,6 @@
 -- Data to populate database during development for visualisation
 
-INSERT INTO country (country_code, short_code, name, solar_hours, carbon_emissions, solar_panel_price, electricity_mix_percentage, electricty_consumption, description)
+INSERT INTO country (country_code, short_code, name, solar_hours, carbon_emissions, solar_panel_price_per_kw, electricity_mix_percentage, electricty_consumption, description)
 VALUES
     -- Hours of Sunlight average estimated from https://www.currentresults.com/Weather/Spain/annual-days-of-sunshine.php (2445.702 hours)
     -- Carbon Emissions for 2023 taken from https://app.electricitymaps.com/zone/ES (39.2 Megatons)
@@ -33,3 +33,16 @@ INSERT INTO countryinfo (description,country_code)
 VALUES
     ('Solar power in Spain has grown significantly due to favorable conditions and government support. Abundant sunshine, coupled with investments in solar technology, has led to increased capacity. There''s still potential for further growth, supported by ongoing advancements in technology and favorable policies aimed at increasing renewable energy usage.','ESP');
 */
+INSERT INTO donation (created, country_code, organization_slug, donation_amount, householder_id)
+VALUES
+    ('2024-01-12 01:15:38.587367', 'ATA', 'antarctica_solar_project', 10, '47fa9dc4-cb7a-44c0-ace2-a65d8705495e'),
+    ('2024-02-01 03:20:49.565309', 'ATA', 'antarctica_solar_project', 5, '47fa9dc4-cb7a-44c0-ace2-a65d8705495e'),
+    ('2023-03-25 04:01:21.346968', 'ATA', 'antarctica_solar_project', 35, '3d1886b7-abec-49b9-b849-99ceb616b127'),
+    ('2023-04-13 06:33:40.246119', 'ESP', 'solaris', 50, '47fa9dc4-cb7a-44c0-ace2-a65d8705495e'),
+    ('2023-05-19 08:42:16.262143', 'ESP', 'solaris', 10, '47fa9dc4-cb7a-44c0-ace2-a65d8705495e'),
+    ('2023-06-08 10:19:39.237623', 'ESP', 'solaris', 103, '3d1886b7-abec-49b9-b849-99ceb616b127'),
+    ('2023-09-28 11:02:32.332768', 'ESP', 'rural_electrification_initiative', 13, '47fa9dc4-cb7a-44c0-ace2-a65d8705495e'),
+    ('2023-11-03 18:52:04.351058', 'ESP', 'rural_electrification_initiative', 107, '3d1886b7-abec-49b9-b849-99ceb616b127');
+
+
+

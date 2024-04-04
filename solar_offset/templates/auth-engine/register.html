@@ -2,11 +2,11 @@
 {% block title %}Register{% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/auth-engine/register-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/auth-engine/register-style.css') }}">
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/auth-engine/register.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/auth-engine/register.js') }}" defer></script>
 {% endblock %}
 
 {% block body %}
@@ -61,7 +61,12 @@
                             </div>
 
 
-                            <p>Already have an account? <a href="/login" class="link-info">Login here</a></p>
+                            <p>Already have an account? <a href="{{ url_for('auth.login') }}" class="link-info">Login
+                                here</a></p>
+
+                            <p>
+                                <div>Applying for a staff account? <a href="{{ url_for('auth.register_staff') }}">register here</a></div>
+                            </p>
 
                         </form>
 
