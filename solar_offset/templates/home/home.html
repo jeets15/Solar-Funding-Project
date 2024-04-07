@@ -4,18 +4,17 @@
 {% block title %}Home{% endblock %}
 
 {% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/home/home-style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home/home-style.css') }}">
 {% endblock %}
 
 {% block scripts %}
-<script src="{{ url_for('static', filename='js/home/home.js') }}" defer></script>
-<script src="{{ url_for('static', filename='js/solar-offset-calculator/solar-energy-offset-calculator.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/home/home.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/solar-offset-calculator/solar-energy-offset-calculator.js') }}"
+            defer></script>
 {% endblock %}
 
 <!-- Body Section -->
 {% block body %}
-
-    {% include 'flashmessage.html' %}
 
     <!--- Main Marketing Banner with donation button --->
     <div class="">
@@ -57,26 +56,8 @@
                             areas.</p>
                     </div>
                     <div class="col-md-8 carousel-image">
-                        <img class="carousel-image" src="../../static/images/direct-normal-irradiation-map.png"
-                             alt="Direct Normal Irradiation Map">
-                    </div>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <div class="row">
-                    <div class="col-md-8 carousel-image">
-                        <img class="carousel-image" src="../../static/images/global-horizontal-irradiation-map.png"
-                             alt="Global Horizontal Irradiation Map">
-                    </div>
-                    <div class="col-md-4">
-                        <br>
-                        <h2 class="display-4">Global Horizontal Irradiation Map. <span class="text-muted"
-                                                                                       style="font-size: xx-large"><br>Plan your solar projects with confidence using our comprehensive GHI resource.</span>
-                        </h2>
-                        <br>
-                        <p class="gradient-text"
-                           style="font-size: x-large; background-image: linear-gradient(90deg, lightgreen 0%, darkgreen 100%);">
-                            De-risk your solar investments with our global GHI map - pinpoint high-yield locations.</p>
+                        <canvas id="canvas-1" class="carousel-image"
+                                src="../../static/images/direct-normal-irradiation-map.png"></canvas>
                     </div>
                 </div>
             </div>
@@ -93,8 +74,26 @@
                             Identify areas for solar power development and promote sustainability.</p>
                     </div>
                     <div class="col-md-8 carousel-image">
-                        <img class="carousel-image" src="../../static/images/photovoltaic-power-potential-map.png"
-                             alt="Photovoltaic Power Potential Map">
+                        <canvas id="canvas-3" class="carousel-image"
+                                src="../../static/images/photovoltaic-power-potential-map.png"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="row">
+                    <div class="col-md-8 carousel-image">
+                        <canvas id="canvas-2" class="carousel-image"
+                                src="../../static/images/global-horizontal-irradiation-map.png"></canvas>
+                    </div>
+                    <div class="col-md-4">
+                        <br>
+                        <h2 class="display-4">Global Horizontal Irradiation Map. <span class="text-muted"
+                                                                                       style="font-size: xx-large"><br>Plan your solar projects with confidence using our comprehensive GHI resource.</span>
+                        </h2>
+                        <br>
+                        <p class="gradient-text"
+                           style="font-size: x-large; background-image: linear-gradient(90deg, lightgreen 0%, darkgreen 100%);">
+                            De-risk your solar investments with our global GHI map - pinpoint high-yield locations.</p>
                     </div>
                 </div>
             </div>
@@ -137,20 +136,25 @@
                         <div>
                             <img width="30%" height="30%" src="../../static/images/people-fill.svg" alt=""/>
                             <h4 class="fw-bold mb-0 fs-4 text-body-emphasis" style="color: maroon">Users</h4>
-                            <p>Become part of a movement – join the growing community of {{ statistics[0] }} who choose sustainability.</p>
+                            <p>Become part of a movement – join the growing community of {{ statistics[0] }} who choose
+                                sustainability.</p>
                         </div>
                     </div>
                     <div class="col d-flex align-items-start">
                         <div>
                             <img width="30%" height="30%" src="../../static/images/currency.svg" alt=""/>
-                            <h4 class="fw-bold mb-0 fs-4 text-body-emphasis" style="color: maroon">Total Amount Donated</h4>
-                            <p>Your contribution counts! Together we've raised £{{ statistics[3] }} for a cleaner future.</p>
+                            <h4 class="fw-bold mb-0 fs-4 text-body-emphasis" style="color: maroon">Total Amount
+                                Donated</h4>
+                            <p>Your contribution counts! Together we've raised £{{ statistics[3] }} for a cleaner
+                                future.</p>
                         </div>
                     </div>
                     <div class="col d-flex align-items-start">
                         <div>
-                            <img width="30%" height="30%" src="../../static/images/globe-central-south-asia.svg" alt=""/>
-                            <h4 class="fw-bold mb-0 fs-4 text-body-emphasis" style="color: maroon">Reduced Carbon Emission</h4>
+                            <img width="30%" height="30%" src="../../static/images/globe-central-south-asia.svg"
+                                 alt=""/>
+                            <h4 class="fw-bold mb-0 fs-4 text-body-emphasis" style="color: maroon">Reduced Carbon
+                                Emission</h4>
                             <p>Help us reduce carbon emissions by {{ statistics[4] }} a year.</p>
                         </div>
                     </div>
