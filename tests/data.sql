@@ -39,7 +39,47 @@ VALUES
     -- Spain Population https://en.wikipedia.org/wiki/Spain#cite_note-10
     ('ESP', 'ES', 'Spain', 2445, 39200000, 1800, 0.1617, 259, 48592909,
         'Spain (España), or the Kingdom of Spain (Reino de España), is a country located in Southwestern Europe, with parts of its territory in the Atlantic Ocean, the Mediterranean Sea and Africa. It is the largest country in Southern Europe and the fourth-most populous European Union member state. [https://en.wikipedia.org/wiki/Spain]
-        \nSolar power in Spain has grown significantly due to favorable conditions and government support. Abundant sunshine, coupled with investments in solar technology, has led to increased capacity. There''s still potential for further growth, supported by ongoing advancements in technology and favorable policies aimed at increasing renewable energy usage.');
+        \nSolar power in Spain has grown significantly due to favorable conditions and government support. Abundant sunshine, coupled with investments in solar technology, has led to increased capacity. There''s still potential for further growth, supported by ongoing advancements in technology and favorable policies aimed at increasing renewable energy usage.'),
+
+    -- United of America
+    ('USA', 'US', 'United States', 3000, 1600000000, 2500, 0.2, 4000, 334914895,
+'The United States of America (USA), commonly known as the United States (U.S. or US) or America, is a country primarily located in North America. It consists of 50 states, a federal district, five major unincorporated territories, 326 Indian reservations, and some minor possessions. The United States is the world''s third-largest country by both land and population. [https://en.wikipedia.org/wiki/United_States]
+\nThe United States has a diverse energy mix, with a significant reliance on fossil fuels like natural gas and coal, as well as growing renewable energy sources like solar and wind power. The country has made progress in increasing its renewable energy capacity, but there is still room for further growth and development in this area to reduce carbon emissions and address climate change concerns.'),
+
+    -- South Africa
+    ('ZAF', 'ZA', 'South Africa', 2800, 440000000, 1500, 0.1, 250, 60871900,
+'South Africa is a country located at the southern tip of the African continent. It is known for its diverse landscapes, rich wildlife, and vibrant culture.
+\nSouth Africa has made progress in expanding its renewable energy capacity, particularly in solar power, but fossil fuels still make up a significant portion of the country''s energy mix. The government has set targets to increase the share of renewable energy in the coming years.
+\nAccording to the latest data, South Africa has an average of 2,800 hours of sunshine per year, which is favorable for solar power generation. The country''s carbon emissions are estimated at 440 million metric tons per year. The average cost of solar panels is around 1,500 ZAR/kW (approximately $100/kW). Renewable energy currently makes up around 10% of the country''s electricity generation, and the government aims to increase this to 20% by 2030.'),
+
+
+-- Argentina
+('ARG', 'AR', 'Argentina', 2800, 440000000, 1500, 0.1, 250, 46234830,
+'Argentina is a country located in the southern part of South America. It is known for its diverse landscapes, rich culture, and vibrant economy.\nAccording to the data, Argentina has an average of 2,800 hours of sunshine per year, which is favorable for solar power generation. The country carbon emissions are estimated at 440 million metric tons per year. The average cost of solar panels is around 1,500 ARS/kW (approximately $100/kW). Renewable energy currently makes up around 10% of Argentina electricity generation. \nArgentina GDP per capital was $11,852 in 2022, according to World Bank data. The country has a population of around 46.2 million people. Argentina trade balance has fluctuated in recent years, with a trade deficit of $9.7 billion in 2018 and a trade surplus of $15.1 billion in 2021. The country inward foreign direct investment stock was $116.7 billion.'),
+
+-- Australia
+('AUS', 'AU', 'Australia', 3000, 180000000, 1500, 0.2, 250, 26636454,
+'Australia is a country located in the Southern Hemisphere, comprising the mainland of the Australian continent, the island of Tasmania, and numerous smaller islands. It is the sixth-largest country by total area. Australia has a diverse climate ranging from tropical in the north to temperate in the south, with a generally hot and dry interior. [https://en.wikipedia.org/wiki/Australia]
+\nAustralia has significant potential for solar power generation due to its abundant sunshine, particularly in the northern and central regions. The government has implemented policies to support the growth of renewable energy, including solar, leading to increased installation of solar panels across the country. However, there is still room for further expansion of solar power to reduce the country''s reliance on fossil fuels.'),
+
+-- Brazil
+('BRA', 'BR', 'Brazil', 2600, 65000000, 1500, 0.2, 500, 217341830,
+'Brazil is the largest country in both South America and Latin America. It is the world''s fifth-largest country, both by geographical area and by population. Brazil''s economy is the world''s ninth-largest by nominal GDP and eighth-largest by purchasing power parity. [https://en.wikipedia.org/wiki/Brazil]
+\nBrazil has significant potential for solar power generation due to its large land area and high levels of solar irradiation, especially in the northeast region. The country has seen rapid growth in solar capacity in recent years, driven by government incentives and falling technology costs. However, there is still room for further expansion of solar power to diversify Brazil''s energy mix, which has historically been dominated by hydroelectric and fossil fuel sources.'),
+
+-- Canada
+('CAN', 'CA', 'Canada', 2000, 530000000, 2500, 0.67, 600, 40528396,
+'Canada is a country in North America. It is the worlds second-largest country by total area. Canadas climate varies widely, ranging from arctic weather in the north to hot summers in the south. While Canada has significant renewable energy resources, including hydroelectric, solar, and wind power, it still relies heavily on fossil fuels for its energy needs. The government has set targets to increase the share of renewable energy in the country electricity mix. [https://en.wikipedia.org/wiki/Canada]\nCanada has significant solar energy potential, especially in the southern regions, but the industry is still relatively small compared to other renewable sources like hydroelectric and wind power. The government has introduced various incentives and policies to support the growth of solar power, and there is potential for further expansion in the coming years as costs continue to decline and technology improves.'),
+
+-- Iran
+('IRN', 'IR', 'Iran', 3000, 600000000, 1500, 0.1, 300, 86500000,
+'Iran, officially the Islamic Republic of Iran, is a country located in Western Asia. It is bordered by the Caspian Sea, the Persian Gulf, and the Gulf of Oman. Iran has a diverse climate, ranging from arid and semi-arid regions in the central and eastern parts to subtropical along the Caspian coast. The country experiences abundant sunshine, making it well-suited for solar power development. [https://en.wikipedia.org/wiki/Iran]
+\nIran has been actively investing in solar energy in recent years, driven by its abundant solar resources and the government efforts to diversify the country energy mix and reduce reliance on fossil fuels. The country has set ambitious targets for renewable energy deployment, including plans to install 5 gigawatts (GW) of solar capacity by 2022. However, progress has been slower than expected due to various challenges, including economic sanctions and grid integration issues. Nevertheless, Iran solar potential remains significant, and continued policy support and technological advancements could unlock further growth in the sector.'),
+
+-- Saudi Arabia
+('SAU', 'SA', 'Saudi Arabia', 3285, 600000000, 2000, 0.0038, 300, 37473929,
+'Saudi Arabia is a country located in Western Asia, bordering the Red Sea and the Persian Gulf. It is the largest country in the Middle East and the 13th-largest country in the world by land area. Saudi Arabia has a hot desert climate, with high temperatures and low rainfall throughout the year. [https://en.wikipedia.org/wiki/Saudi_Arabia]
+\nSaudi Arabia has been investing heavily in renewable energy, particularly solar power, in recent years. The country has set ambitious targets to increase its renewable energy capacity, aiming to generate 50% of its electricity from renewables by 2030. This is driven by the country abundant solar resources and the desire to diversify its energy mix and reduce its reliance on oil and gas exports. However, the country still relies heavily on fossil fuels, and there is significant potential for further growth in renewable energy generation.');
 
 
 INSERT INTO organization (name_slug, country_code, name, details_paypal, details_stripe, sites, status, description)
