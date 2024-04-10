@@ -39,12 +39,13 @@ def donate():
 
         paypal_order_api_url = f"https://api-m.sandbox.paypal.com/v2/checkout/orders/{order_id}"
         response = requests.get(paypal_order_api_url, headers=headers)
+        if response.status_code != 200:
+            return "Failed to retrieve order details from PayPal", 400
         paypal_order_data = response.json()
         purchase_units = paypal_order_data.get("purchase_units", [])
         amount_paid = int(round(float(purchase_units[0]["amount"]["value"])))  # Amount paid by the user
         payment_status = paypal_order_data["status"]  # Status of the payment
-        if response.status_code != 200:
-            return "Failed to retrieve order details from PayPal", 400
+
         if not purchase_units:
             return "No purchase units found in PayPal order data", 400
 
