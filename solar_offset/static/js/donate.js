@@ -54,7 +54,6 @@ function prepareDonation(donateForm, userData) {
             // On successful capture, display a success message
             onApprove: function (data, actions) {
                 let donationAmount = donationInput.value;
-                // Make an AJAX POST request to your /donate endpoint
                 let xhr = new XMLHttpRequest();
                 xhr.open("POST", "/api/donate", true);
                 xhr.setRequestHeader("Content-Type", "application/json");
@@ -71,7 +70,8 @@ function prepareDonation(donateForm, userData) {
                 let requestData = JSON.stringify({
                     organization_slug: orgaSlug,
                     country_code: countryCode,
-                    donation_amount: donationAmount
+                    donation_amount: donationAmount,
+                    orderID: data.orderID,
                 });
                 // Send the request
                 xhr.send(requestData);

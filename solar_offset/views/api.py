@@ -1,8 +1,15 @@
 from datetime import datetime
 from flask import Blueprint, render_template, request, session
 from solar_offset.db import get_db
+import requests
 
 bp = Blueprint("api", __name__, url_prefix="/api")
+
+headers = {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer A21AALeda0KsruBs6n6MJIXdNAB6CBQk4rU41SAFnfFqKZgCP8a7ADGggWtP7YcqZEKYcwoO1GpA7MRcv2hQ4n6MncN7-mXEA"
+    # Replace with your PayPal access token
+}
 
 
 @bp.route("/donate", methods=["GET", "POST"])
@@ -28,7 +35,19 @@ def donate():
         # Validate the Form Entries
         data = request.get_json()
         country_code = data.get("country_code")
-        # country_code = request.form.get("country_code", None)
+        order_id = data.get("orderID")
+
+        paypal_order_api_url = f"https://api-m.sandbox.paypal.com/v2/checkout/orders/{order_id}"
+        response = requests.get(paypal_order_api_url, headers=headers)
+        paypal_order_data = response.json()
+        purchase_units = paypal_order_data.get("purchase_units", [])
+        amount_paid = int(round(float(purchase_units[0]["amount"]["value"])))  # Amount paid by the user
+        payment_status = paypal_order_data["status"]  # Status of the payment
+        if response.status_code != 200:
+            return "Failed to retrieve order details from PayPal", 400
+        if not purchase_units:
+            return "No purchase units found in PayPal order data", 400
+
         if country_code is None:
             return "You must supply a 'country_code' entry", 400
         country_code = country_code.upper()
@@ -36,9 +55,11 @@ def donate():
         if organization_slug is None:
             return "You must supply a 'organization_slug' entry", 400
         organization_slug = organization_slug.lower()
-        donation_amount = data.get("donation_amount", None)
+        donation_amount = int(data.get("donation_amount", None))
         if donation_amount is None:
             return "You must supply a 'donation_amount' entry", 400
+        if amount_paid != donation_amount or payment_status != "APPROVED":
+            return "Payment verification failed", 400
         donation_amount = str(donation_amount)
         if db.execute(
                 "SELECT country_code FROM country WHERE country.country_code == ?", [country_code]
