@@ -4,10 +4,34 @@ from solar_offset.db import get_db
 import requests
 from dotenv import load_dotenv
 import os
+import subprocess
 
 load_dotenv()
-PAYPAL_ACCESS_TOKEN = os.getenv("PAYPAL_ACCESS_TOKEN")
 
+
+def get_paypal_access_token():
+    client_id = os.getenv("PAYPAL_CLIENT_ID")
+    client_secret = os.getenv("PAYPAL_CLIENT_SECRET")
+    token_url = "https://api-m.sandbox.paypal.com/v1/oauth2/token"
+    headers = {
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+    data = {
+        "grant_type": "client_credentials"
+    }
+    response = requests.post(token_url, headers=headers, auth=(client_id, client_secret), data=data)
+
+    if response.status_code == 200:
+        # Extract the access token from the response
+        access_token = response.json().get("access_token")
+        return access_token
+    else:
+        # Handle error case
+        print("Error occurred while retrieving access token:", response.text)
+        return None
+
+
+PAYPAL_ACCESS_TOKEN = get_paypal_access_token()
 bp = Blueprint("api", __name__, url_prefix="/api")
 
 headers = {
@@ -21,6 +45,7 @@ def donate():
     if request.method == 'POST':
         # Ensure that user is logged into a session
         sess_user_id = session.get("user_id", None)
+        print("Paypal access token", PAYPAL_ACCESS_TOKEN)
         if sess_user_id is None:
             return "You must be logged in to donate", 401
 
@@ -40,7 +65,7 @@ def donate():
         data = request.get_json()
         country_code = data.get("country_code")
         order_id = data.get("orderID")
-
+        print("Order ID:", order_id)
         paypal_order_api_url = f"https://api-m.sandbox.paypal.com/v2/checkout/orders/{order_id}"
         response = requests.get(paypal_order_api_url, headers=headers)
         if response.status_code != 200:
