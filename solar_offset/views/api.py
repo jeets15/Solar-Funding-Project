@@ -2,13 +2,17 @@ from datetime import datetime
 from flask import Blueprint, render_template, request, session
 from solar_offset.db import get_db
 import requests
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+PAYPAL_ACCESS_TOKEN = os.getenv("PAYPAL_ACCESS_TOKEN")
 
 bp = Blueprint("api", __name__, url_prefix="/api")
 
 headers = {
     "Content-Type": "application/json",
-    "Authorization": "Bearer A21AALeda0KsruBs6n6MJIXdNAB6CBQk4rU41SAFnfFqKZgCP8a7ADGggWtP7YcqZEKYcwoO1GpA7MRcv2hQ4n6MncN7-mXEA"
-    # Replace with your PayPal access token
+    "Authorization": "Bearer " + PAYPAL_ACCESS_TOKEN
 }
 
 

@@ -1,9 +1,43 @@
+import uuid
+
 from flask import session, url_for
 from solar_offset.db import get_db
 import json
-
+import requests
+from collections import namedtuple
+from dotenv import load_dotenv
+import os
 
 # TODO add more unit tests
+
+
+load_dotenv()
+PAYPAL_ACCESS_TOKEN = os.getenv("PAYPAL_ACCESS_TOKEN")
+
+
+def verify_paypal_order(order_id, donation_amount):
+    PaypalVerification = namedtuple("PaypalVerification", ['valid', 'error_message'])
+
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + PAYPAL_ACCESS_TOKEN
+    }
+    req_url = f"https://api-m.sandbox.paypal.com/v2/checkout/orders/{order_id}"
+
+    response = requests.get(req_url, headers=headers)
+
+    if response.status_code != 200:
+        return PaypalVerification(False, "Failed to retrieve order details from PayPal")
+
+    paypal_order_data = response.json()
+    purchase_units = paypal_order_data.get("purchase_units", [])
+    amount_paid = int(round(float(purchase_units[0]["amount"]["value"])))  # Amount paid by the user
+    payment_status = paypal_order_data["status"]
+    if amount_paid != donation_amount or payment_status != "APPROVED":
+        return PaypalVerification(False, "Payment verification failed")
+
+    # Successful verification
+    return PaypalVerification(True, None)
 
 
 def test_donate_get(client):
@@ -83,7 +117,8 @@ def test_donate_post_logged_in_householder_no_data(client, auth):
         res = client.post("/api/donate", data=json.dumps({}), headers=headers)
         assert (res.status_code, res.text) == (400, "You must supply a 'country_code' entry") \
                or (res.status_code, res.text) == (400, "You must supply a 'organization_slug' entry") \
-               or (res.status_code, res.text) == (400, "You must supply a 'donation_amount' entry")
+               or (res.status_code, res.text) == (400, "You must supply a 'donation_amount' entry") \
+               or (res.status_code, res.text) == (400, "You must supply a 'order_id' entry")
 
 
 def test_donate_post_logged_in_householder_single_data(client, auth):
@@ -96,7 +131,8 @@ def test_donate_post_logged_in_householder_single_data(client, auth):
         headers = {'Content-Type': 'application/json'}
         res = client.post("/api/donate", data=json_data, headers=headers)
         assert (res.status_code, res.text) == (400, "You must supply a 'organization_slug' entry") \
-               or (res.status_code, res.text) == (400, "You must supply a 'donation_amount' entry")
+               or (res.status_code, res.text) == (400, "You must supply a 'donation_amount' entry") \
+               or (res.status_code, res.text) == (400, "You must supply a 'order_id' entry")
 
     with client:
         auth.login(username="jane.doe15@example.com", password="12Jane!DoeDoe")
@@ -107,7 +143,8 @@ def test_donate_post_logged_in_householder_single_data(client, auth):
         headers = {'Content-Type': 'application/json'}
         res = client.post("/api/donate", data=json_data, headers=headers)
         assert (res.status_code, res.text) == (400, "You must supply a 'country_code' entry") \
-               or (res.status_code, res.text) == (400, "You must supply a 'donation_amount' entry")
+               or (res.status_code, res.text) == (400, "You must supply a 'donation_amount' entry") \
+               or (res.status_code, res.text) == (400, "You must supply a 'order_id' entry")
 
     with client:
         auth.login(username="jane.doe15@example.com", password="12Jane!DoeDoe")
@@ -118,7 +155,8 @@ def test_donate_post_logged_in_householder_single_data(client, auth):
         headers = {'Content-Type': 'application/json'}
         res = client.post("/api/donate", data=json_data, headers=headers)
         assert (res.status_code, res.text) == (400, "You must supply a 'country_code' entry") \
-               or (res.status_code, res.text) == (400, "You must supply a 'organization_slug' entry")
+               or (res.status_code, res.text) == (400, "You must supply a 'organization_slug' entry") \
+               or (res.status_code, res.text) == (400, "You must supply a 'order_id' entry")
 
 
 def test_donate_post_logged_in_householder_data_pairs(client, auth):
@@ -247,3 +285,22 @@ def test_donate_post_donation_amount(client, auth):
         json_data = json.dumps(data)
         res = client.post("/api/donate", data=json_data, headers=headers)
         assert (res.status_code, res.text) == (400, "Donation Amount must be a positive integer")
+
+
+def test_donation_paypal(client, auth, monkeypatch):
+    def mock_verify_paypal_order(order_id, donation_amount):
+        PaypalVerification = namedtuple("PaypalVerification", ['valid', 'error_message'])
+        return PaypalVerification(True, None)
+
+    monkeypatch.setattr('solar_offset.tests.api.verify_paypal_order', mock_verify_paypal_order)
+
+    with client:
+        auth.login(username="jane.doe15@example.com", password="12Jane!DoeDoe")
+        data = {
+            "country_code": "ata",
+            "organization_slug": "antarctica_solar_project",
+            "donation_amount": "2",
+            "order_id": str(uuid.uuid4())
+        }
+        res = client.post("/api/donate", data=json.dumps(data), content_type="application/json")
+        assert res.status_code == 200
