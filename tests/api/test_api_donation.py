@@ -292,7 +292,7 @@ def test_donation_paypal(client, auth, monkeypatch):
         PaypalVerification = namedtuple("PaypalVerification", ['valid', 'error_message'])
         return PaypalVerification(True, None)
 
-    monkeypatch.setattr('solar_offset.tests.api.verify_paypal_order', mock_verify_paypal_order)
+    monkeypatch.setattr('test_api_donation.verify_paypal_order', mock_verify_paypal_order)
 
     with client:
         auth.login(username="jane.doe15@example.com", password="12Jane!DoeDoe")
