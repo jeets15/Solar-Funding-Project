@@ -1,3 +1,4 @@
+from collections import namedtuple
 from datetime import datetime
 from flask import Blueprint, render_template, request, session
 from solar_offset.db import get_db
@@ -29,6 +30,31 @@ def get_paypal_access_token():
         # Handle error case
         print("Error occurred while retrieving access token:", response.text)
         return None
+    
+
+def verify_paypal_order(order_id, donation_amount):
+    PaypalVerification = namedtuple("PaypalVerification", ['valid', 'error_message'])
+
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer " + PAYPAL_ACCESS_TOKEN
+    }
+    req_url = f"https://api-m.sandbox.paypal.com/v2/checkout/orders/{order_id}"
+
+    response = requests.get(req_url, headers=headers)
+
+    if response.status_code != 200:
+        return PaypalVerification(False, "Failed to retrieve order details from PayPal")
+
+    paypal_order_data = response.json()
+    purchase_units = paypal_order_data.get("purchase_units", [])
+    amount_paid = int(round(float(purchase_units[0]["amount"]["value"])))  # Amount paid by the user
+    payment_status = paypal_order_data["status"]
+    if amount_paid != donation_amount or payment_status != "APPROVED":
+        return PaypalVerification(False, "Payment verification failed")
+
+    # Successful verification
+    return PaypalVerification(True, None)
 
 
 PAYPAL_ACCESS_TOKEN = get_paypal_access_token()
@@ -64,20 +90,12 @@ def donate():
         # Validate the Form Entries
         data = request.get_json()
         country_code = data.get("country_code")
+        donation_amount = data.get("donation_amount", None)
         order_id = data.get("orderID")
         print("Order ID:", order_id)
-        paypal_order_api_url = f"https://api-m.sandbox.paypal.com/v2/checkout/orders/{order_id}"
-        response = requests.get(paypal_order_api_url, headers=headers)
-        if response.status_code != 200:
-            return "Failed to retrieve order details from PayPal", 400
-        paypal_order_data = response.json()
-        purchase_units = paypal_order_data.get("purchase_units", [])
-        amount_paid = int(round(float(purchase_units[0]["amount"]["value"])))  # Amount paid by the user
-        payment_status = paypal_order_data["status"]  # Status of the payment
 
-        if not purchase_units:
-            return "No purchase units found in PayPal order data", 400
-
+        if donation_amount is None:
+            return "You must supply a 'donation_amount' entry", 400
         if country_code is None:
             return "You must supply a 'country_code' entry", 400
         country_code = country_code.upper()
@@ -85,12 +103,6 @@ def donate():
         if organization_slug is None:
             return "You must supply a 'organization_slug' entry", 400
         organization_slug = organization_slug.lower()
-        donation_amount = int(data.get("donation_amount", None))
-        if donation_amount is None:
-            return "You must supply a 'donation_amount' entry", 400
-        if amount_paid != donation_amount or payment_status != "APPROVED":
-            return "Payment verification failed", 400
-        donation_amount = str(donation_amount)
         if db.execute(
                 "SELECT country_code FROM country WHERE country.country_code == ?", [country_code]
         ).fetchone() is None:
@@ -100,12 +112,20 @@ def donate():
                 [organization_slug, country_code]
         ).fetchone() is None:
             return "Specified Organization does not Exist", 400
+        
+        
         if not donation_amount.isdigit() \
                 or int(donation_amount) < 1 \
                 or str(int(donation_amount)) != donation_amount:
             return "Donation Amount must be a positive integer", 400
         else:
-            donation_amount = int(donation_amount)
+            donation_amount = int(donation_amount)        
+
+        # Verify that form data is supported by paypal API info
+        verification =  verify_paypal_order(order_id, donation_amount)
+        if not verification.valid:
+            return verification.error_message, 400
+
 
         # Insert new Donation into the Database
         timestamp_now = datetime.now()
