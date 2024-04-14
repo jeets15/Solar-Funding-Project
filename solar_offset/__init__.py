@@ -2,7 +2,8 @@ import os
 from flask import Flask
 
 
-# `python -m flask --app solar_offset run --port 8000 --debug` to run the development server
+# `python -m flask --app solar_offset run -h localhost --port 8000 --debug` to run the development server
+
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)

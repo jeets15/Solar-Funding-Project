@@ -10,18 +10,20 @@
             <label for="form-donation-amount" class="form-label">Donation Amount</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                <span class="input-group-text">£</span>
+                    <span class="input-group-text">£</span>
                 </div>
-                <input type="number" min="1" step="1" value="1" class="form-control" id="form-donation-amount" name="donation_amount"
-                    aria-label="Amount (to the nearest GB pound)"
-                    pattern=" 0+\.[0-9]*[1-9][0-9]*$"
-                    onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57">
-                    <!-- The onkeypress function ensures that only a certain range of keys can be input (DELETE, BACKSPACE, ENTER, 0-9) -->
+                <input type="number" min="1" step="1" value="1" class="form-control" id="form-donation-amount"
+                       name="donation_amount"
+                       aria-label="Amount (to the nearest GB pound)"
+                       pattern=" 0+\.[0-9]*[1-9][0-9]*$"
+                       onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57">
+                <!-- The onkeypress function ensures that only a certain range of keys can be input (DELETE, BACKSPACE, ENTER, 0-9) -->
                 <div class="input-group-append">
-                <span class="input-group-text">.00</span>
+                    <span class="input-group-text">.00</span>
                 </div>
             </div>
         </div>
-        <input id="form-donate-submit" type="submit" value="Donate" class="btn btn-primary" style="width: 100%;">
+        <div class="paypal-button-container" data-orga-slug="{{ organization.name_slug }}"
+             data-country-code="{{ country.country_code }}"></div>
     </form>
 </div>
