@@ -39,7 +39,6 @@
                 <a href="{{ url_for('home.home') }}" class="nav-link px-2 link-dark">Home</a>
             </li>
             <li>
-                <!-- Alternative link name: Discover Donation Choices -->
                 <a href="{{ url_for('householder.country_list') }}" class="nav-link px-2 link-dark">Explore<br>Countries</a>
             </li>
             <li>
@@ -52,8 +51,15 @@
                 <a href="/" class="nav-link px-2 link-dark">About</a>
             </li>
             {% if g.user %}
+                <!-- <li> -->
+                    <!-- <div class="vr vr-blurry" style="height: 1em;">•</div> -->
+                <!-- </li> -->
+                <!-- <li> -->
+                    <!-- <span class="nav-link px-2 link-dark" style="border-left: 0.1em solid gray; border-right: 0.1em solid gray"><span style="visibility: hidden;">I</span></span> -->
+                <!-- </li> -->
                 <li>
-                    <span class="nav-link px-2 link-dark">•</span>
+                    <!-- •  -->
+                    <span class="nav-link px-2 link-dark"><b>˙</b></span>
                 </li>
                 {% if 'h' in g.user.user_type %}
                     <li>
