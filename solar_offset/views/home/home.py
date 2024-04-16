@@ -10,3 +10,8 @@ def home():
     stats = calculate_statistics()
     # Return the stats to the home.html
     return render_template("./home/home.html", statistics=stats)
+
+
+@bp.route("/contact-us")
+def contact():
+    return render_template("./contact-us.html")
