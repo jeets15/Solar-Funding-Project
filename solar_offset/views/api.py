@@ -139,6 +139,8 @@ def donate():
     else:
         organization_slug = request.args.get('orga', None)
         country_code = request.args.get('country', None)
+        print("Organization: ",organization_slug)
+        print("Country code: ",country_code)
         if organization_slug is None:
             return "No Organization given", 400
         elif country_code is None:
@@ -152,13 +154,14 @@ def donate():
         organization = db.execute(
             "SELECT * FROM organization WHERE name_slug == ? AND country_code == ?", [organization_slug, country_code]
         ).fetchone()
-        solarprice = country["solar_panel_price_per_kw"] * SOLAR_PANEL_POWER_kW
+
 
         if country is None:
             return "Country Code does not exist", 400
         elif organization is None:
             return "Organization does not exist", 400
         else:
+            solarprice = country["solar_panel_price_per_kw"] * SOLAR_PANEL_POWER_kW
             return render_template(
                 "./api/donate.html",
                 solarprice=solarprice,

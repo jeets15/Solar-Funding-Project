@@ -44,7 +44,7 @@ function prepareDonation(donateForm, userData) {
                 width: '20%'
             },
             createOrder: function (data, actions) {
-                var donationAmount = (donationInput.value * solarPrice).toString();
+                var donationAmount = (donationInput.value * solarPrice);
                 return actions.order.create({
                     intent: 'CAPTURE',
                     payer: {
@@ -64,7 +64,7 @@ function prepareDonation(donateForm, userData) {
             },
             // On successful capture, display a success message
             onApprove: function (data, actions) {
-                let donationAmount = (donationInput.value * solarPrice).toString();
+                let donationAmount = (donationInput.value * solarPrice);
                 let xhr = new XMLHttpRequest();
                 xhr.open("POST", "/api/donate", true);
                 xhr.setRequestHeader("Content-Type", "application/json");
