@@ -7,6 +7,8 @@ from dotenv import load_dotenv
 import os
 import subprocess
 
+from solar_offset.utils.carbon_offset_util import SOLAR_PANEL_POWER_kW
+
 load_dotenv()
 
 
@@ -30,7 +32,7 @@ def get_paypal_access_token():
         # Handle error case
         print("Error occurred while retrieving access token:", response.text)
         return None
-    
+
 
 def verify_paypal_order(order_id, donation_amount):
     PaypalVerification = namedtuple("PaypalVerification", ['valid', 'error_message'])
@@ -92,7 +94,6 @@ def donate():
         country_code = data.get("country_code")
         donation_amount = data.get("donation_amount", None)
         order_id = data.get("orderID")
-        print("Order ID:", order_id)
 
         if donation_amount is None:
             return "You must supply a 'donation_amount' entry", 400
@@ -112,20 +113,18 @@ def donate():
                 [organization_slug, country_code]
         ).fetchone() is None:
             return "Specified Organization does not Exist", 400
-        
-        
+
         if not donation_amount.isdigit() \
                 or int(donation_amount) < 1 \
                 or str(int(donation_amount)) != donation_amount:
             return "Donation Amount must be a positive integer", 400
         else:
-            donation_amount = int(donation_amount)        
+            donation_amount = int(donation_amount)
 
-        # Verify that form data is supported by paypal API info
-        verification =  verify_paypal_order(order_id, donation_amount)
+            # Verify that form data is supported by paypal API info
+        verification = verify_paypal_order(order_id, donation_amount)
         if not verification.valid:
             return verification.error_message, 400
-
 
         # Insert new Donation into the Database
         timestamp_now = datetime.now()
@@ -140,6 +139,8 @@ def donate():
     else:
         organization_slug = request.args.get('orga', None)
         country_code = request.args.get('country', None)
+        print("Organization: ",organization_slug)
+        print("Country code: ",country_code)
         if organization_slug is None:
             return "No Organization given", 400
         elif country_code is None:
@@ -153,12 +154,16 @@ def donate():
         organization = db.execute(
             "SELECT * FROM organization WHERE name_slug == ? AND country_code == ?", [organization_slug, country_code]
         ).fetchone()
+
+
         if country is None:
             return "Country Code does not exist", 400
         elif organization is None:
             return "Organization does not exist", 400
         else:
+            solarprice = country["solar_panel_price_per_kw"] * SOLAR_PANEL_POWER_kW
             return render_template(
                 "./api/donate.html",
+                solarprice=solarprice,
                 country=country,
                 organization=organization)

@@ -21,19 +21,30 @@
 {% endblock %}
 */
 
+function changeFormula() {
+    let donationFormula = document.getElementById("donation-formula")
+    var solarPrice = document.getElementById("form-solar-price").value;
+    let donationInput = document.getElementById("form-number-solar-panels");
+    let answer = solarPrice * donationInput.value;
+    donationFormula.innerText = answer;
+}
 
 function prepareDonation(donateForm, userData) {
     var buttonContainers = document.getElementsByClassName('paypal-button-container');
     // Iterate over each container and render PayPal button
-    let donationInput = document.getElementById("form-donation-amount");
+    var solarPrice = document.getElementById("form-solar-price").value;
+    let donationInput = document.getElementById("form-number-solar-panels");
     let banner = "";
     for (var i = 0; i < buttonContainers.length; i++) {
         var orgaSlug = buttonContainers[i].getAttribute('data-orga-slug');
         var countryCode = buttonContainers[i].getAttribute('data-country-code');
         let sessionData = sessionStorage.getItem('user_id');
         paypal.Buttons({
+            style: {
+                width: '20%'
+            },
             createOrder: function (data, actions) {
-                var donationAmount = donationInput.value;
+                var donationAmount = (donationInput.value * solarPrice);
                 return actions.order.create({
                     intent: 'CAPTURE',
                     payer: {
@@ -53,7 +64,7 @@ function prepareDonation(donateForm, userData) {
             },
             // On successful capture, display a success message
             onApprove: function (data, actions) {
-                let donationAmount = donationInput.value;
+                let donationAmount = (donationInput.value * solarPrice);
                 let xhr = new XMLHttpRequest();
                 xhr.open("POST", "/api/donate", true);
                 xhr.setRequestHeader("Content-Type", "application/json");
