@@ -11,7 +11,7 @@
             <label for="form-donation-amount" class="form-label">Donation Amount</label>
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text">No.of panels: </span>
+                    <span class="input-group-text">No.of Panels</span>
                 </div>
                 <input type="number" min="1" step="1" value="1" class="form-control" id="form-number-solar-panels"
                        name="solar_panels"
@@ -21,13 +21,13 @@
                        onchange="changeFormula()"
                        onkeypress="return (event.charCode == 8 || event.charCode == 0 || event.charCode == 13) ? null : event.charCode >= 48 && event.charCode <= 57">
                 <!-- The onkeypress function ensures that only a certain range of keys can be input (DELETE, BACKSPACE, ENTER, 0-9) -->
-                <div class="input-group-append" style="max-width: 0%;">
+                <div class="input-group-append">
                     <span class="input-group-text">(£ <span id="donation-formula"
-                    >{{ solarprice }}*1 = £{{ solarprice }}</span>) </span>
+                    >{{ solarprice }}</span>) </span>
                 </div>
             </div>
         </div>
-        <div class="paypal-button-container" style="width: 155%;" data-orga-slug="{{ organization.name_slug }}"
+        <div class="paypal-button-container" data-orga-slug="{{ organization.name_slug }}"
              data-country-code="{{ country.country_code }}"></div>
     </form>
 </div>

@@ -26,7 +26,7 @@ function changeFormula() {
     var solarPrice = document.getElementById("form-solar-price").value;
     let donationInput = document.getElementById("form-number-solar-panels");
     let answer = solarPrice * donationInput.value;
-    donationFormula.innerText = `${solarPrice} * ${donationInput.value} = £${answer}`;
+    donationFormula.innerText = answer;
 }
 
 function prepareDonation(donateForm, userData) {
