@@ -1,12 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Referral Page</title>
-</head>
-<body>
-    <h1>Welcome</h1>
-    <p>{{ message }}</p>
-</body>
-</html>
+{% extends 'base.html' %}
+
+<!-- Title Section -->
+{% block title %}Invitation{% endblock %}
+
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home/home-style.css') }}">
+{% endblock %}
+
+{% block scripts %}
+    <script src="{{ url_for('static', filename='js/home/home.js') }}" defer></script>
+    <script src="{{ url_for('static', filename='js/solar-offset-calculator/solar-energy-offset-calculator.js') }}"
+            defer></script>
+{% endblock %}
+
+<!-- Body Section -->
+{% block body %}
+    <!-- Specific content for the referral page -->
+    <div>
+        <h2>Invitation</h2>
+        <p>{{ message }}</p>
+        <!-- You can add more content here if needed -->
+    </div>
+{% endblock %}

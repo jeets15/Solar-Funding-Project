@@ -8,7 +8,7 @@ from math import floor, isclose
 
 from solar_offset.views.auth import login_required
 
-import hashlib
+
 
 
 
@@ -200,9 +200,8 @@ def country(country_code):
 
 @bp.route("/referal/<sender>/<recipient>")
 def referal(sender, recipient):
-    welcome_message = f"Hello, {recipient}! Welcome, sent by {sender}!"
+    welcome_message = f"Hello, {recipient}. {sender} wants you to be a part of the initiative to reduce the solar offset. You can do so by making donations towards the use of solar panels. {sender} has already become a part of this movement and wants you to join as well!!"
     return render_template("referal.html", message=welcome_message)
-
 
 
 
