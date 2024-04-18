@@ -1,16 +1,16 @@
 {% extends 'base.html' %}
 
 {% block title %}Admin DashBoard{% endblock %}
-
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/homestyle.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/adminstyle.css') }}">
+    <link href="https://unpkg.com/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
 {% endblock %}
 {% block scripts %}
     <script src="{{ url_for('static',filename='js/users/admin/admin.js') }}" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/he@1.2.0/he.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
 {% endblock %}
 {% block body %}
-
-    {% include 'flashmessage.html' %}
     <div class="text-center">
         <h2>Welcome to Solar Offset Admin DashBoard: {{ g.user.name }}</h2>
     </div>
@@ -45,11 +45,30 @@
         </div>
     </div>
 
+    <div id="table-controls" class="position-relative overflow-hidden m-md-3 text-center">
+        <label for="filter-column">Column:</label>
+        <select id="filter-column">
+            <option value="">Select Column</option>
+            <option value="user_type">User Type</option>
+            <option value="id">User ID</option>
+            <option value="email_username">Email</option>
+        </select>
+        <label for="filter-type">Type:</label>
+        <select id="filter-type">
+            <option value="=">=</option>
+            <option value="!=">!=</option>
+        </select>
+        <label for="filter-value">Value:</label>
+        <input type="text" id="filter-value">
+
+        <button id="apply-filter" class="btn btn-success">Apply Filter</button>
+        <button id="clear-filter" class="btn btn-outline-success">Clear Filter</button>
+    </div>
 
     <div class="position-relative overflow-hidden m-md-3 text-center">
         <div class="col-md-6  mx-auto mt-5">
 
-            <table class="table table-striped table-hover table-bordered table-responsive"
+            <table class="!table !table-striped !table-hover !table-bordered !table-responsive" id="admin-table"
                    style="min-height: 20vh; min-width: 120%">
                 <thead>
                 <tr>
@@ -75,7 +94,7 @@
                                     <button class="btn btn-success" type="submit">Delete</button>
 
                                 </form>
-                                {% if user['is_suspended'] !="-" %}
+                                {% if user['is_suspended'] %}
                                     <form action="/is-suspend-user" method="post">
                                         <input type="hidden" name="user_id" value="{{ user['id'] }}">
                                         <button class="btn btn-outline-success" type="submit">UnSuspend</button>
@@ -91,7 +110,7 @@
                             </div>
                         </td>
                         <td>
-                            {{ user['is_suspended'] }}
+                            {{ user['suspend_message'] }}
                         </td>
                     </tr>
                 {% endfor %}

@@ -1,5 +1,4 @@
 DROP TABLE IF EXISTS user;
-DROP TABLE IF EXISTS user_status;
 DROP TABLE IF EXISTS country;
 DROP TABLE IF EXISTS organization;
 DROP TABLE IF EXISTS donation;
@@ -29,16 +28,13 @@ CREATE TABLE user
     -- a user can be admin, staff, or both at the same time
     user_type      CHAR(3) CHECK ( user_type IN ('h__', '__a', '_s_', '_sa') ),
 
+    -- If user is suspended set column to a string containing the "suspension message"
+    -- set to NULL otherwise
+    status_suspend TEXT DEFAULT NULL,
+
     -- Householder Only
     --   Carbon footprint of householder in Tons (t)
     householder_carbon_footprint REAL DEFAULT NULL CHECK ( householder_carbon_footprint > 0 )
-);
-
-CREATE TABLE user_status
-(
-    user_id CHAR(36) CHECK ( LENGTH(user_id) == 36 ) PRIMARY KEY, -- Foreign key reference to user table
-    suspend TEXT DEFAULT NULL,                                    -- If user is suspended set column to a string containing the "suspension message"
-    FOREIGN KEY (user_id) REFERENCES user (id)
 );
 
 CREATE TABLE country

@@ -1,14 +1,18 @@
 <!DOCTYPE html>
+{% if not _show_navbar is defined %}
+    {% set _show_navbar = True %}
+{% endif %}
 <html>
 <head>
     <title>SolarSave - {% block title %}{% endblock %}</title>
-    <link rel="icon" type="image/x-icon" href="../static/images/logo/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/logo/favicon.ico') }}">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles_base.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
+
     {% block styles %}
     {% endblock %}
     <meta>
@@ -20,53 +24,57 @@
     <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between">
 
         <!-- Company Logo -->
-        <a href="{{ url_for('home.home') }}"
-           class="d-flex align-items-center col-md-3 text-dark text-decoration-none"
-           style="font-size: xx-large">
-            <img src="{{ url_for('static', filename='images/logo/logo.png') }}"
-                 alt="Login image" class="" width="60" height="60"/>
-            <span class="gradient-text page-title-gradient"> Solar Save </span>
-        </a>
+        <div class="d-flex align-items-center col-md-3 text-dark">
+            <a href="{{ url_for('home.home') }}" class="text-decoration-none" style="font-size: xx-large;">
+                <img src="{{ url_for('static', filename='images/logo/logo.png') }}"
+                     alt="Login image" class="" width="60" height="60"/>
+                <span class="gradient-text page-title-gradient"> Solar Save </span>
+            </a>
+        </div>
 
         <!-- Navigation Bar -->
-        <ul class=" nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li>
-                <a href="{{ url_for('home.home') }}" class="nav-link px-2 link-dark">Home</a>
-            </li>
-            <li>
-                <!-- Alternative link name: Discover Donation Choices -->
-                <a href="{{ url_for('householder.country_list') }}" class="nav-link px-2 link-dark">Donate</a>
-            </li>
-            <li>
-                <a href="/" class="nav-link px-2 link-dark">Contact</a>
-            </li>
-            <li>
-                <a href="/" class="nav-link px-2 link-dark">FAQs</a>
-            </li>
-            <li>
-                <a href="/" class="nav-link px-2 link-dark">About</a>
-            </li>
-            {% if g.user %}
+        {% if _show_navbar %}
+            <ul class=" nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                 <li>
-                    <span class="nav-link px-2 link-dark">•</span>
+                    <a href="{{ url_for('home.home') }}" class="nav-link px-2 link-dark">Home</a>
                 </li>
-                {% if 'h' in g.user.user_type %}
+                <li>
+                    <!-- Alternative link name: Discover Donation Choices -->
+                    <a href="{{ url_for('householder.country_list') }}" class="nav-link px-2 link-dark">Donate</a>
+                </li>
+                <li>
+                    <a href="/contact-us" class="nav-link px-2 link-dark">Contact</a>
+                </li>
+                <li>
+                    <a href="/" class="nav-link px-2 link-dark">FAQs</a>
+                </li>
+                <li>
+                    <a href="/" class="nav-link px-2 link-dark">About</a>
+                </li>
+                {% if g.user %}
                     <li>
-                        <a href="{{ url_for('householder.dashboard') }}" class="nav-link px-2 link-dark">My Profile</a>
+                        <span class="nav-link px-2 link-dark">•</span>
                     </li>
+                    {% if 'h' in g.user.user_type %}
+                        <li>
+                            <a href="{{ url_for('householder.dashboard') }}" class="nav-link px-2 link-dark">My
+                                Profile</a>
+                        </li>
+                    {% endif %}
+                    {% if 's' in g.user.user_type %}
+                        <li>
+                            <a href="{{ url_for('staff.staff') }}" class="nav-link px-2 link-dark">Staff<br>Reports</a>
+                        </li>
+                    {% endif %}
+                    {% if 'a' in g.user.user_type %}
+                        <li>
+                            <a href="{{ url_for('admin.admin') }}"
+                               class="nav-link px-2 link-dark">Admin<br>Dashboard</a>
+                        </li>
+                    {% endif %}
                 {% endif %}
-                {% if 's' in g.user.user_type %}
-                    <li>
-                        <a href="{{ url_for('staff.staff') }}" class="nav-link px-2 link-dark">Staff<br>Reports</a>
-                    </li>
-                {% endif %}
-                {% if 'a' in g.user.user_type %}
-                    <li>
-                        <a href="{{ url_for('admin.admin') }}" class="nav-link px-2 link-dark">Admin<br>Dashboard</a>
-                    </li>
-                {% endif %}
-            {% endif %}
-        </ul>
+            </ul>
+        {% endif %}
 
         <!-- Login & Register Section -->
         <div class="col-md-3 text-end">
@@ -81,7 +89,19 @@
 </div>
 
 <!-- Main Section -->
-<main style="flex: 1; overflow-y: auto">{% block body %}{% endblock %}</main>
+<main style="flex: 1; overflow-y: auto">
+    {% with msg = get_flashed_messages(with_categories=true) %}
+        {% if msg %}
+            {% for category, message in msg %}
+                <div class="flashed-message alert alert-{{ category }} alert-dismissible fade show mt-2 text-center"
+                     role="alert">
+                    <strong>{{ message }}</strong>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+    {% block body %}{% endblock %}
+</main>
 
 <!-- Footer Section -->
 <footer class="footer d-flex flex-wrap justify-content-between align-items-center py-3 border-top bg-light">
@@ -106,6 +126,9 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
 <script src="{{ url_for('static', filename='bootstrap.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/flashmessage.js') }}" defer></script>
+
+
 {% block scripts %}
 {% endblock %}
 </body>

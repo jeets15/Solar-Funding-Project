@@ -13,32 +13,21 @@ def admin():
     users = db.execute(
         'SELECT * FROM user WHERE id!= ? ', (current_admin,)
     ).fetchall()
-    user_status_list = db.execute('SELECT * FROM user_status ').fetchall()
 
-    user_status_dict = {}
-    for user_row in user_status_list:
-        user_status_dict[user_row['user_id']] = user_row['suspend']
-
-    user_dicts = []
-
-    for user_row in users:
+    user_dicts = [ dict(usr) for usr in users ]
+    for usr in user_dicts:
         user_types = []
-        userdict = dict(user_row)
-        if "h" in userdict["user_type"]:
+        if "h" in usr["user_type"]:
             user_types.append("Householder")
-        if "s" in userdict["user_type"]:
+        if "s" in usr["user_type"]:
             user_types.append("Staff")
-        if 'a' in userdict['user_type']:
+        if 'a' in usr['user_type']:
             user_types.append("Admin")
+        usr['user_type'] = " & ".join(user_types)
 
-        userdict['user_type'] = " & ".join(user_types)
-        userdict["is_suspended"] = user_status_dict.get(user_row['id'], None)
-        if userdict["is_suspended"] is None:
-            userdict["is_suspended"] = "-"
-        else:
-            userdict["is_suspended"] = userdict["is_suspended"]
-        user_dicts.append(userdict)
-    print(user_dicts)
+        usr['is_suspended'] = usr['status_suspend'] is not None
+        usr['suspend_message'] = usr['status_suspend'] if usr['is_suspended'] else '-'
+
     return render_template(
         "./users/admin/admin.html",
         users=user_dicts,
@@ -49,7 +38,7 @@ def admin():
 def delete_user():
     user_id = request.form['user_id']
     db = get_db()
-    db.execute("DELETE FROM user WHERE id=?", (user_id,))
+    db.execute("DELETE FROM user WHERE id == ?", (user_id,))
     db.commit()
     return redirect('/admin')
 
@@ -58,23 +47,16 @@ def delete_user():
 def is_suspend_user():
     user_id = request.form['user_id']
     db = get_db()
-    users = db.execute(
-        'SELECT * FROM user_status WHERE user_id = ? ', (user_id,)
-    ).fetchone()
-    if users is None:
-        db.execute(
-            "INSERT INTO user_status (user_id) VALUES (?)",
-            (user_id,),
-        )
+
     if 'suspend_message' in request.form:
         suspend_message = request.form['suspend_message']
         db.execute(
-            "UPDATE user_status SET suspend = ? WHERE user_id = ?",
+            "UPDATE user SET status_suspend = ? WHERE id == ?",
             (suspend_message, user_id),
         )
     else:
         db.execute(
-            "UPDATE user_status SET suspend = ? WHERE user_id = ?",
+            "UPDATE user SET status_suspend = ? WHERE id == ?",
             (None, user_id),
         )
 
