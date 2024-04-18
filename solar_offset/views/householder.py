@@ -198,6 +198,10 @@ def country(country_code):
 
 
 
+@bp.route("/referal/<sender>/<recipient>")
+def referal(sender, recipient):
+    welcome_message = f"Hello, {recipient}! Welcome, sent by {sender}!"
+    return render_template("referal.html", message=welcome_message)
 
 
 
@@ -208,55 +212,4 @@ def country(country_code):
 
 
 
-# Dummy database to simulate referral codes
-referral_codes = {
-    'REFCODE_47fa9dc4': 'jeetsinghvi@hotmail.com',
-    'REFCODE_1234567890': 'jane.doe@example.com'
-}
-
-
-@bp.route('/generate_referral_code', methods=['GET'])
-def generate_referral_code():
-    email = ('jeetsinghvi@hotmail.com')      # Replace with email from database
-    if email:
-        email = email.strip()
-        referral_code = generate_code_from_email(email)
-        return f"Referral code for {email}: {referral_code}"
-    else:
-        return "Email parameter is missing"
-
-
-def generate_code_from_email(email):
-    # Add a unique identifier (e.g., user ID) to the email before hashing
-    unique_identifier = '8b1a1136-0024-477f-9e29-cb7266cb46d6'
-    email_with_id = email + unique_identifier
-
-    # Use SHA-256 hashing to generate a unique hash for the email with ID
-    hashed_email = hashlib.sha256(email_with_id.encode()).hexdigest()
-    # Take the first 12 characters of the hashed email as the referral code
-    referral_code = hashed_email[:12]
-    return referral_code
-
-
-@bp.route('/verify_referral_code', methods=['POST'])
-def verify_referral_code():
-    user_referral_code = request.form.get('referral_code')
-    user_email = request.form.get('user_email')
-
-    if user_referral_code:
-        # Here, you would typically check the user's input against a database of valid referral codes
-        if user_referral_code in referral_codes:
-            referred_email = referral_codes[user_referral_code]
-            # Apply discount to both users
-            apply_discount_to_user(user_email, 0.1)  # 10% discount
-            apply_discount_to_user(referred_email, 0.1)  # 10% discount
-            return f"Discount applied for {user_email} and {referred_email}"
-        else:
-            return "Invalid referral code"
-    else:
-        return "Referral code not provided"
-
-def apply_discount_to_user(email, discount):
-    # Code to apply discount to the user with the given email
-    pass  # Placeholder for actual implementation
 
