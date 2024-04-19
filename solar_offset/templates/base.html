@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 {% if not _show_navbar is defined %}
-{% set _show_navbar = True %}
+    {% set _show_navbar = True %}
 {% endif %}
 <html>
 <head>
@@ -34,43 +34,45 @@
 
         <!-- Navigation Bar -->
         {% if _show_navbar %}
-        <ul class=" nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li>
-                <a href="{{ url_for('home.home') }}" class="nav-link px-2 link-dark">Home</a>
-            </li>
-            <li>
-                <a href="{{ url_for('householder.country_list') }}" class="nav-link px-2 link-dark">Browse<br>Countries</a>
-            </li>
-            <li>
-                <a href="/" class="nav-link px-2 link-dark">Contact</a>
-            </li>
-            <li>
-                <a href="/" class="nav-link px-2 link-dark">FAQs</a>
-            </li>
-            <li>
-                <a href="/" class="nav-link px-2 link-dark">About</a>
-            </li>
-            {% if g.user %}
+            <ul class=" nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                 <li>
-                    <span class="nav-link px-2 link-dark"><b>˙</b></span>
+                    <a href="{{ url_for('home.home') }}" class="nav-link px-2 link-dark">Home</a>
                 </li>
-                {% if 'h' in g.user.user_type %}
+                <li>
+                    <a href="{{ url_for('householder.country_list') }}" class="nav-link px-2 link-dark">Browse<br>Countries</a>
+                </li>
+                <li>
+                    <a href="/contact-us" class="nav-link px-2 link-dark">Contact</a>
+                </li>
+                <li>
+                    <a href="/" class="nav-link px-2 link-dark">FAQs</a>
+                </li>
+                <li>
+                    <a href="/" class="nav-link px-2 link-dark">About</a>
+                </li>
+                {% if g.user %}
                     <li>
-                        <a href="{{ url_for('householder.dashboard') }}" class="nav-link px-2 link-dark">My Profile</a>
+                        <span class="nav-link px-2 link-dark">•</span>
                     </li>
+                    {% if 'h' in g.user.user_type %}
+                        <li>
+                            <a href="{{ url_for('householder.dashboard') }}" class="nav-link px-2 link-dark">My
+                                Profile</a>
+                        </li>
+                    {% endif %}
+                    {% if 's' in g.user.user_type %}
+                        <li>
+                            <a href="{{ url_for('staff.staff') }}" class="nav-link px-2 link-dark">Staff<br>Reports</a>
+                        </li>
+                    {% endif %}
+                    {% if 'a' in g.user.user_type %}
+                        <li>
+                            <a href="{{ url_for('admin.admin') }}"
+                               class="nav-link px-2 link-dark">Admin<br>Dashboard</a>
+                        </li>
+                    {% endif %}
                 {% endif %}
-                {% if 's' in g.user.user_type %}
-                    <li>
-                        <a href="{{ url_for('staff.staff') }}" class="nav-link px-2 link-dark">Staff<br>Reports</a>
-                    </li>
-                {% endif %}
-                {% if 'a' in g.user.user_type %}
-                    <li>
-                        <a href="{{ url_for('admin.admin') }}" class="nav-link px-2 link-dark">Admin<br>Dashboard</a>
-                    </li>
-                {% endif %}
-            {% endif %}
-        </ul>
+            </ul>
         {% endif %}
 
         <!-- Login & Register Section -->
