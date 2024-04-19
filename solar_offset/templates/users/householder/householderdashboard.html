@@ -52,23 +52,23 @@
                 </div>
                 <div class="shadow-box text-center">
                     <h3>Donation Badge</h3>
-                    {% if stats.donated_sum > 1000 %}
+                    {% if stats.donated_sum >= 20000 %}
                         <img src="{{ url_for('static', filename='images/gold-badge.jpg') }}" alt="Gold Badge"
                              style="width: 100px;">
-                        <p>Congratulations! You've earned a Gold Badge!</p>
-                    {% elif (stats.donated_sum > 500 and stats.donated_sum<=1000) %}
+                        <p>Congratulations! You've earned a Gold Badge! Your donations are above £20000</p>
+                    {% elif (stats.donated_sum >= 10000 and stats.donated_sum<20000) %}
                         <img src="{{ url_for('static', filename='images/silver_badge.jpg') }}" alt="Silver Badge"
                              style="width: 100px;">
                         <p>Great job! You've earned a Silver Badge! You need to donate
-                            atleast {{ 1001-stats.donated_sum }} more to earn a gold badge!!</p>
-                    {% elif (stats.donated_sum > 100 and stats.donated_sum>=500) %}
+                            atleast £{{ 20000-stats.donated_sum }} more to earn a gold badge!!</p>
+                    {% elif (stats.donated_sum >= 5000 and stats.donated_sum<10000) %}
                         <img src="{{ url_for('static', filename='images/bronze_badge.jpg') }}" alt="Bronze Badge"
                              style="width: 100px;">
                         <p>Good work! You've earned a Bronze Badge! You need to donate
-                            atleast {{ 501-stats.donated_sum }} more to earn a silver badge!!</p>
+                            atleast £{{ 10000-stats.donated_sum }} more to earn a silver badge!!</p>
                     {% else %}
                         <p>No badge earned yet. Keep donating to earn one! You need to donate
-                            atleast {{ 101-stats.donated_sum }} more to earn a bronze badge!!</p>
+                            atleast £{{ 5000-stats.donated_sum }} more to earn a bronze badge!!</p>
                     {% endif %}
                 </div>
             </div>
