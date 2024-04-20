@@ -20,11 +20,9 @@
         <p>{{ message }}</p>
         <!-- You can add more content here if needed -->
         <div class="bottom-button">
-            <button type="button" class="btn btn-primary">Join now</button>
+            <a href="http://localhost:8000" class="btn btn-primary">Join now</a>
         </div>
         <!-- Image -->
-        <img src="{{ url_for('static', filename='images/solar+map+of+UK+compressed.webp') }}" alt="Your Image" class="img-fluid mb-3" style="max-width: 100%; height: fit-content;">
+        <img src="{{ url_for('static', filename='images/solar+map+of+UK+compressed.webp') }}" alt="Your Image" class="img-fluid mb-3" style="max-width: 100%; height: auto;">
     </div>
 {% endblock %}
-
-
