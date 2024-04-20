@@ -200,8 +200,9 @@ def country(country_code):
 
 @bp.route("/referal/<sender>/<recipient>")
 def referal(sender, recipient):
-    welcome_message = f"Hello, {recipient}. {sender} wants you to be a part of the initiative to reduce the solar offset. You can do so by making donations towards the use of solar panels. {sender} has already become a part of this movement and wants you to join as well!!"
+    welcome_message = f"Hello, {recipient}.\n{sender} wants you to be a part of the initiative to reduce the solar offset. You can do so by making donations towards the use of solar panels. {sender} has already become a part of this movement and wants you to join as well!!\nThis is a great opportunity for you to contribute to a cleaner and more sustainable future. By donating, you'll help reduce the carbon footprint and support the widespread adoption of renewable energy sources. Together, we can make a significant impact and create a better world for future generations.\nJoin us in our mission to create a greener planet today!"
     return render_template("referal.html", message=welcome_message)
+
 
 
 

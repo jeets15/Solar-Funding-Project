@@ -13,12 +13,18 @@
             defer></script>
 {% endblock %}
 
-<!-- Body Section -->
 {% block body %}
     <!-- Specific content for the referral page -->
-    <div>
+    <div class="container">
         <h2>Invitation</h2>
         <p>{{ message }}</p>
         <!-- You can add more content here if needed -->
+        <div class="bottom-button">
+            <button type="button" class="btn btn-primary">Join now</button>
+        </div>
+        <!-- Image -->
+        <img src="{{ url_for('static', filename='images/solar+map+of+UK+compressed.webp') }}" alt="Your Image" class="img-fluid mb-3" style="max-width: 100%; height: fit-content;">
     </div>
 {% endblock %}
+
+
