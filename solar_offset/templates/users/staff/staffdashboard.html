@@ -1,91 +1,46 @@
-
-
 {% extends 'base.html' %}
-<!-- Title Section -->
-{% block title %}Staff DashBoard{% endblock %}
-
+{% block title %}Staff Dashboard{% endblock %}
 {% block styles %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/staffstyle.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/home/home-style.css') }}">
+<style>
+    /* Custom styles for the staff dashboard */
+    .dashboard-container {
+        display: flex;
+        justify-content: center;
+    }
+    .dashboard-content {
+        width: 100%;
+        max-width: 800px; /* Adjust as needed */
+    }
+</style>
 {% endblock %}
-
-<!-- Body Section -->
 {% block body %}
-    <div class="container">
-        <div class="left-section mt-3">
-            <h2>Welcome, {{ g.user.name }}</h2>
-        </div>
-
-        <div class="right-section">
-            {% if countries %}
-                <form action="/staff/report" method="POST">
-                    <label for="country">Select Country:</label>
-                    <select id="country" name="country" onchange="updateOrganizations()" class="mb-3 mr-2"></select>
-
-                    <label for="organization" class="mt-2">Select Organization:</label>
-                    <select id="organization" name="organization"></select>
-
-                    <div class="mt-3">
-                        <button class="btn btn-outline-success px-4 mr-2">
-                            Generate
-                        </button>
-                        <button class="btn btn-outline-success px-4">Export
-                        </button>
-                    </div>
-                </form>
-                <script>
-                    var countries = [
-                        {% for country in countries %}
-                            {
-                                "name": "{{ country.name }}",
-                                "country_code": "{{ country.country_code }}",
-                                "organizations": "{{ country.org_name }}"
-                            },
-                        {% endfor %}
-                    ];
-
-                    function populateDropdown(selectId, options) {
-                        var select = document.getElementById(selectId);
-                        select.innerHTML = ""; // Clear existing options
-
-                        for (var i = 0; i < options.length; i++) {
-                            var option = document.createElement("option");
-                            option.text = options[i];
-                            option.value = options[i];
-                            select.add(option);
-                        }
-                    }
-
-                    function updateOrganizations() {
-                        var countrySelect = document.getElementById("country");
-                        var organizationSelect = document.getElementById("organization");
-                        var selectedCountry = countrySelect.value;
-                        let selectedCountryObjs = []
-                        let organizationList = []
-                        countries.forEach(country => {
-                            let countryName = country.name
-                            if (countryName == selectedCountry) {
-                                selectedCountryObjs.push(country)
-                            }
-                        })
-                        selectedCountryObjs.forEach(organization => {
-                            let organizationName = organization.organizations
-                            organizationList.push(organizationName)
-                        })
-                        populateDropdown("organization", organizationList);
-                    }
-
-                    // Populate the country dropdown initially
-                    var countryNames = countries.map(country => country.name);
-                    let uniqueCountries = new Set(countryNames)
-                    let uniqueCountriesArr = [...uniqueCountries]
-                    populateDropdown("country", uniqueCountriesArr);
-
-                    // Update organizations when the country dropdown changes
-                    updateOrganizations();
-                </script>
-
-            {% endif %}
+<div class="container">
+    <div class="left-section mt-3">
+        <h3>Welcome, {{ g.user.name }}</h3>
+    </div>
+    <div class="right-section">
+        <form id="reportForm" action="/staff/report" method="POST">
+            <label for="country">Select Country:</label>
+            <select id="country" name="country" class="mb-3 mr-2">
+                {% for country in countries %}
+                <option value="{{ country.country_code }}">{{ country.name }}</option>
+                {% endfor %}
+            </select>
+            <label for="organization" class="ml-2">Select Organization:</label>
+            <select id="organization" name="organization" class="mb-3 mr-2"></select>
+            <button type="button" id="generateButton" class="btn btn-outline-success px-4 mr-2">Generate</button>
+            <button type="button" class="btn btn-outline-success px-4" onclick="exportData()">Export</button>
+        </form>
+        <div class="dashboard-container">
+            <div class="dashboard-content">
+                <div id="reportTable" class="mt-3"></div>
+            </div>
         </div>
     </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static',filename='js/users/staff/staff.js') }}" defer></script>    
 {% endblock %}
