@@ -43,7 +43,7 @@
 from flask import Blueprint, render_template, request, jsonify, make_response
 from solar_offset.db import get_db
 from solar_offset.views.auth import login_required
-import pdfkit
+#import pdfkit
 
 bp = Blueprint("staff", __name__)
 
@@ -133,12 +133,12 @@ def export_report():
     html = render_template("./users/staff/export_report.html", users=users)
 
     # Convert HTML to PDF
-    pdf = pdfkit.from_string(html, False)
+    # pdf = pdfkit.from_string(html, False)
 
-    # Create response with PDF content
-    response = make_response(pdf)
-    response.headers["Content-Type"] = "application/pdf"
-    response.headers["Content-Disposition"] = "attachment; filename=report.pdf"
+    # # Create response with PDF content
+    # response = make_response(pdf)
+    # response.headers["Content-Type"] = "application/pdf"
+    # response.headers["Content-Disposition"] = "attachment; filename=report.pdf"
 
-    return response
+    # return response
 
