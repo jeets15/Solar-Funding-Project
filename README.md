@@ -32,3 +32,7 @@ Team 02 - Manhattan Project ([solar Offset](https://docs.google.com/document/d/1
 Cloning the project :
 * ``` git clone https://git.shefcompsci.org.uk/com6103-2023-24/team02/project.git ```
 * Enter user name and password (set your password in gitlab, if you have not)
+
+---
+
+Team02 Report Link-: https://docs.google.com/document/d/1xTUIPcTBzpBr-NFb_HYEKPPyM8XYSCPV7uyJMslg9xQ/edit?usp=sharing
