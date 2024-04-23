@@ -1,7 +1,7 @@
 
 /* Style Links in Base Template Navbar */
 ul.nav li {
-    margin: 0 0 auto 0;
+    margin: 0 0 auto 14px;
 }
 ul.nav a {
     line-height: 1em;
@@ -104,4 +104,9 @@ hr.tight {
     border: 0.1em solid;
     border-radius: 1em;
     padding: 0.5em;
+}
+
+.nav-link.active {
+    color: green;
+    font-weight: bold;
 }

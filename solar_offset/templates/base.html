@@ -36,16 +36,16 @@
         {% if _show_navbar %}
             <ul class=" nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
                 <li>
-                    <a href="{{ url_for('home.home') }}" class="nav-link px-2 link-dark">Home</a>
+                    <a href="{{ url_for('home.home') }}" class="nav-link px-2 link-dark {% if request.path == url_for('home.home') %}active{% endif %}">Home</a>
                 </li>
                 <li>
-                    <a href="{{ url_for('householder.country_list') }}" class="nav-link px-2 link-dark">Browse<br>Countries</a>
+                    <a href="{{ url_for('householder.country_list') }}" class="nav-link px-2 link-dark {% if request.path == url_for('householder.country_list') %}active{% endif %}">Browse Countries</a>
                 </li>
                 <li>
-                    <a href="/contact-us" class="nav-link px-2 link-dark">Contact</a>
+                    <a href="/contact-us" class="nav-link px-2 link-dark {% if request.path == '/contact-us' %}active{% endif %}">Contact</a>
                 </li>
                 <li>
-                    <a href="/" class="nav-link px-2 link-dark">FAQs</a>
+                    <a href="/" class="nav-link px-2 link-dark ">FAQs</a>
                 </li>
                 <li>
                     <a href="/" class="nav-link px-2 link-dark">About</a>
@@ -56,19 +56,19 @@
                     </li>
                     {% if 'h' in g.user.user_type %}
                         <li>
-                            <a href="{{ url_for('householder.dashboard') }}" class="nav-link px-2 link-dark">My
+                            <a href="{{ url_for('householder.dashboard') }}" class="nav-link px-2 link-dark {% if request.path == url_for('householder.dashboard') %}active{% endif %}">My
                                 Profile</a>
                         </li>
                     {% endif %}
                     {% if 's' in g.user.user_type %}
                         <li>
-                            <a href="{{ url_for('staff.staff') }}" class="nav-link px-2 link-dark">Staff<br>Reports</a>
+                            <a href="{{ url_for('staff.staff') }}" class="nav-link px-2 link-dark {% if request.path == url_for('staff.staff') %}active{% endif %}">Staff<br>Reports</a>
                         </li>
                     {% endif %}
                     {% if 'a' in g.user.user_type %}
                         <li>
                             <a href="{{ url_for('admin.admin') }}"
-                               class="nav-link px-2 link-dark">Admin<br>Dashboard</a>
+                               class="nav-link px-2 link-dark {% if request.path == url_for('admin.admin') %}active{% endif %}">Admin<br>Dashboard</a>
                         </li>
                     {% endif %}
                 {% endif %}
