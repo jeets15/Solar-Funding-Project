@@ -52,6 +52,7 @@
                 </div>
                 <div class="shadow-box text-center">
                     <h3>Donation Badge</h3>
+                 {% if donations %}
                     {% if stats.donated_sum >= 20000 %}
                         <img src="{{ url_for('static', filename='images/gold-badge.jpg') }}" alt="Gold Badge"
                              style="width: 100px;">
@@ -70,6 +71,11 @@
                         <p>No badge earned yet. Keep donating to earn one! You need to donate
                             atleast £{{ 5000-stats.donated_sum }} more to earn a bronze badge!!</p>
                     {% endif %}
+
+                {% else %}
+                <p>No badge earned yet. Keep donating to earn one! You need to donate
+                            atleast £5000 more to earn a bronze badge!!</p>
+                {% endif %}
                 </div>
             </div>
             <div class="flex-column">
