@@ -2,19 +2,6 @@
 {% block title %}Staff Dashboard{% endblock %}
 {% block styles %}
     <link href="https://unpkg.com/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
-<!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/staffstyle.css') }}"> -->
-<!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/home/home-style.css') }}"> -->
-<!-- <style>
-    /* Custom styles for the staff dashboard */
-    .dashboard-container {
-        display: flex;
-        justify-content: center;
-    }
-    .dashboard-content {
-        width: 100%;
-        max-width: 800px; /* Adjust as needed */
-    }
-</style> -->
 {% block scripts %}
     <script type="text/javascript" src="{{ url_for('static',filename='js/users/staff/staff.js') }}" defer></script>
     <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
@@ -58,28 +45,4 @@
         </table>
     </div>
 </div>
-<!-- <div class="container">
-    <div class="left-section mt-3">
-        <h3>Welcome, {{ g.user.name }}</h3>
-    </div>
-    <div class="right-section">
-        <form id="reportForm" action="/staff/report" method="POST">
-            <label for="country">Select Country:</label>
-            <select id="country" name="country" class="mb-3 mr-2">
-                {% for country in countries %}
-                <option value="{{ country.country_code }}">{{ country.name }}</option>
-                {% endfor %}
-            </select>
-            <label for="organization" class="ml-2">Select Organization:</label>
-            <select id="organization" name="organization" class="mb-3 mr-2"></select>
-            <button type="button" id="generateButton" class="btn btn-outline-success px-4 mr-2">Generate</button>
-            <button type="button" class="btn btn-outline-success px-4" onclick="exportData()">Export</button>
-        </form>
-        <div class="dashboard-container">
-            <div class="dashboard-content">
-                <div id="reportTable" class="mt-3"></div>
-            </div>
-        </div>
-    </div>
-</div> -->
 {% endblock %}
