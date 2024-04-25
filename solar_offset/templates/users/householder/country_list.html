@@ -46,6 +46,12 @@
 
     <div style="display: flex;">
         <h2>Country List</h2>
+          <div class="search-container" style="position: relative;margin-left: 5%;">
+           <span class="search-icon" style="position: absolute; left: 10px; top: 42%; transform: translateY(-50%);">
+                <i class="bi bi-search"></i> <!-- Using Bootstrap Icons as an example -->
+            </span>
+            <input type="text" id="country-search" placeholder="Search for a country..." oninput="filterCountries()" class="form-control search-input">
+        </div>
         <div sorting-hidden="flex" style="margin-left: auto; display: none;">
             <div class="dropdown">
                 <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
