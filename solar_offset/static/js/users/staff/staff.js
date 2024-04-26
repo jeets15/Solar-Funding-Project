@@ -6,13 +6,10 @@ function afterTableBuilt() {
 }
 
 
-
-function actionFormatter(cell) {
-    return cell.getValue();
-}
-
 function comparisonFilterEditor(cell, onRendered, success, cancel, editorParams) {
     let container = document.createElement("span");
+    container.style.width = "100%";
+    container.style.display = "block";
     let selector = document.createElement("select");
     for (let opt_txt of ["=", "<", ">", "<=", ">="]) {
         let opt = document.createElement("option");
@@ -20,12 +17,12 @@ function comparisonFilterEditor(cell, onRendered, success, cancel, editorParams)
         opt.innerHTML = opt_txt;
         selector.appendChild(opt);
     }
-    selector.style.width = "20%";
+    selector.style.width = "3.2em";
     selector.style['min-width'] = "3.2em";
     let filterInput = document.createElement("input");
     filterInput.setAttribute("type", "text");
     filterInput.setAttribute("placeholder", "filter...");
-    filterInput.style.width = "80%";
+    filterInput.style['margin-left'] = "0.5em";
 
     function buildValues(){
         success({
@@ -43,7 +40,7 @@ function comparisonFilterEditor(cell, onRendered, success, cancel, editorParams)
             cancel();
         }
     }
-
+    
     selector.addEventListener("change", buildValues);
     filterInput.addEventListener("change", buildValues);
     filterInput.addEventListener("blur", buildValues);
@@ -64,7 +61,6 @@ function comparisonFilterFunction(headerValue, rowValue, rowData, filterParams) 
                 value = parseFloat(value);
                 target = parseFloat(target);
             }
-            console.log(value, comp, target)
             if (comp === "=") {
                 if (dataType === "string") {
                     return value.includes(target);
@@ -85,53 +81,55 @@ function comparisonFilterFunction(headerValue, rowValue, rowData, filterParams) 
     return true;
 }
 
-window.addEventListener('load', function () {
-    // Create and Setup Tabulator table
-    let tableData = [];
-    let rows = document
-            .getElementById("donation-data")
-            .getElementsByTagName("tbody")[0]
-            .getElementsByTagName("tr");
 
-    for (let row of rows) {
-        let cells = row.getElementsByTagName("td");
-        tableData.push({
-            timestamp: cells[0].textContent.trim(),
-            country: cells[1].textContent.trim(),
-            organization: cells[2].textContent.trim(),
-            amount: cells[3].textContent.trim(),
-            solar_panels: cells[4].textContent.trim(),
-            householder: cells[5].textContent.trim(),
-        })
-    }
 
-    let tabulatorColumns = [
-        {title: "Timestamp",    field:"timestamp", headerFilterFuncParams: {data_type: "string"}},
-        {title: "Country",      field:"country", headerFilterFuncParams: {data_type: "string"}},
-        {title: "Organization", field:"organization", headerFilterFuncParams: {data_type: "string"}},
-        {title: "Amount (£)",   field:"amount", sorter:"number", hozAlign: "right", headerFilterFuncParams: {data_type: "numeric"}},
-        {title: "Solar Panels", field:"solar_panels", sorter:"number", headerFilterFuncParams: {data_type: "numeric"}},
-        {title: "Householder",  field:"householder", headerFilterFuncParams: {data_type: "string"}},
-    ];
-    
-    for (let col of tabulatorColumns) {
-        col.frozen = true;
-        col.headerFilter = comparisonFilterEditor;
-        col.headerFilterFunc = comparisonFilterFunction;
-        col.headerFilterLiveFilter = false;
-        col.minWidth = 150;
-    }
-    
-    let table = new Tabulator('#donation-data', {
-        layout: "fitData",
-        pagination: "local",
-        paginationSize: 50,
-        columns: tabulatorColumns
-    });
-    
-    // Callback to afterTableBuilt callback
-    table.on("tableBuilt", function () {
-        table.setData(tableData);
-        afterTableBuilt();
-    });
+// Create and Setup Tabulator table
+let tableData = [];
+
+let rows = document
+    .getElementById("donation-data")
+    .getElementsByTagName("tbody")[0]
+    .getElementsByTagName("tr");
+
+for (let row of rows) {
+    let cells = row.getElementsByTagName("td");
+    tableData.push({
+        timestamp: cells[0].textContent.trim(),
+        country: cells[1].textContent.trim(),
+        organization: cells[2].textContent.trim(),
+        amount: cells[3].textContent.trim(),
+        solar_panels: cells[4].textContent.trim(),
+        householder: cells[5].textContent.trim(),
+    })
+}
+
+let tabulatorColumns = [
+    {title: "Timestamp",    field:"timestamp", headerFilterFuncParams: {data_type: "string"}},
+    {title: "Country",      field:"country", headerFilterFuncParams: {data_type: "string"}},
+    {title: "Organization", field:"organization", headerFilterFuncParams: {data_type: "string"}},
+    {title: "Amount (£)",   field:"amount", sorter:"number", hozAlign: "right", headerFilterFuncParams: {data_type: "numeric"}},
+    {title: "Solar Panels", field:"solar_panels", sorter:"number", headerFilterFuncParams: {data_type: "numeric"}},
+    {title: "Householder",  field:"householder", headerFilterFuncParams: {data_type: "string"}},
+];
+
+for (let col of tabulatorColumns) {
+    col.frozen = true;
+    col.headerFilter = comparisonFilterEditor;
+    col.headerFilterFunc = comparisonFilterFunction;
+    col.headerFilterLiveFilter = false;
+    col.minWidth = 150;
+}
+
+let tableElement = document.getElementById('donation-data');
+let table = new Tabulator(tableElement, {
+    layout: "fitData",
+    pagination: "local",
+    paginationSize: 50,
+    columns: tabulatorColumns
+});
+
+// Callback to afterTableBuilt callback
+table.on("tableBuilt", function () {
+    table.setData(tableData);
+    afterTableBuilt();
 });

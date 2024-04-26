@@ -3,8 +3,8 @@
 {% block styles %}
     <link href="https://unpkg.com/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
 {% block scripts %}
-    <script type="text/javascript" src="{{ url_for('static',filename='js/users/staff/staff.js') }}" defer></script>
     <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/users/staff/staff.js') }}" defer></script>
 {% endblock %}
 {% endblock %}
 {% block body %}
@@ -19,7 +19,7 @@
             <button id="download-csv" class="btn btn-secondary" style=" margin: 0.5em; margin-left: auto;">Download CSV</button>
         </div>
 
-        <table id="donation-data" class="!table !table-striped !table-hover !table-bordered !table-responsive">
+        <table id="donation-data" class="">
             <thead>
                 <tr>
                     <th scope="col">Timestamp</th>
