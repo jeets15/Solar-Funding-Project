@@ -10,6 +10,15 @@ body {
     justify-content: center;
 }
 
+.search-input {
+    padding-left: 2.5em;
+}
+
+.search-icon {
+    color: #6c757d;
+    font-size: 1rem;
+}
+
 .project {
     min-width: 33em;
     border: 1px solid #ccc;

@@ -36,6 +36,21 @@ function sortingUrlEncode(obj) {
     return encodeURIComponent(sortings.join("|"));
 }
 
+function filterCountries() {
+    const query = document.getElementById('country-search').value.toLowerCase();
+    const countryList = document.querySelectorAll('ul[sorting-target="country-list"] > li');
+
+    countryList.forEach(country => {
+        const countryName = country.querySelector('h3').textContent.toLowerCase();
+
+        // Check if the country name contains the search query
+        if (countryName.includes(query)) {
+            country.style.display = 'block'; // Show the country if it matches the query
+        } else {
+            country.style.display = 'none'; // Hide the country if it doesn't match the query
+        }
+    });
+}
 function sortingUrlDecode(str) {
     let obj = {};
     if (!str) {
