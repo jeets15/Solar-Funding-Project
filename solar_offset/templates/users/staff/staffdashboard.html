@@ -1,91 +1,48 @@
-
-
 {% extends 'base.html' %}
-<!-- Title Section -->
-{% block title %}Staff DashBoard{% endblock %}
-
+{% block title %}Staff Dashboard{% endblock %}
 {% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/staffstyle.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/home/home-style.css') }}">
+    <link href="https://unpkg.com/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
+{% block scripts %}
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
+    <script type="text/javascript" src="{{ url_for('static',filename='js/users/staff/staff.js') }}" defer></script>
 {% endblock %}
-
-<!-- Body Section -->
+{% endblock %}
 {% block body %}
-    <div class="container">
-        <div class="left-section mt-3">
-            <h2>Welcome, {{ g.user.name }}</h2>
-        </div>
-
-        <div class="right-section">
-            {% if countries %}
-                <form action="/staff/report" method="POST">
-                    <label for="country">Select Country:</label>
-                    <select id="country" name="country" onchange="updateOrganizations()" class="mb-3 mr-2"></select>
-
-                    <label for="organization" class="mt-2">Select Organization:</label>
-                    <select id="organization" name="organization"></select>
-
-                    <div class="mt-3">
-                        <button class="btn btn-outline-success px-4 mr-2">
-                            Generate
-                        </button>
-                        <button class="btn btn-outline-success px-4">Export
-                        </button>
-                    </div>
-                </form>
-                <script>
-                    var countries = [
-                        {% for country in countries %}
-                            {
-                                "name": "{{ country.name }}",
-                                "country_code": "{{ country.country_code }}",
-                                "organizations": "{{ country.org_name }}"
-                            },
-                        {% endfor %}
-                    ];
-
-                    function populateDropdown(selectId, options) {
-                        var select = document.getElementById(selectId);
-                        select.innerHTML = ""; // Clear existing options
-
-                        for (var i = 0; i < options.length; i++) {
-                            var option = document.createElement("option");
-                            option.text = options[i];
-                            option.value = options[i];
-                            select.add(option);
-                        }
-                    }
-
-                    function updateOrganizations() {
-                        var countrySelect = document.getElementById("country");
-                        var organizationSelect = document.getElementById("organization");
-                        var selectedCountry = countrySelect.value;
-                        let selectedCountryObjs = []
-                        let organizationList = []
-                        countries.forEach(country => {
-                            let countryName = country.name
-                            if (countryName == selectedCountry) {
-                                selectedCountryObjs.push(country)
-                            }
-                        })
-                        selectedCountryObjs.forEach(organization => {
-                            let organizationName = organization.organizations
-                            organizationList.push(organizationName)
-                        })
-                        populateDropdown("organization", organizationList);
-                    }
-
-                    // Populate the country dropdown initially
-                    var countryNames = countries.map(country => country.name);
-                    let uniqueCountries = new Set(countryNames)
-                    let uniqueCountriesArr = [...uniqueCountries]
-                    populateDropdown("country", uniqueCountriesArr);
-
-                    // Update organizations when the country dropdown changes
-                    updateOrganizations();
-                </script>
-
-            {% endif %}
-        </div>
+<div class="d-flex flex-column align-items-center">
+    <div style="margin: 1em;">
+        <h3>Welcome, {{ g.user.name }}</h3>
     </div>
+
+    <div style="margin: 1em;">
+        <div class="d-flex flex-row">
+            <h4>Donation Data</h4>
+            <button id="download-csv" class="btn btn-secondary" style=" margin: 0.5em; margin-left: auto;">Download CSV</button>
+        </div>
+
+        <table id="donation-data" class="">
+            <thead>
+                <tr>
+                    <th scope="col">Timestamp</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">Organization</th>
+                    <th scope="col">Amount (£)</th>
+                    <th scope="col">Solar Panels</th>
+                    <th scope="col">Householder</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for donation in donations %}
+                <tr>
+                    <td>{{ donation.created }}</td>
+                    <td>{{ donation.country_name }}</td>
+                    <td>{{ donation.organization_name }}</td>
+                    <td>{{ donation.amount }}</td>
+                    <td>{{ donation.solar_panels }}</td>
+                    <td>{{ donation.householder }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
 {% endblock %}
