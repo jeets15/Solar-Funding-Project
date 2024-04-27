@@ -52,23 +52,29 @@
                 </div>
                 <div class="shadow-box text-center">
                     <h3>Donation Badge</h3>
-                    {% if stats.donated_sum >= 20000 %}
-                        <img src="{{ url_for('static', filename='images/gold-badge.jpg') }}" alt="Gold Badge"
-                             style="width: 100px;">
-                        <p>Congratulations! You've earned a Gold Badge! Your donations are above £20000</p>
-                    {% elif (stats.donated_sum >= 10000 and stats.donated_sum<20000) %}
-                        <img src="{{ url_for('static', filename='images/silver_badge.jpg') }}" alt="Silver Badge"
-                             style="width: 100px;">
-                        <p>Great job! You've earned a Silver Badge! You need to donate
-                            atleast £{{ 20000-stats.donated_sum }} more to earn a gold badge!!</p>
-                    {% elif (stats.donated_sum >= 5000 and stats.donated_sum<10000) %}
-                        <img src="{{ url_for('static', filename='images/bronze_badge.jpg') }}" alt="Bronze Badge"
-                             style="width: 100px;">
-                        <p>Good work! You've earned a Bronze Badge! You need to donate
-                            atleast £{{ 10000-stats.donated_sum }} more to earn a silver badge!!</p>
-                    {% else %}
+                    {% if donations %}
+                        {% if stats.donated_sum >= 20000 %}
+                            <img src="{{ url_for('static', filename='images/gold-badge.jpg') }}" alt="Gold Badge"
+                                style="width: 100px;">
+                            <p>Congratulations! You've earned a Gold Badge! Your donations are above £20000</p>
+                        {% elif (stats.donated_sum >= 10000 and stats.donated_sum<20000) %}
+                            <img src="{{ url_for('static', filename='images/silver_badge.jpg') }}" alt="Silver Badge"
+                                style="width: 100px;">
+                            <p>Great job! You've earned a Silver Badge! You need to donate
+                                atleast £{{ 20000-stats.donated_sum }} more to earn a gold badge!!</p>
+                        {% elif (stats.donated_sum >= 5000 and stats.donated_sum<10000) %}
+                            <img src="{{ url_for('static', filename='images/bronze_badge.jpg') }}" alt="Bronze Badge"
+                                style="width: 100px;">
+                            <p>Good work! You've earned a Bronze Badge! You need to donate
+                                atleast £{{ 10000-stats.donated_sum }} more to earn a silver badge!!</p>
+                        {% else %}
                         <p>No badge earned yet. Keep donating to earn one! You need to donate
                             atleast £{{ 5000-stats.donated_sum }} more to earn a bronze badge!!</p>
+                        {% endif %}
+                    {% else %}
+                        <p>Start donating to earn badges!
+                            You can earn the bronze badge by donating at least £5000.
+                        </p>
                     {% endif %}
                 </div>
             </div>
@@ -82,6 +88,7 @@
                                 <div><b class="large">{{ g.user.householder_carbon_footprint }} tons</b></div>
                             </div>
                             <hr>
+                            {% if donations %}
                             <div>
                                 <div class="centering" style="margin-bottom: 0.5em;">The Impact of your Donations</div>
                                 <div class="centering flex-row">
@@ -102,6 +109,11 @@
                                 <div>Your Reduced Carbon Footprint</div>
                                 <div><b class="large">{{ carbon_offset_data.reduced_footprint }} tons</b></div>
                             </div>
+                            {% else %}
+                            <div class="centering" style="margin-bottom: 0.5em;">
+                                <a href="{{ url_for('householder.country_list') }}">Make Donations</a> to Reduce your Carbon Footprint
+                            </div>
+                            {% endif %}
                         </div>
                     {% else %}
                         <h3>Add your Carbon Footprint</h3>
