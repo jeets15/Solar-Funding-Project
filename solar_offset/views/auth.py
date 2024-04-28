@@ -258,14 +258,18 @@ def register_staff():
             "This may take some time."
         ])
 
+        userid = str(uuid4())
+
         db.execute(
             "INSERT INTO user (id, email_username, display_name, password_hash, user_type, status_suspend) \
             VALUES (?, ?, ?, ?, '_s_', ?);",
-            (str(uuid4()), email, display_name, generate_password_hash(pwd), staff_suspend_message)
+            (userid, email, display_name, generate_password_hash(pwd), staff_suspend_message)
         )
         db.commit()
 
-        return render_template("auth-engine/register-staff.html")
+        session["user_id"] = userid
+
+        return redirect(url_for('staff.staff'))
 
     else:
         return render_template("auth-engine/register-staff.html")
