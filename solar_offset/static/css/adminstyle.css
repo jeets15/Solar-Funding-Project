@@ -12,4 +12,5 @@
 #admin-table .tabulator-cell {
     border-top: 1px solid #dee2e6 !important;
     padding: 0.5rem !important;
+    white-space: normal !important;
 }
