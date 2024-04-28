@@ -21,8 +21,10 @@ function comparisonFilterEditor(cell, onRendered, success, cancel, editorParams)
     selector.style['min-width'] = "3.2em";
     let filterInput = document.createElement("input");
     filterInput.setAttribute("type", "text");
+    filterInput.setAttribute("size", "1");
     filterInput.setAttribute("placeholder", "filter...");
     filterInput.style['margin-left'] = "0.5em";
+    filterInput.style['min-width'] = "60%";
 
     function buildValues(){
         success({
