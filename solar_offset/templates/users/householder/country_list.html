@@ -135,12 +135,18 @@
             <div style="display: flex;">
                 <div>
                     <ul class="list-inline">
-                        <li>
-                            {{ badge_vertical('Donations Made', country.donation_count, v_badge_unit=None, prepend_unit=False) }}
-                        </li>
-                        <li>
-                            {{ badge_vertical('Solar Funds Raised', country.donation_sum, v_badge_unit='£', prepend_unit=True) }}
-                        </li>
+                        {% if country.donation_count %}
+                            <li>
+                                {{ badge_vertical('Donations Made', country.donation_count, v_badge_unit=None, prepend_unit=False) }}
+                            </li>
+                            <li>
+                                {{ badge_vertical('Solar Funds Raised', country.donation_sum, v_badge_unit='£', prepend_unit=True) }}
+                            </li>
+                        {% else %}
+                            <span class="framed-rounded" style="border-color: gray;">
+                                Be one of the First to Donate to {{ country.name }}!
+                            </span>
+                        {% endif %}
                     </ul>
                 </div>
                 <div style="display:flex; margin-left: auto;">
